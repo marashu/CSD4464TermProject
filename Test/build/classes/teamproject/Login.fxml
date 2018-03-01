@@ -7,42 +7,51 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" opacity="1.0" prefHeight="472.0" prefWidth="600.0" styleClass="mainFxmlClass, thebackground" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+<AnchorPane id="AnchorPane" opacity="1.0" prefHeight="472.0" prefWidth="600.0" styleClass="mainFxmlClass, thebackground" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="teamproject.FXMLController">
   <children>
-    <TextField layoutX="254.0" layoutY="185.0" prefWidth="168.0" text="">
-      <stylesheets>
-        <URL value="@style.css" />
-      </stylesheets>
-    </TextField>
-    <TextField id="txtPassword" layoutX="254.0" layoutY="218.0" prefWidth="168.0" styleClass="btn-style1">
-      <stylesheets>
-        <URL value="@style.css" />
-      </stylesheets>
-    </TextField>
-    <Button id="" layoutX="306.0" layoutY="265.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="116.0" style="" styleClass="btn-style1, button1" text="Register">
-      <stylesheets>
-        <URL value="@style.css" />
-      </stylesheets>
-    </Button>
-    <Button id="" layoutX="177.0" layoutY="266.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="116.0" styleClass="btn-style1, button1" text="Login">
-      <stylesheets>
-        <URL value="@style.css" />
-      </stylesheets>
-    </Button>
-    <Button id="" layoutX="177.0" layoutY="318.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="245.0" styleClass="button2" text="Find ID or Password">
-      <stylesheets>
-        <URL value="@style.css" />
-      </stylesheets>
-    </Button>
-    <Label layoutX="178.0" layoutY="191.0" text="ID" />
-    <Label layoutX="177.0" layoutY="224.0" text="Password" />
-    <ImageView fitHeight="60.78012472943142" fitWidth="263.7522888183594" layoutX="166.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-        <Image url="@source/login.png" />
-      </image>
-    </ImageView>
-    <Label layoutX="221.0" layoutY="428.0" text="Version 0.1 By Java Avangers" textAlignment="CENTER" textFill="WHITE" />
+    <Pane fx:id="paneLogin" layoutX="0.0" layoutY="0.0" prefHeight="472.0" prefWidth="600.0">
+      <children>
+        <TextField fx:id="txtId" layoutX="254.0" layoutY="185.0" prefWidth="168.0" text="">
+          <stylesheets>
+            <URL value="@style.css" />
+          </stylesheets>
+        </TextField>
+        <PasswordField fx:id="txtPassword" layoutX="254.0" layoutY="222.0" prefWidth="168.0" />
+        <Button id="" fx:id="btnLogin" layoutX="177.0" layoutY="266.0" mnemonicParsing="false" onAction="#openLogin" prefHeight="43.0" prefWidth="116.0" styleClass="btn-style1, button1" text="Login">
+          <stylesheets>
+            <URL value="@style.css" />
+          </stylesheets>
+        </Button>
+        <Button id="" fx:id="btnFindIdPw" layoutX="177.0" layoutY="318.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="245.0" styleClass="button2" text="Find ID or Password">
+          <font>
+            <Font name="System Bold" size="12.0" fx:id="x1" />
+          </font>
+          <stylesheets>
+            <URL value="@style.css" />
+          </stylesheets>
+        </Button>
+        <Label fx:id="labelId" font="$x1" layoutX="178.0" layoutY="191.0" text="ID">
+          <textFill>
+            <Color blue="0.329" green="0.224" red="0.063" fx:id="x2" />
+          </textFill>
+        </Label>
+        <Label fx:id="labelPw" font="$x1" layoutX="177.0" layoutY="224.0" text="Password" textFill="$x2" />
+        <Label fx:id="txtVersion" layoutX="221.0" layoutY="428.0" text="Version 0.1 By Java Avangers" textAlignment="CENTER" textFill="WHITE" />
+        <ImageView fx:id="imgTitle" fitHeight="60.78012472943142" fitWidth="263.7522888183594" layoutX="166.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
+          <image>
+            <Image url="@source/login.png" />
+          </image>
+        </ImageView>
+        <Button id="" fx:id="btnRegister" layoutX="306.0" layoutY="265.0" mnemonicParsing="false" onAction="#openRegister" prefHeight="44.0" prefWidth="116.0" style="" styleClass="btn-style1, button1" text="Register">
+          <stylesheets>
+            <URL value="@style.css" />
+          </stylesheets>
+        </Button>
+      </children>
+    </Pane>
   </children>
   <stylesheets>
     <URL value="@style.css" />

@@ -2,11 +2,12 @@
     -fx-background-image: url("source/bg.png");
     -fx-background-size: 100% 100%;
     }
+    
 
 .button1 {
     -fx-background-color : #356896;
     -fx-text-fill        : #ffffff;
-    -fx-font-weight      : 900;
+    -fx-font-weight      : bold;
     }
 
 .button1:hover {
@@ -14,11 +15,11 @@
     }
 
 .button2 {
-    -fx-background-color : #039B00;
     -fx-text-fill        : #ffffff;
+    -fx-background-color : #039B00;
     -fx-font-weight      : 900;
     }
 
 .button2:hover {
-    -fx-background-color : #01579B;
+    -fx-background-color : #006631;
     }

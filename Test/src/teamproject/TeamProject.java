@@ -18,16 +18,25 @@ import javafx.stage.Stage;
  */
 public class TeamProject extends Application {
     
+    private static Stage primaryStage;
+    
     @Override
-    public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
-        
-        Scene scene = new Scene(root);
-        
-        stage.setScene(scene);
-        stage.show();
+    public void start(Stage aprimaryStage) throws Exception {
+      
+        FXMLLoader loader = new FXMLLoader();
+        Parent root = loader.load(getClass().getResource("Login.fxml"));
+
+        primaryStage = aprimaryStage;        
+        primaryStage.setTitle("Trivia Game");
+        primaryStage.setScene(new Scene(root));
+        primaryStage.show();
+
     }
 
+    static public Stage getPrimaryStage() {
+        return TeamProject.primaryStage;
+    }    
+    
     /**
      * @param args the command line arguments
      */
