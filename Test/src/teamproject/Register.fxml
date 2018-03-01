@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" opacity="1.0" prefHeight="472.0" prefWidth="600.0" styleClass="mainFxmlClass, thebackground" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+  <children>
+    <TextField layoutX="270.0" layoutY="175.0" prefWidth="168.0" text="">
+      <stylesheets>
+        <URL value="@style.css" />
+      </stylesheets>
+    </TextField>
+    <TextField id="txtPassword" layoutX="270.0" layoutY="208.0" prefWidth="168.0" styleClass="btn-style1">
+      <stylesheets>
+        <URL value="@style.css" />
+      </stylesheets>
+    </TextField>
+    <Button id="" layoutX="307.0" layoutY="377.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="131.0" style="" styleClass="button2" text="Cancel">
+      <stylesheets>
+        <URL value="@style.css" />
+      </stylesheets>
+    </Button>
+    <Button id="" layoutX="160.0" layoutY="378.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="131.0" styleClass="btn-style1, button1" text="Create Account">
+      <stylesheets>
+        <URL value="@style.css" />
+      </stylesheets>
+    </Button>
+    <Label layoutX="161.0" layoutY="182.0" text="ID" />
+    <Label layoutX="160.0" layoutY="215.0" text="Password" />
+    <ImageView fitHeight="60.78012472943142" fitWidth="263.7522888183594" layoutX="194.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+        <Image url="@source/register.png" />
+      </image>
+    </ImageView>
+    <Label layoutX="160.0" layoutY="244.0" text="Password Confirm" />
+    <Label layoutX="160.0" layoutY="276.0" text="Hint Question" />
+    <Label layoutX="160.0" layoutY="309.0" text="Hint Answer" />
+    <Label layoutX="160.0" layoutY="341.0" text="Email" />
+    <TextField layoutX="270.0" layoutY="240.0" prefWidth="168.0" />
+    <TextField layoutX="270.0" layoutY="305.0" prefWidth="168.0" />
+    <TextField layoutX="270.0" layoutY="337.0" prefWidth="168.0" />
+    <ComboBox layoutX="270.0" layoutY="273.0" prefHeight="21.0" prefWidth="168.0">
+      <items>
+        <FXCollections fx:factory="observableArrayList">
+          <String fx:value="Item 1" />
+          <String fx:value="Item 2" />
+          <String fx:value="Item 3" />
+        </FXCollections>
+      </items>
+    </ComboBox>
+    <Label layoutX="227.0" layoutY="135.0" text="Every textfield is required." textAlignment="CENTER" textFill="WHITE" />
+  </children>
+  <stylesheets>
+    <URL value="@style.css" />
+  </stylesheets>
+</AnchorPane>
