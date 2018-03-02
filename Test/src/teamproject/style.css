@@ -2,7 +2,11 @@
     -fx-background-image: url("source/bg.png");
     -fx-background-size: 100% 100%;
     }
-    
+
+.label1{
+    -fx-text-fill        : #162a49;
+    -fx-font-weight      : bold;
+    }
 
 .button1 {
     -fx-background-color : #356896;
@@ -17,7 +21,7 @@
 .button2 {
     -fx-text-fill        : #ffffff;
     -fx-background-color : #039B00;
-    -fx-font-weight      : 900;
+    -fx-font-weight      : bold;
     }
 
 .button2:hover {

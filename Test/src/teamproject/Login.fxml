@@ -25,7 +25,7 @@
             <URL value="@style.css" />
           </stylesheets>
         </Button>
-        <Button id="" fx:id="btnFindIdPw" layoutX="177.0" layoutY="318.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="245.0" styleClass="button2" text="Find ID or Password">
+        <Button id="" fx:id="btnFindIdPw" layoutX="177.0" layoutY="318.0" mnemonicParsing="false" onAction="#openFindIdPw" prefHeight="22.0" prefWidth="245.0" styleClass="button2" text="Find ID or Password">
           <font>
             <Font name="System Bold" size="12.0" fx:id="x1" />
           </font>
@@ -33,12 +33,19 @@
             <URL value="@style.css" />
           </stylesheets>
         </Button>
-        <Label fx:id="labelId" font="$x1" layoutX="178.0" layoutY="191.0" text="ID">
+        <Label fx:id="labelId" font="$x1" layoutX="178.0" layoutY="191.0" styleClass="label1" text="ID" textFill="#103954">
+          <stylesheets>
+            <URL value="@style.css" />
+          </stylesheets>
+        </Label>
+        <Label fx:id="labelPw" font="$x1" layoutX="177.0" layoutY="224.0" styleClass="label1" text="Password">
+          <stylesheets>
+            <URL value="@style.css" />
+          </stylesheets>
           <textFill>
             <Color blue="0.329" green="0.224" red="0.063" fx:id="x2" />
           </textFill>
         </Label>
-        <Label fx:id="labelPw" font="$x1" layoutX="177.0" layoutY="224.0" text="Password" textFill="$x2" />
         <Label fx:id="txtVersion" layoutX="221.0" layoutY="428.0" text="Version 0.1 By Java Avangers" textAlignment="CENTER" textFill="WHITE" />
         <ImageView fx:id="imgTitle" fitHeight="60.78012472943142" fitWidth="263.7522888183594" layoutX="166.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
           <image>

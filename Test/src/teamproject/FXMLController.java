@@ -60,7 +60,24 @@ public class FXMLController implements Initializable {
     }
     
     @FXML
+    private void openFindIdPw(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("FindIdPassword.fxml"));
+        TeamProject.getPrimaryStage().setScene(new Scene(root));
+        TeamProject.getPrimaryStage().show();
+        System.out.println("FindIdPassword.fxml opened");
+    }
+    
+    // should be changed after making account function
+    @FXML
     private void creatAccount(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+        TeamProject.getPrimaryStage().setScene(new Scene(root));
+        TeamProject.getPrimaryStage().show();
+        System.out.println("Login.fxml opened");
+    }
+    // should be changed after reseting account function
+    @FXML
+    private void resetAccount(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("Login.fxml"));
         TeamProject.getPrimaryStage().setScene(new Scene(root));
         TeamProject.getPrimaryStage().show();
