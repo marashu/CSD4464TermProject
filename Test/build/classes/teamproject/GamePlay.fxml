@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" opacity="1.0" prefHeight="472.0" prefWidth="600.0" styleClass="mainFxmlClass, thebackground" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="teamproject.FXMLController">
+  <children>
+    <Pane fx:id="paneLogin" prefHeight="755.0" prefWidth="1024.0">
+      <children>
+            <Text fill="WHITE" layoutX="60.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome  Trivia Quiz Game" wrappingWidth="334.0">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Text>
+            <Pane layoutX="60.0" layoutY="130.0" prefHeight="579.0" prefWidth="651.0" style="-fx-background-color: #ffffff;">
+               <children>
+                  <Text fill="#000e64" layoutX="37.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Question">
+                     <font>
+                        <Font name="Myanmar Text Bold" size="24.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#8b8b8b" layoutX="40.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TextTextTextTextTextTeTextTextTextTextTextTeTextTextTextTextTextTeTextTextTextTextTextTeTextTextTextTextTextTe" wrappingWidth="571.453125">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                  </Text>
+                  <RadioButton layoutX="120.0" layoutY="332.0" mnemonicParsing="false" text="RadioButton">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </RadioButton>
+                  <RadioButton layoutX="345.0" layoutY="332.0" mnemonicParsing="false" text="RadioButton">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </RadioButton>
+                  <RadioButton layoutX="120.0" layoutY="390.0" mnemonicParsing="false" text="RadioButton">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </RadioButton>
+                  <RadioButton layoutX="345.0" layoutY="390.0" mnemonicParsing="false" text="RadioButton">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </RadioButton>
+                  <ImageView fitHeight="144.0" fitWidth="571.0" layoutX="39.0" layoutY="259.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@source/line.png" />
+                     </image>
+                  </ImageView>
+                  <Button layoutX="176.0" layoutY="486.0" mnemonicParsing="false" prefHeight="56.0" prefWidth="297.0" styleClass="button2" stylesheets="@style.css" text="Submit Answer" />
+               </children>
+            </Pane>
+            <Pane layoutX="740.0" layoutY="130.0" prefHeight="416.0" prefWidth="236.0" style="-fx-background-color: #ffffff;">
+               <children>
+                  <Text fill="#000e64" layoutX="64.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User Lists">
+                     <font>
+                        <Font name="Myanmar Text Bold" size="24.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <Text fill="WHITE" layoutX="811.0" layoutY="601.0" strokeType="OUTSIDE" strokeWidth="0.0" text="My Score">
+               <font>
+                  <Font name="Myanmar Text Bold" size="24.0" />
+               </font>
+            </Text>
+            <Text fill="#000e64" layoutX="762.0" layoutY="677.0" strokeType="OUTSIDE" strokeWidth="0.0" text="100,000" wrappingWidth="202.50391590036452">
+               <font>
+                  <Font name="Leelawadee UI Bold" size="50.0" />
+               </font>
+            </Text>
+            <Text fill="#9c0d0f" layoutX="823.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Timer : 12:00 ">
+               <font>
+                  <Font name="Myanmar Text Bold" size="24.0" />
+               </font>
+            </Text>
+            <ImageView fitHeight="46.0" fitWidth="42.0" layoutX="767.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@source/clock.png" />
+               </image>
+            </ImageView>
+      </children>
+    </Pane>
+  </children>
+  <stylesheets>
+    <URL value="@style.css" />
+  </stylesheets>
+</AnchorPane>
