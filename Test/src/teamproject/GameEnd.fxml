@@ -26,8 +26,8 @@
                   <Font name="Leelawadee UI Bold" size="180.0" />
                </font>
             </Text>
-            <Button layoutX="425.0" layoutY="508.0" mnemonicParsing="false" onAction="#replayHost" prefHeight="57.0" prefWidth="209.0" styleClass="button2" stylesheets="@style.css" text="Replay" />
-            <Button layoutX="425.0" layoutY="580.0" mnemonicParsing="false" onAction="#backToMain" prefHeight="57.0" prefWidth="209.0" styleClass="button1" text="Back to main" />
+            <Button fx:id="btnReplay" layoutX="425.0" layoutY="508.0" mnemonicParsing="false" onAction="#replayHost" prefHeight="57.0" prefWidth="209.0" styleClass="button2" stylesheets="@style.css" text="Replay" />
+            <Button fx:id="btnBackToMain" layoutX="425.0" layoutY="580.0" mnemonicParsing="false" onAction="#backToMain" prefHeight="57.0" prefWidth="209.0" styleClass="button1" text="Back to main" />
       </children>
     </Pane>
   </children>

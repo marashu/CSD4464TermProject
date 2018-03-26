@@ -37,9 +37,9 @@
                   <Font name="Myanmar Text Bold" size="48.0" />
                </font>
             </Text>
-            <Button layoutX="443.0" layoutY="324.0" mnemonicParsing="false" onAction="#startGame" prefHeight="91.0" prefWidth="419.0" styleClass="button2" stylesheets="@style.css" text="Start Game" />
-            <Button layoutX="443.0" layoutY="434.0" mnemonicParsing="false" onAction="#exitGame" prefHeight="91.0" prefWidth="419.0" styleClass="button3" text="Exit" />
-            <Button layoutX="443.0" layoutY="544.0" mnemonicParsing="false" onAction="#dropGame" prefHeight="91.0" prefWidth="419.0" styleClass="button1" stylesheets="@style.css" text="Drop Game" />
+            <Button fx:id="btnHostStartGame" layoutX="443.0" layoutY="324.0" mnemonicParsing="false" onAction="#startGame" prefHeight="91.0" prefWidth="419.0" styleClass="button2" stylesheets="@style.css" text="Start Game" />
+            <Button fx:id="btnHostExit" layoutX="443.0" layoutY="434.0" mnemonicParsing="false" onAction="#exitGame" prefHeight="91.0" prefWidth="419.0" styleClass="button3" text="Exit" />
+            <Button fx:id="btnHostDropGame" layoutX="443.0" layoutY="544.0" mnemonicParsing="false" onAction="#dropGame" prefHeight="91.0" prefWidth="419.0" styleClass="button1" stylesheets="@style.css" text="Drop Game" />
             <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="495.0" layoutY="189.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@source/title_roomName.png" />
