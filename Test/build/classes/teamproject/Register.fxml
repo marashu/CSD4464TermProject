@@ -19,7 +19,7 @@
   <children>
     <Pane fx:id="paneRegister" layoutX="0.0" layoutY="0.0" prefHeight="755.0" prefWidth="1024.0">
       <children>
-        <Button id="" layoutX="520.0" layoutY="541.0" mnemonicParsing="false" onAction="#openLogin" prefHeight="44.0" prefWidth="131.0" style="" styleClass="button2" text="Cancel">
+        <Button id="" fx:id="btnCancelAccount" layoutX="523.0" layoutY="615.0" mnemonicParsing="false" onAction="#goToLogin" prefHeight="56.0" prefWidth="212.0" style="" styleClass="button2" text="Cancel">
           <font>
             <Font name="System Bold" size="12.0" fx:id="x1" />
           </font>
@@ -27,34 +27,52 @@
             <URL value="@style.css" />
           </stylesheets>
         </Button>
-        <TextField fx:id="txtId" layoutX="497.0" layoutY="296.0" prefWidth="168.0" text="">
+        <TextField fx:id="txtId" layoutX="493.0" layoutY="240.0" prefHeight="43.0" prefWidth="240.0" text="">
           <stylesheets>
             <URL value="@style.css" />
           </stylesheets>
         </TextField>
-        <Label fx:id="labelPassword" font="$x1" layoutX="333.0" layoutY="333.0" text="Password">
+        <Label fx:id="labelPassword" layoutX="291.0" layoutY="313.0" text="Password">
           <textFill>
             <Color blue="0.329" green="0.224" red="0.063" fx:id="x2" />
           </textFill>
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
         </Label>
-        <Label fx:id="labelId" font="$x1" layoutX="334.0" layoutY="300.0" text="ID" textFill="$x2" />
-        <Label fx:id="labelPwConfirm" font="$x1" layoutX="333.0" layoutY="362.0" text="Password Confirm" textFill="$x2" />
-        <Button id="" layoutX="373.0" layoutY="542.0" mnemonicParsing="false" onAction="#creatAccount" prefHeight="43.0" prefWidth="131.0" styleClass="btn-style1, button1" text="Create Account">
+        <Label fx:id="labelId" layoutX="291.0" layoutY="257.0" text="ID" textFill="$x2">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font></Label>
+        <Label fx:id="labelPwConfirm" layoutX="291.0" layoutY="360.0" text="Password Confirm" textFill="$x2">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font></Label>
+        <Button id="" fx:id="btnCreateAccount" layoutX="289.0" layoutY="616.0" mnemonicParsing="false" onAction="#creatAccount" prefHeight="56.0" prefWidth="218.0" styleClass="btn-style1, button1" text="Create Account">
           <stylesheets>
             <URL value="@style.css" />
           </stylesheets>
         </Button>
-        <Label fx:id="labelHintQuestion" font="$x1" layoutX="333.0" layoutY="394.0" text="Hint Question" textFill="$x2" />
-        <Label fx:id="labelHintAnswer" font="$x1" layoutX="333.0" layoutY="427.0" text="Hint Answer" textFill="$x2" />
-        <Label fx:id="labelEmail" font="$x1" layoutX="333.0" layoutY="459.0" text="Email" textFill="$x2" />
-        <ImageView fitHeight="107.0" fitWidth="313.0" layoutX="348.0" layoutY="123.0" pickOnBounds="true" preserveRatio="true">
+        <Label fx:id="labelHintQuestion" layoutX="291.0" layoutY="413.0" text="Hint Question" textFill="$x2">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font></Label>
+        <Label fx:id="labelHintAnswer" layoutX="291.0" layoutY="469.0" text="Hint Answer" textFill="$x2">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font></Label>
+        <Label fx:id="labelEmail" layoutX="291.0" layoutY="525.0" text="Email" textFill="$x2">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font></Label>
+        <ImageView fitHeight="107.0" fitWidth="313.0" layoutX="340.0" layoutY="87.0" pickOnBounds="true" preserveRatio="true">
           <image>
             <Image url="@source/register.png" />
           </image>
         </ImageView>
-        <TextField fx:id="textAnswer" layoutX="497.0" layoutY="424.0" prefWidth="168.0" />
-        <Label layoutX="428.0" layoutY="230.0" text="Every textfield is required." textAlignment="CENTER" textFill="WHITE" />
-        <ComboBox id="txtHint" fx:id="comboQuestion" layoutX="497.0" layoutY="392.0" prefHeight="21.0" prefWidth="168.0">
+        <TextField fx:id="textAnswer" layoutX="493.0" layoutY="457.0" prefHeight="43.0" prefWidth="240.0" />
+        <Label layoutX="420.0" layoutY="190.0" text="Every textfield is required." textAlignment="CENTER" textFill="WHITE" />
+        <ComboBox id="txtHint" fx:id="comboQuestion" layoutX="493.0" layoutY="401.0" prefHeight="43.0" prefWidth="240.0">
           <items>
             <FXCollections fx:factory="observableArrayList">
               <String fx:value="Mother's first name" />
@@ -64,9 +82,9 @@
             </FXCollections>
           </items>
         </ComboBox>
-        <PasswordField fx:id="txtPassword" layoutX="497.0" layoutY="328.0" prefWidth="168.0" />
-        <PasswordField fx:id="txtPasswordConfirm" layoutX="497.0" layoutY="361.0" prefWidth="168.0" />
-        <TextField fx:id="txtEmail" layoutX="497.0" layoutY="456.0" prefWidth="168.0" />
+        <PasswordField fx:id="txtPassword" layoutX="493.0" layoutY="294.0" prefHeight="43.0" prefWidth="240.0" />
+        <PasswordField fx:id="txtPasswordConfirm" layoutX="493.0" layoutY="348.0" prefHeight="43.0" prefWidth="240.0" />
+        <TextField fx:id="txtEmail" layoutX="493.0" layoutY="513.0" prefHeight="43.0" prefWidth="240.0" />
       </children>
     </Pane>
   </children>
