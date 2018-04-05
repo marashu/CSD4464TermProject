@@ -5,6 +5,8 @@
  */
 package teamproject;
 
+import java.io.IOException;
+import java.net.UnknownHostException;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
@@ -23,14 +25,16 @@ public class TeamProject extends Application {
     @Override
     public void start(Stage aprimaryStage) throws Exception {
       
+        
         FXMLLoader loader = new FXMLLoader();
         Parent root = loader.load(getClass().getResource("Login.fxml"));
-
+        
         primaryStage = aprimaryStage;        
         primaryStage.setTitle("Trivia Game");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
 
+       
     }
 
     static public Stage getPrimaryStage() {
@@ -40,7 +44,8 @@ public class TeamProject extends Application {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, UnknownHostException, ClassNotFoundException {
+        //ClientManager.GetQuestionFromServer();
         launch(args);
     }
     
