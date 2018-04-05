@@ -19,7 +19,7 @@
   <children>
     <Pane fx:id="paneRegister" layoutX="0.0" layoutY="0.0" prefHeight="755.0" prefWidth="1024.0">
       <children>
-        <Button id="" fx:id="btnCancelAccount" layoutX="523.0" layoutY="615.0" mnemonicParsing="false" onAction="#goToLogin" prefHeight="56.0" prefWidth="212.0" style="" styleClass="button2" text="Cancel">
+        <Button fx:id="btnCancelAccount" layoutX="523.0" layoutY="615.0" mnemonicParsing="false" onAction="#goToLogin" prefHeight="56.0" prefWidth="212.0" style="" styleClass="button2" text="Cancel">
           <font>
             <Font name="System Bold" size="12.0" fx:id="x1" />
           </font>
@@ -27,7 +27,7 @@
             <URL value="@style.css" />
           </stylesheets>
         </Button>
-        <TextField fx:id="txtId" layoutX="493.0" layoutY="240.0" prefHeight="43.0" prefWidth="240.0" text="">
+        <TextField fx:id="txtRegisterId" layoutX="493.0" layoutY="240.0" prefHeight="43.0" prefWidth="240.0" text="">
           <stylesheets>
             <URL value="@style.css" />
           </stylesheets>
@@ -70,9 +70,9 @@
             <Image url="@source/register.png" />
           </image>
         </ImageView>
-        <TextField fx:id="textAnswer" layoutX="493.0" layoutY="457.0" prefHeight="43.0" prefWidth="240.0" />
-        <Label layoutX="420.0" layoutY="190.0" text="Every textfield is required." textAlignment="CENTER" textFill="WHITE" />
-        <ComboBox id="txtHint" fx:id="comboQuestion" layoutX="493.0" layoutY="401.0" prefHeight="43.0" prefWidth="240.0">
+        <TextField fx:id="txtRegisterAnswer" layoutX="493.0" layoutY="457.0" prefHeight="43.0" prefWidth="240.0" />
+        <Label fx:id="txtInformation" layoutX="420.0" layoutY="190.0" text="Every textfield is required." textAlignment="CENTER" textFill="WHITE" />
+        <ComboBox fx:id="comboRegisterQuestion" layoutX="493.0" layoutY="401.0" prefHeight="43.0" prefWidth="240.0">
           <items>
             <FXCollections fx:factory="observableArrayList">
               <String fx:value="Mother's first name" />
@@ -82,9 +82,9 @@
             </FXCollections>
           </items>
         </ComboBox>
-        <PasswordField fx:id="txtPassword" layoutX="493.0" layoutY="294.0" prefHeight="43.0" prefWidth="240.0" />
-        <PasswordField fx:id="txtPasswordConfirm" layoutX="493.0" layoutY="348.0" prefHeight="43.0" prefWidth="240.0" />
-        <TextField fx:id="txtEmail" layoutX="493.0" layoutY="513.0" prefHeight="43.0" prefWidth="240.0" />
+        <PasswordField fx:id="txtRegisterPassword" layoutX="493.0" layoutY="294.0" prefHeight="43.0" prefWidth="240.0" />
+        <PasswordField fx:id="txtRegisterPasswordConfirm" layoutX="493.0" layoutY="348.0" prefHeight="43.0" prefWidth="240.0" />
+        <TextField fx:id="txtRegisterEmail" layoutX="493.0" layoutY="513.0" prefHeight="43.0" prefWidth="240.0" />
       </children>
     </Pane>
   </children>

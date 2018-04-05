@@ -2,6 +2,7 @@
 
 <?import java.net.URL?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -13,7 +14,7 @@
   <children>
     <Pane fx:id="paneLogin" prefHeight="755.0" prefWidth="1024.0">
       <children>
-        <Button id="btnLogOut" fx:id="btnLogOut" layoutX="849.0" layoutY="41.0" mnemonicParsing="false" onAction="#goToLogin" prefHeight="43.0" prefWidth="116.0" styleClass="btn-style1, button1" text="Log Out">
+        <Button fx:id="btnLogOut" layoutX="849.0" layoutY="41.0" mnemonicParsing="false" onAction="#goToLogin" prefHeight="43.0" prefWidth="116.0" styleClass="btn-style1, button1" text="Log Out">
           <stylesheets>
             <URL value="@style.css" />
           </stylesheets>
@@ -30,15 +31,20 @@
                         <Font name="Myanmar Text Bold" size="24.0" />
                      </font>
                   </Text>
+                  <ScrollPane fx:id="listUser" layoutX="24.0" layoutY="91.0" prefHeight="470.0" prefWidth="200.0">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="456.0" prefWidth="200.0" />
+                    </content>
+                  </ScrollPane>
                </children>
             </Pane>
-            <Text fill="#000e64" layoutX="695.0" layoutY="231.0" strokeType="OUTSIDE" strokeWidth="0.0" text="123">
+            <Text fx:id="roomName" fill="#000e64" layoutX="695.0" layoutY="231.0" strokeType="OUTSIDE" strokeWidth="0.0" text="123">
                <font>
                   <Font name="Myanmar Text Bold" size="48.0" />
                </font>
             </Text>
             <Button fx:id="btnHostStartGame" layoutX="443.0" layoutY="324.0" mnemonicParsing="false" onAction="#startGame" prefHeight="91.0" prefWidth="419.0" styleClass="button2" stylesheets="@style.css" text="Start Game" />
-            <Button fx:id="btnHostExit" layoutX="443.0" layoutY="434.0" mnemonicParsing="false" onAction="#exitGame" prefHeight="91.0" prefWidth="419.0" styleClass="button3" text="Exit" />
+            <Button fx:id="btnHostExit" layoutX="443.0" layoutY="434.0" mnemonicParsing="false" onAction="#exitGame" prefHeight="91.0" prefWidth="419.0" styleClass="button3" stylesheets="@style.css" text="Exit" />
             <Button fx:id="btnHostDropGame" layoutX="443.0" layoutY="544.0" mnemonicParsing="false" onAction="#dropGame" prefHeight="91.0" prefWidth="419.0" styleClass="button1" stylesheets="@style.css" text="Drop Game" />
             <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="495.0" layoutY="189.0" pickOnBounds="true" preserveRatio="true">
                <image>

@@ -17,7 +17,7 @@
   <children>
     <Pane fx:id="paneLogin" prefHeight="755.0" prefWidth="1024.0">
       <children>
-        <Button id="btnLogOut" fx:id="btnLogOut" layoutX="849.0" layoutY="41.0" mnemonicParsing="false" onAction="#userLogout" prefHeight="43.0" prefWidth="116.0" styleClass="btn-style1, button1" text="Log Out">
+        <Button fx:id="btnLogOut" layoutX="849.0" layoutY="41.0" mnemonicParsing="false" onAction="#userLogout" prefHeight="43.0" prefWidth="116.0" styleClass="btn-style1, button1" text="Log Out">
           <stylesheets>
             <URL value="@style.css" />
           </stylesheets>
@@ -34,7 +34,7 @@
                         <Font name="Myanmar Text Bold" size="24.0" />
                      </font>
                   </Text>
-                  <BarChart layoutX="15.0" layoutY="85.0" prefHeight="293.0" prefWidth="302.0">
+                  <BarChart fx:id="graphMyStastics" layoutX="15.0" layoutY="85.0" prefHeight="293.0" prefWidth="302.0">
                     <xAxis>
                       <CategoryAxis side="BOTTOM" />
                     </xAxis>
@@ -47,7 +47,7 @@
                         <Font name="Myanmar Text Bold" size="24.0" />
                      </font>
                   </Text>
-                  <Text fill="#a3a3a3" layoutX="48.0" layoutY="479.0" strokeType="OUTSIDE" strokeWidth="0.0" text="zfsdfsfsdfsdfsdfsdfsdfsdfzfsdfsfsdfsdfsdfsdfsdfsdfzfsdfsfsdfsdfsdfsdfsdfsdf" wrappingWidth="241.18359375" />
+                  <Text fx:id="txtStrongQuestion" fill="#a3a3a3" layoutX="48.0" layoutY="479.0" strokeType="OUTSIDE" strokeWidth="0.0" text="zfsdfsfsdfsdfsdfsdfsdfsdfzfsdfsfsdfsdfsdfsdfsdfsdfzfsdfsfsdfsdfsdfsdfsdfsdf" wrappingWidth="241.18359375" />
                </children>
             </Pane>
             <Pane layoutX="412.0" layoutY="142.0" prefHeight="562.0" prefWidth="263.0" style="-fx-background-color: #e9e9e9;">
@@ -71,17 +71,17 @@
             </Pane>
             <Pane layoutX="693.0" layoutY="142.0" prefHeight="562.0" prefWidth="272.0" style="-fx-background-color: #e9e9e9;">
                <children>
-                  <Button fx:id="btnLoggyJoinRoom" layoutX="30.0" layoutY="463.0" mnemonicParsing="false" onAction="#loginAsUser" prefHeight="73.0" prefWidth="213.0" styleClass="button2" stylesheets="@style.css" text="Join Room" />
-                  <ScrollPane layoutX="30.0" layoutY="145.0" prefHeight="293.0" prefWidth="213.0">
-                    <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="293.0" prefWidth="211.0" />
-                    </content>
-                  </ScrollPane>
+                  <Button fx:id="btnLobbyJoinRoom" layoutX="30.0" layoutY="463.0" mnemonicParsing="false" onAction="#loginAsUser" prefHeight="73.0" prefWidth="213.0" styleClass="button2" stylesheets="@style.css" text="Join Room" />
                   <Text fill="#000e64" layoutX="79.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Join Game">
                      <font>
                         <Font name="Myanmar Text Bold" size="24.0" />
                      </font>
                   </Text>
+                  <ScrollPane layoutX="38.0" layoutY="123.0" prefHeight="316.0" prefWidth="200.0">
+                    <content>
+                      <AnchorPane fx:id="listUser" minHeight="0.0" minWidth="0.0" prefHeight="316.0" prefWidth="200.0" />
+                    </content>
+                  </ScrollPane>
                </children>
             </Pane>
       </children>

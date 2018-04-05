@@ -15,10 +15,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+import javafx.scene.chart.BarChart;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
@@ -30,17 +31,65 @@ import javafx.stage.Stage;
 public class FXMLController implements Initializable {
     private Parent root;
     
+    /**
+     * Login variable
+    **/
     @FXML
-    private Button btnLogin, btnRegister, btnFindIdPw;      
+    private TextField txtId, txtPassword;
+    private Button btnLogin, btnRegister, btnFindIdPw;
     
+    /**
+     * Register variable
+    **/
+    @FXML
+    private TextField txtRegisterId, txtRegisterPassword, txtRegisterPasswordConfirm, textRegisterAnswer, txtRegisterEmail;
+    private ComboBox comboRegisterQuestion;
     
- 
+    /**
+     * Find Id & pw
+    **/
+    @FXML
+    private TextField txtEmailFind, txtHintAnswerFind;
+    private ComboBox comboHintFind;
+    
+    /**
+     * Game Lobby
+     * button- btnLogOut, scrollpane - listUser can be used everywhere in Game play
+    **/
+    @FXML
+    private Button btnLogOut, btnLobbyCreateRoom, btnLobbyJoinRoom;
+    private Text txtStrongQuestion;
+    private BarChart graphMyStastics;
+    private ScrollPane listUser;
+    
+    /**
+     * Game Host and User
+    **/
+    @FXML
+    private Button btnHostStartGame, btnHostExit, btnHostDropGame;
+    private Text roomName;
+    
+    /**
+     * Game Play
+    **/
+    @FXML
+    private Button btnSubmitAnswer;
+    private Text txtQuestion, txtScore, txtTimer;
+    private RadioButton rdoAnswer1, rdoAnswer2, rdoAnswer3, rdoAnswer4;
+    
+    /**
+     * Game End
+    **/
+    @FXML
+    private Text txtFinalScore;
+    private Button replayHost, backToMain;
+    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
     }    
     
     /*
@@ -55,19 +104,10 @@ public class FXMLController implements Initializable {
         System.out.println("Register.fxml opened");
     }
     
-    /*
-    * button for going to Game Lobby page if user success
-    */
-    @FXML
-    private void userLogout(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("Login.fxml"));
-        TeamProject.getPrimaryStage().setScene(new Scene(root));
-        TeamProject.getPrimaryStage().show();
-        System.out.println("Login.fxml opened");
-    }
+    
     
     /*
-    * button for going to Game Lobby page if user success
+    * button for going to Login page
     */
     @FXML
     private void goToLogin(ActionEvent event) throws IOException {
@@ -150,6 +190,17 @@ public class FXMLController implements Initializable {
     }
     
     /*
+    * button for going to Game Lobby page if user success
+    */
+    @FXML
+    private void userLogout(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+        TeamProject.getPrimaryStage().setScene(new Scene(root));
+        TeamProject.getPrimaryStage().show();
+        System.out.println("Login.fxml opened");
+    }
+    
+    /*
     * button for starting game
     */
     @FXML
@@ -157,7 +208,17 @@ public class FXMLController implements Initializable {
         root = FXMLLoader.load(getClass().getResource("GamePlay.fxml"));
         TeamProject.getPrimaryStage().setScene(new Scene(root));
         TeamProject.getPrimaryStage().show();
+        
+        // declare toggle button in Game Play page
+        ToggleGroup group = new ToggleGroup();
+        rdoAnswer1.setToggleGroup(group);
+        rdoAnswer2.setToggleGroup(group);
+        rdoAnswer3.setToggleGroup(group);
+        rdoAnswer4.setToggleGroup(group);
+        
         System.out.println("GamePlay.fxml opened");
+        
+        
     }
     
     /*
@@ -185,6 +246,11 @@ public class FXMLController implements Initializable {
         alert.showAndWait();
         
         System.out.println("GameLobby.fxml opened");
+    }
+    
+    @FXML
+    private void submitAnswer(ActionEvent event){
+//        this is the button for submit quiz answer
     }
     
     /*

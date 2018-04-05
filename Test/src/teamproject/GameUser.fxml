@@ -13,7 +13,7 @@
   <children>
     <Pane fx:id="paneLogin" prefHeight="755.0" prefWidth="1024.0">
       <children>
-        <Button id="btnLogOut" fx:id="btnLogOut" layoutX="849.0" layoutY="41.0" mnemonicParsing="false" onAction="#userLogout" prefHeight="43.0" prefWidth="116.0" styleClass="btn-style1, button1" text="Log Out">
+        <Button fx:id="btnLogOut" layoutX="849.0" layoutY="41.0" mnemonicParsing="false" onAction="#userLogout" prefHeight="43.0" prefWidth="116.0" styleClass="btn-style1, button1" text="Log Out">
           <stylesheets>
             <URL value="@style.css" />
           </stylesheets>
@@ -32,7 +32,7 @@
                   </Text>
                </children>
             </Pane>
-            <Text fill="#000e64" layoutX="647.0" layoutY="257.0" strokeType="OUTSIDE" strokeWidth="0.0" text="123">
+            <Text fx:id="roomName" fill="#000e64" layoutX="647.0" layoutY="257.0" strokeType="OUTSIDE" strokeWidth="0.0" text="123">
                <font>
                   <Font name="Myanmar Text Bold" size="48.0" />
                </font>

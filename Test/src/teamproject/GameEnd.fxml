@@ -21,7 +21,7 @@
                   <Font name="Myanmar Text Bold" size="24.0" />
                </font>
             </Text>
-            <Text fill="WHITE" layoutX="185.0" layoutY="424.0" strokeType="OUTSIDE" strokeWidth="0.0" text="100,000" wrappingWidth="689.5039159003645">
+            <Text fx:id="txtFinalScore" fill="WHITE" layoutX="185.0" layoutY="424.0" strokeType="OUTSIDE" strokeWidth="0.0" text="100,000" wrappingWidth="689.5039159003645">
                <font>
                   <Font name="Leelawadee UI Bold" size="180.0" />
                </font>
