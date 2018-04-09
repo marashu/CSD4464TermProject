@@ -13,6 +13,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
@@ -35,60 +36,82 @@ public class FXMLController implements Initializable {
      * Login variable
     **/
     @FXML
-    private TextField txtId, txtPassword;
-    private Button btnLogin, btnRegister, btnFindIdPw;
+    private static TextField txtId, txtPassword;
+    @FXML
+    private static Button btnLogin, btnRegister, btnFindIdPw;
     
     /**
      * Register variable
     **/
     @FXML
-    private TextField txtRegisterId, txtRegisterPassword, txtRegisterPasswordConfirm, textRegisterAnswer, txtRegisterEmail;
-    private ComboBox comboRegisterQuestion;
+    private static TextField txtRegisterId, txtRegisterPassword, txtRegisterPasswordConfirm, textRegisterAnswer, txtRegisterEmail;
+    @FXML
+    private static ComboBox comboRegisterQuestion;
     
     /**
      * Find Id & pw
     **/
     @FXML
-    private TextField txtEmailFind, txtHintAnswerFind;
-    private ComboBox comboHintFind;
+    private static TextField txtEmailFind, txtHintAnswerFind;
+    @FXML
+    private static ComboBox comboHintFind;
     
     /**
      * Game Lobby
      * button- btnLogOut, scrollpane - listUser can be used everywhere in Game play
     **/
     @FXML
-    private Button btnLogOut, btnLobbyCreateRoom, btnLobbyJoinRoom;
-    private Text txtStrongQuestion;
-    private BarChart graphMyStastics;
-    private ScrollPane listUser;
+    private static Button btnLogOut, btnLobbyCreateRoom, btnLobbyJoinRoom;
+    @FXML
+    private static Text txtStrongQuestion;
+    @FXML
+    private static BarChart graphMyStastics;
+    @FXML
+    private static ScrollPane listUser;
+    @FXML
+    private static Button btnPlayGame;
     
     /**
      * Game Host and User
     **/
     @FXML
-    private Button btnHostStartGame, btnHostExit, btnHostDropGame;
-    private Text roomName;
+    private static Button btnHostStartGame, btnHostExit, btnHostDropGame;
+    @FXML
+    private static Text roomName;
     
     /**
      * Game Play
     **/
     @FXML
-    private Button btnSubmitAnswer;
-    private Text txtQuestion, txtScore, txtTimer;
-    private RadioButton rdoAnswer1, rdoAnswer2, rdoAnswer3, rdoAnswer4;
+    private static Button btnSubmitAnswer;
+    @FXML 
+    private static Text txtScore, txtTimer, txtQuestion;
+    @FXML 
+    private static RadioButton rdoAnswer1, rdoAnswer2, rdoAnswer3, rdoAnswer4;
     
     /**
      * Game End
     **/
     @FXML
-    private Text txtFinalScore;
-    private Button replayHost, backToMain;
+    private static Text txtFinalScore;
+    @FXML
+    private static Button replayHost, backToMain;
+    
+    /**
+     * Managers
+     */
+    private GameManager gm;
     
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        //create the game manager
+        gm = new GameManager();
+        
+        //generate the questions list to reduce database calls
+        gm.GenerateQuestions();
         
     }    
     
@@ -114,6 +137,7 @@ public class FXMLController implements Initializable {
         root = FXMLLoader.load(getClass().getResource("Login.fxml"));
         TeamProject.getPrimaryStage().setScene(new Scene(root));
         TeamProject.getPrimaryStage().show();
+        
         System.out.println("Login.fxml opened");
     }
     
@@ -125,6 +149,9 @@ public class FXMLController implements Initializable {
         root = FXMLLoader.load(getClass().getResource("GameLobby.fxml"));
         TeamProject.getPrimaryStage().setScene(new Scene(root));
         TeamProject.getPrimaryStage().show();
+        
+        
+        //System.out.println(btnPlayGame.getText());
         System.out.println("GameLobby.fxml opened");
     }
     
@@ -205,19 +232,58 @@ public class FXMLController implements Initializable {
     */
     @FXML
     private void startGame(ActionEvent event) throws IOException {
+        //System.out.println((Node)event.getSource());
         root = FXMLLoader.load(getClass().getResource("GamePlay.fxml"));
         TeamProject.getPrimaryStage().setScene(new Scene(root));
-        TeamProject.getPrimaryStage().show();
         
-        // declare toggle button in Game Play page
-        ToggleGroup group = new ToggleGroup();
-        rdoAnswer1.setToggleGroup(group);
-        rdoAnswer2.setToggleGroup(group);
-        rdoAnswer3.setToggleGroup(group);
-        rdoAnswer4.setToggleGroup(group);
+        
+        //generate the list of questions for this set
+        gm.RandomizeQuestions();
+        
+        //if text fields do not exist, create them
+        
+        
+        //set the text
+        SetQuestionAndAnswers();
+        
+        
+        
         
         System.out.println("GamePlay.fxml opened");
         
+        //TODO: include a timer
+        //sample code can be found here:
+        //http://asgteach.com/2011/10/javafx-animation-and-binding-simple-countdown-timer-2/
+        
+        
+        TeamProject.getPrimaryStage().show();
+    }
+    
+    
+    
+    /**
+     * Function to update the text for questions and answers
+     */
+    private void SetQuestionAndAnswers()
+    {
+        //shuffle the answers
+        gm.GetCurrentQuestion().ShuffleAnswers();
+        
+        //the fxml isn't loading the elements for some reason, so pull them
+        //from the stage
+        Text txtQuest = (Text) TeamProject.getPrimaryStage().getScene().lookup("#txtQuestion");
+        RadioButton a1 = (RadioButton)TeamProject.getPrimaryStage().getScene().lookup("#rdoAnswer1");
+        RadioButton a2 = (RadioButton)TeamProject.getPrimaryStage().getScene().lookup("#rdoAnswer2");
+        RadioButton a3 = (RadioButton)TeamProject.getPrimaryStage().getScene().lookup("#rdoAnswer3");
+        RadioButton a4 = (RadioButton)TeamProject.getPrimaryStage().getScene().lookup("#rdoAnswer4");
+        
+        //set the text
+        txtQuest.setText(gm.GetCurrentQuestion().GetQuestion());
+        
+        a1.setText(gm.GetCurrentQuestion().GetAnswers().get(0).GetAnswer());
+        a2.setText(gm.GetCurrentQuestion().GetAnswers().get(1).GetAnswer());
+        a3.setText(gm.GetCurrentQuestion().GetAnswers().get(2).GetAnswer());
+        a4.setText(gm.GetCurrentQuestion().GetAnswers().get(3).GetAnswer());
         
     }
     
@@ -284,6 +350,18 @@ public class FXMLController implements Initializable {
         TeamProject.getPrimaryStage().setScene(new Scene(root));
         TeamProject.getPrimaryStage().show();
         System.out.println("GameHost.fxml opened");
+    }
+    
+    @FXML
+    private void resetMyTotalResult(ActionEvent event) throws IOException
+    {
+        
+    }
+    
+    @FXML
+    private void editUserProfile(ActionEvent event) throws IOException
+    {
+        
     }
           
 }
