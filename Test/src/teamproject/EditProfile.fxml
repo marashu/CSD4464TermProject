@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import java.net.URL?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" opacity="1.0" prefHeight="472.0" prefWidth="600.0" styleClass="mainFxmlClass, thebackground" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="teamproject.FXMLController">
+  <children>
+    <Pane fx:id="paneRegister" layoutX="0.0" layoutY="0.0" prefHeight="755.0" prefWidth="1024.0">
+      <children>
+        <Button fx:id="btnCancelEdit" layoutX="523.0" layoutY="615.0" mnemonicParsing="false" onAction="#backToMain" prefHeight="56.0" prefWidth="212.0" style="" styleClass="button2" text="Cancel">
+          <font>
+            <Font name="System Bold" size="12.0" fx:id="x1" />
+          </font>
+          <stylesheets>
+            <URL value="@style.css" />
+          </stylesheets>
+        </Button>
+        <Label fx:id="labelPassword" layoutX="291.0" layoutY="313.0" text="Password">
+          <textFill>
+            <Color blue="0.329" green="0.224" red="0.063" fx:id="x2" />
+          </textFill>
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+        </Label>
+        <Label fx:id="labelId" layoutX="291.0" layoutY="257.0" text="ID" textFill="$x2">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font></Label>
+        <Label fx:id="labelPwConfirm" layoutX="291.0" layoutY="360.0" text="Password Confirm" textFill="$x2">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font></Label>
+        <Button id="" fx:id="btnEditProfileConfirm" layoutX="289.0" layoutY="616.0" mnemonicParsing="false" onAction="#editUserProfileConfirm" prefHeight="56.0" prefWidth="218.0" styleClass="btn-style1, button1" text="Edit Profile">
+          <stylesheets>
+            <URL value="@style.css" />
+          </stylesheets>
+        </Button>
+        <Label fx:id="labelHintQuestion" layoutX="291.0" layoutY="413.0" text="Hint Question" textFill="$x2">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font></Label>
+        <Label fx:id="labelHintAnswer" layoutX="291.0" layoutY="469.0" text="Hint Answer" textFill="$x2">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font></Label>
+        <Label fx:id="labelEmail" layoutX="291.0" layoutY="525.0" text="Email" textFill="$x2">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font></Label>
+        <TextField fx:id="txtEditAnswer" layoutX="493.0" layoutY="457.0" prefHeight="43.0" prefWidth="240.0" />
+        <Label fx:id="txtEditInformation" layoutX="420.0" layoutY="190.0" text="Every textfield is required." textAlignment="CENTER" textFill="WHITE" />
+        <ComboBox fx:id="comboEditQuestion" layoutX="493.0" layoutY="401.0" prefHeight="43.0" prefWidth="240.0">
+          <items>
+            <FXCollections fx:factory="observableArrayList">
+              <String fx:value="Mother's first name" />
+              <String fx:value="Hometown name" />
+              <String fx:value="Middle School's name" />
+              <String fx:value="Your pet's name" />
+            </FXCollections>
+          </items>
+        </ComboBox>
+        <PasswordField fx:id="txtEditPassword" layoutX="493.0" layoutY="294.0" prefHeight="43.0" prefWidth="240.0" />
+        <PasswordField fx:id="txtEditPasswordConfirm" layoutX="493.0" layoutY="348.0" prefHeight="43.0" prefWidth="240.0" />
+        <TextField fx:id="txtEditEmail" layoutX="493.0" layoutY="513.0" prefHeight="43.0" prefWidth="240.0" />
+            <ImageView fitHeight="90.0" fitWidth="465.0" layoutX="286.0" layoutY="110.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@source/editProfile.png" />
+               </image>
+            </ImageView>
+            <Text fx:id="txtIdEdit" layoutX="493.0" layoutY="273.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label1" text="Id" wrappingWidth="126.9072265625">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+      </children>
+    </Pane>
+  </children>
+  <stylesheets>
+    <URL value="@style.css" />
+  </stylesheets>
+</AnchorPane>

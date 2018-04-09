@@ -3,7 +3,7 @@
 <?import java.net.URL?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -15,86 +15,70 @@
   <children>
     <Pane fx:id="paneLogin" prefHeight="755.0" prefWidth="1024.0">
       <children>
-            <Text fill="WHITE" layoutX="60.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome  Trivia Quiz Game" wrappingWidth="334.0">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-            </Text>
-            <Pane layoutX="60.0" layoutY="130.0" prefHeight="579.0" prefWidth="651.0" style="-fx-background-color: #ffffff;">
+            <Pane layoutX="60.0" layoutY="130.0" prefHeight="579.0" prefWidth="894.0" style="-fx-background-color: #ffffff;">
                <children>
                   <Text fill="#000e64" layoutX="37.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Question">
                      <font>
                         <Font name="Myanmar Text Bold" size="24.0" />
                      </font>
                   </Text>
-                  <Text fx:id="txtQuestion" fill="#8b8b8b" layoutX="40.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TextTextTextTextTextTeTextTextTextTextTextTeTextTextTextTextTextTeTextTextTextTextTextTeTextTextTextTextTextTe" wrappingWidth="571.453125">
+                  <Text fx:id="txtQuestion" fill="#8b8b8b" layoutX="40.0" layoutY="124.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TextTextTextTextTextTeTextTextTextTextTextTeTextTextTextTextTextTeTextTextTextTextTextTeTextTextTextTextTextTe" wrappingWidth="813.453125">
                      <font>
                         <Font size="30.0" />
                      </font>
                   </Text>
-                  <RadioButton fx:id="rdoAnswer1" layoutX="120.0" layoutY="332.0" mnemonicParsing="false" text="RadioButton">
+                  <RadioButton fx:id="rdoAnswer1" layoutX="256.0" layoutY="319.0" mnemonicParsing="false" text="RadioButton">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <toggleGroup>
+                        <ToggleGroup fx:id="quizAnswer" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="rdoAnswer2" layoutX="506.0" layoutY="319.0" mnemonicParsing="false" text="RadioButton" toggleGroup="$quizAnswer">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </RadioButton>
-                  <RadioButton fx:id="rdoAnswer2" layoutX="345.0" layoutY="332.0" mnemonicParsing="false" text="RadioButton">
+                  <RadioButton fx:id="rdoAnswer3" layoutX="256.0" layoutY="377.0" mnemonicParsing="false" text="RadioButton" toggleGroup="$quizAnswer">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </RadioButton>
-                  <RadioButton fx:id="rdoAnswer3" layoutX="120.0" layoutY="390.0" mnemonicParsing="false" text="RadioButton">
+                  <RadioButton fx:id="rdoAnswer4" layoutX="506.0" layoutY="377.0" mnemonicParsing="false" text="RadioButton" toggleGroup="$quizAnswer">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </RadioButton>
-                  <RadioButton fx:id="rdoAnswer4" layoutX="345.0" layoutY="390.0" mnemonicParsing="false" text="RadioButton">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </RadioButton>
-                  <ImageView fitHeight="67.0" fitWidth="571.0" layoutX="116.0" layoutY="246.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="67.0" fitWidth="571.0" layoutX="263.0" layoutY="234.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@source/line.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="btnSubmitAnswer" layoutX="176.0" layoutY="486.0" mnemonicParsing="false" onAction="#submitAnswer" prefHeight="56.0" prefWidth="297.0" styleClass="button2" stylesheets="@style.css" text="Submit Answer" />
+                  <Button fx:id="btnSubmitAnswer" layoutX="324.0" layoutY="464.0" mnemonicParsing="false" onAction="#submitAnswer" prefHeight="56.0" prefWidth="297.0" styleClass="button2" stylesheets="@style.css" text="Submit Answer" />
                </children>
             </Pane>
-            <Pane layoutX="740.0" layoutY="130.0" prefHeight="416.0" prefWidth="220.0" style="-fx-background-color: #ffffff;">
-               <children>
-                  <Text fill="#000e64" layoutX="64.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User Lists">
-                     <font>
-                        <Font name="Myanmar Text Bold" size="24.0" />
-                     </font>
-                  </Text>
-                  <ScrollPane layoutX="25.0" layoutY="81.0" prefHeight="313.0" prefWidth="174.0">
-                    <content>
-                      <AnchorPane fx:id="listUser" minHeight="0.0" minWidth="0.0" prefHeight="311.0" prefWidth="172.0" />
-                    </content>
-                  </ScrollPane>
-               </children>
-            </Pane>
-            <Text fill="WHITE" layoutX="811.0" layoutY="601.0" strokeType="OUTSIDE" strokeWidth="0.0" text="My Score">
+            <Text fill="WHITE" layoutX="60.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="My Score">
                <font>
                   <Font name="Myanmar Text Bold" size="24.0" />
                </font>
             </Text>
-            <Text fx:id="txtScore" fill="#000e64" layoutX="762.0" layoutY="677.0" strokeType="OUTSIDE" strokeWidth="0.0" text="100,000" wrappingWidth="202.50391590036452">
+            <Text fx:id="txtScore" fill="#000e64" layoutX="182.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="100,000" wrappingWidth="202.50391590036452">
                <font>
                   <Font name="Leelawadee UI Bold" size="50.0" />
                </font>
             </Text>
-            <Text fill="#9c0d0f" layoutX="796.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Timer : ">
+            <Text fill="#9c0d0f" layoutX="807.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Timer : ">
                <font>
                   <Font name="Myanmar Text Bold" size="24.0" />
                </font>
             </Text>
-            <ImageView fitHeight="46.0" fitWidth="42.0" layoutX="740.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="46.0" fitWidth="42.0" layoutX="751.0" layoutY="43.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@source/clock.png" />
                </image>
             </ImageView>
-            <Text fx:id="txtTimer" fill="#9c0d0f" layoutX="881.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="12:00">
+            <Text fx:id="txtTimer" fill="#9c0d0f" layoutX="892.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="12:00">
                <font>
                   <Font name="Myanmar Text Bold" size="24.0" />
                </font>
