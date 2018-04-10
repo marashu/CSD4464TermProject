@@ -9,11 +9,15 @@ package teamproject;
 import java.io.IOException;
 import javafx.fxml.Initializable;
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -48,35 +52,32 @@ public class FXMLController implements Initializable {
      * Login variable
     **/
     private static TextField txtId, txtPassword;
-    private static Button btnLogin, btnRegister, btnFindIdPw;
     
     /**
      * Register variable
     **/
-    private static TextField txtRegisterId, txtRegisterPassword, txtRegisterPasswordConfirm, textRegisterAnswer, txtRegisterEmail;
-    private static ComboBox comboRegisterQuestion;
+    private static TextField txtRegisterId, txtRegisterEmail;
+    private static PasswordField txtRegisterPassword, txtRegisterPasswordConfirm;
+    private static Text reg_notice_id, reg_notice_pw, reg_notice_pwc, reg_notice_email;
     
     /**
      * Find Id & pw
     **/
-    private static TextField txtEmailFind, txtHintAnswerFind;
-    private static ComboBox comboHintFind;
+    private static TextField txtEmailFind;
     
     /**
      * Game Lobby
      * button- btnLogOut, scrollpane - listUser can be used everywhere in Game play
     **/
-    private static Button btnLogOut, btnLobbyCreateRoom, btnLobbyJoinRoom;
     private static Text txtStrongQuestion;
     private static BarChart graphMyStastics;
-    private static ScrollPane listUser;
-    private static Button btnPlayGame;
     
     /**
-     * Game Host and User
+     * Game User-Edit
+     * button- btnLogOut, scrollpane - listUser can be used everywhere in Game play
     **/
-    private static Button btnHostStartGame, btnHostExit, btnHostDropGame;
-    private static Text roomName;
+    private static Text txtIdEdit, edit_notice_pw, edit_notice_pwc, edit_notice_email;
+    private static TextField txtEditPassword, txtEditPasswordConfirm, txtEditEmail;
     
     /**
      * Game Play
@@ -130,41 +131,29 @@ public class FXMLController implements Initializable {
                 //TextField
                 txtId = (TextField) TeamProject.getPrimaryStage().getScene().lookup("#txtId");
                 txtPassword = (TextField) TeamProject.getPrimaryStage().getScene().lookup("#txtPassword");
-                
-                //Button
-                btnLogin= (Button) TeamProject.getPrimaryStage().getScene().lookup("#btnLogin");
-                btnRegister= (Button) TeamProject.getPrimaryStage().getScene().lookup("#btnRegister");
-                btnFindIdPw= (Button) TeamProject.getPrimaryStage().getScene().lookup("#btnFindIdPw");
                 break;
             case REGISTER:
                 //TextField
                 txtRegisterId= (TextField) TeamProject.getPrimaryStage().getScene().lookup("#txtRegisterId");
-                txtRegisterPassword= (TextField) TeamProject.getPrimaryStage().getScene().lookup("#txtRegisterPassword");
-                txtRegisterPasswordConfirm= (TextField) TeamProject.getPrimaryStage().getScene().lookup("#txtRegisterPasswordConfirm");
-                textRegisterAnswer= (TextField) TeamProject.getPrimaryStage().getScene().lookup("#textRegisterAnswer");
                 txtRegisterEmail= (TextField) TeamProject.getPrimaryStage().getScene().lookup("#txtRegisterEmail");
-                //ComboBox
-                comboRegisterQuestion= (ComboBox) TeamProject.getPrimaryStage().getScene().lookup("#comboRegisterQuestion");
+                //PasswordField
+                txtRegisterPassword= (PasswordField) TeamProject.getPrimaryStage().getScene().lookup("#txtRegisterPassword");
+                txtRegisterPasswordConfirm= (PasswordField) TeamProject.getPrimaryStage().getScene().lookup("#txtRegisterPasswordConfirm");
+                //Text
+                reg_notice_id= (Text) TeamProject.getPrimaryStage().getScene().lookup("#reg_notice_id");
+                reg_notice_pw= (Text) TeamProject.getPrimaryStage().getScene().lookup("#reg_notice_pw");
+                reg_notice_pwc= (Text) TeamProject.getPrimaryStage().getScene().lookup("#reg_notice_pwc");
+                reg_notice_email= (Text) TeamProject.getPrimaryStage().getScene().lookup("#reg_notice_email");
                 break;
             case FORGOT_PASSWORD:
                 //TextField
                 txtEmailFind= (TextField) TeamProject.getPrimaryStage().getScene().lookup("#txtEmailFind");
-                txtHintAnswerFind= (TextField) TeamProject.getPrimaryStage().getScene().lookup("#txtHintAnswerFind");
-                //ComboBox
-                comboHintFind= (ComboBox) TeamProject.getPrimaryStage().getScene().lookup("#comboHintFind");
                 break;
             case READY:
-                //Button
-                btnLogOut= (Button) TeamProject.getPrimaryStage().getScene().lookup("#btnLogOut"); 
-                btnLobbyCreateRoom= (Button) TeamProject.getPrimaryStage().getScene().lookup("#btnLobbyCreateRoom");
-                btnLobbyJoinRoom= (Button) TeamProject.getPrimaryStage().getScene().lookup("#btnLobbyJoinRoom");
-                btnPlayGame= (Button) TeamProject.getPrimaryStage().getScene().lookup("#btnPlayGame");
                 //Text
                 txtStrongQuestion= (Text) TeamProject.getPrimaryStage().getScene().lookup("#txtStrongQuestion");
                 //BarChart
                 graphMyStastics= (BarChart) TeamProject.getPrimaryStage().getScene().lookup("#graphMyStastics");
-                //ScrollPane
-                listUser= (ScrollPane) TeamProject.getPrimaryStage().getScene().lookup("#listUser");
                 break;
             case PLAY:
                 //Button
@@ -185,6 +174,17 @@ public class FXMLController implements Initializable {
                 //Button
                 replayHost= (Button) TeamProject.getPrimaryStage().getScene().lookup("#replayHost");
                 backToMain= (Button) TeamProject.getPrimaryStage().getScene().lookup("#backToMain");
+                break;
+            case EDIT:
+                //Text
+                txtIdEdit = (Text) TeamProject.getPrimaryStage().getScene().lookup("#txtIdEdit");
+                edit_notice_pw = (Text) TeamProject.getPrimaryStage().getScene().lookup("#edit_notice_pw");
+                edit_notice_pwc = (Text) TeamProject.getPrimaryStage().getScene().lookup("#edit_notice_pwc");
+                edit_notice_email = (Text) TeamProject.getPrimaryStage().getScene().lookup("#edit_notice_email");
+                //TextField
+                txtEditPassword = (TextField) TeamProject.getPrimaryStage().getScene().lookup("#txtEditPassword");
+                txtEditPasswordConfirm = (TextField) TeamProject.getPrimaryStage().getScene().lookup("#txtEditPasswordConfirm");
+                txtEditEmail = (TextField) TeamProject.getPrimaryStage().getScene().lookup("#txtEditEmail");
                 break;
             default:
                 break;
@@ -383,6 +383,8 @@ public class FXMLController implements Initializable {
      * 
      * This section is functions to be maintained by Aeri
      */
+ 
+    
     
     /*
     * button for going to register page
@@ -396,8 +398,6 @@ public class FXMLController implements Initializable {
         SetScreenResources();
         System.out.println("Register.fxml opened");
     }
-    
-    
     
     /*
     * button for going to Login page
@@ -417,14 +417,35 @@ public class FXMLController implements Initializable {
     */
     @FXML
     private void openLogin(ActionEvent event) throws IOException {
-        currentScreen = ScreenType.READY;
-        root = FXMLLoader.load(getClass().getResource("GameLobby.fxml"));
-        TeamProject.getPrimaryStage().setScene(new Scene(root));
-        TeamProject.getPrimaryStage().show();
-        SetScreenResources();
+        String id = txtId.getText();
+        String pw = txtPassword.getText();
+        Alert alert = new Alert(AlertType.INFORMATION);
         
-        System.out.println(btnPlayGame.getText());
-        System.out.println("GameLobby.fxml opened");
+        try{
+            DBManager db = new DBManager();
+            boolean checkLogin = db.loginPlayer(id, pw);
+            
+            if(id.equals("") || pw.equals("")){
+                alert.setTitle("Login Failed");
+                alert.setContentText("Please check your ID and password");
+                alert.showAndWait();
+            }else{
+                if(checkLogin){
+                    currentScreen = ScreenType.READY;
+                    root = FXMLLoader.load(getClass().getResource("GameLobby.fxml"));
+                    TeamProject.getPrimaryStage().setScene(new Scene(root));
+                    TeamProject.getPrimaryStage().show();
+                    SetScreenResources();
+                    System.out.println("GameLobby.fxml opened");
+                }else{
+                    alert.setTitle("Login Failed");
+                    alert.setContentText("Please check your ID and password");
+                    alert.showAndWait();
+                }
+            }
+        }catch(SQLException ex){
+            System.out.println(ex.getMessage());
+        }
     }
     
     /*
@@ -444,47 +465,160 @@ public class FXMLController implements Initializable {
     * button for creating user account
     */
     @FXML
-    private void creatAccount(ActionEvent event) throws IOException {
-        currentScreen = ScreenType.LOGIN;
-        root = FXMLLoader.load(getClass().getResource("Login.fxml"));
-        TeamProject.getPrimaryStage().setScene(new Scene(root));
-        TeamProject.getPrimaryStage().show();
-        SetScreenResources();
+    private void creatAccount(ActionEvent event) throws IOException{
+        String id = txtRegisterId.getText();
+        String pw = txtRegisterPassword.getText();
+        String pwc = txtRegisterPasswordConfirm.getText();
+        String email = txtRegisterEmail.getText();
+        boolean checkID = checkID(id);
+        boolean checkPW = checkPW(pw);
+        boolean checkPWC = checkPWC(pwc, pw);
+        boolean checkEmail = checkEmail(email);
         
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("Create Account");
-        alert.setContentText("User Account is created");
-        alert.showAndWait();
+        try{
+            if(checkID && checkPW & checkPWC && checkEmail){
+                DBManager db = new DBManager();
+                db.submitPlayer(id, pw, email);
+                
+                currentScreen = ScreenType.LOGIN;
+                root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+                TeamProject.getPrimaryStage().setScene(new Scene(root));
+                TeamProject.getPrimaryStage().show();
+                SetScreenResources();
+
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Create Account");
+                alert.setContentText("User Account is created");
+                alert.showAndWait();
+
+                System.out.println("Login.fxml opened");
+            }
+        }catch(SQLException ex){
+            System.err.println(ex.getMessage());
+        }
+    }
+    public boolean checkID(String id){
+        boolean status = false;
+        if(id.equals("")){
+            reg_notice_id.setText("This field is required.");
+            status = false;
+        }else{
+            char[] idArray = id.toCharArray();
+            if(idArray.length < 5 || idArray.length > 8){
+                reg_notice_id.setText("Length of ID should be between 5 and 8");
+                status = false;
+            }else{
+                reg_notice_id.setText("");
+                status = true;
+            }
+        }
+        return status;
+    }
+    public boolean checkPW(String pw){
+        boolean status = false;
+        if(pw.equals("")){
+            reg_notice_pw.setText("This field is required.");
+            status = false;
+        }else{
+            char[] pwArray = pw.toCharArray();
+            if(pwArray.length < 5){
+                reg_notice_pw.setText("Password is weak");
+                status = false;
+            }else{
+                reg_notice_pw.setText("");
+                status = true;
+            }
+        }
+        return status;
+    }
+    public boolean checkPWC(String pwc, String pw){
+        boolean status = false;
+        if(pwc.equals("")){
+            reg_notice_pwc.setText("This field is required.");
+            status = false;
+        }else{
+            if(!pwc.equals(pw)){
+                reg_notice_pwc.setText("This is not mached to Password.");
+                status = false;
+            }else{
+                reg_notice_pwc.setText("");
+                status = true;
+            }
+        }
+        return status;
+    }
+    public boolean checkEmail(String email){
+        boolean status = false;
+        String regex =  "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+        Pattern pattern = Pattern.compile(regex);
         
-        System.out.println("Login.fxml opened");
+        if(email.equals("")){
+            reg_notice_email.setText("This field is required.");
+            status = false;
+        }else{
+            Matcher matcher  = pattern.matcher(email);
+            if(!matcher.matches()){
+                reg_notice_email.setText("This is not email format.");
+                status= false;
+            }else{
+                reg_notice_email.setText("");
+                status= true;
+            } 
+        }
+        return status;
     }
     
     /*
     * button for reseting user Account 
     */
     @FXML
-    private void resetAccount(ActionEvent event) throws IOException {
-        currentScreen = ScreenType.LOGIN;
-        root = FXMLLoader.load(getClass().getResource("Login.fxml"));
-        TeamProject.getPrimaryStage().setScene(new Scene(root));
-        TeamProject.getPrimaryStage().show();
-        SetScreenResources();
-        System.out.println("Login.fxml opened");
+    private void findAccount(ActionEvent event) throws IOException{
+        
+        String email = txtEmailFind.getText();
+        String findId = "";
+        String findPw = "";
+        
+        try{
+            DBManager db = new DBManager();
+            boolean checkAccount = db.findIdPw(email);
+            if(checkAccount){
+                findId = db.getFindId();
+                findPw = db.getFindPw();
+                Alert alert = new Alert(AlertType.CONFIRMATION);
+                alert.setTitle("Login Information");
+                alert.setContentText("ID : " + findId + "\n" + "Password: " + findPw + "\n\n" +
+                        "Would you like to login?");
+                
+                Optional<ButtonType> result = alert.showAndWait();
+                if(result.get() == ButtonType.OK){
+                    currentScreen = ScreenType.LOGIN;
+                    root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+                    TeamProject.getPrimaryStage().setScene(new Scene(root));
+                    TeamProject.getPrimaryStage().show();
+                    SetScreenResources();
+                    System.out.println("Login.fxml opened");
+                }
+            }else{
+                Alert alert = new Alert(AlertType.CONFIRMATION);
+                alert.setTitle("Login Information");
+                alert.setContentText("Can't find user information\nWill you find again?");
+                
+                Optional<ButtonType> result = alert.showAndWait();
+                if(result.get() == ButtonType.CANCEL){
+                    currentScreen = ScreenType.LOGIN;
+                    root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+                    TeamProject.getPrimaryStage().setScene(new Scene(root));
+                    TeamProject.getPrimaryStage().show();
+                    SetScreenResources();
+                    System.out.println("Login.fxml opened");
+                }
+            }
+        }catch(SQLException ex){
+            System.out.println(ex.getMessage());            
+        }
     }
-    
-    /*
-    * button for creating room 
-    */
-    @FXML
-    private void createRoom(ActionEvent event) throws IOException {
-        currentScreen = ScreenType.READY;
-        root = FXMLLoader.load(getClass().getResource("GameLobby.fxml"));
-        TeamProject.getPrimaryStage().setScene(new Scene(root));
-        TeamProject.getPrimaryStage().show();
-        SetScreenResources();
-        System.out.println("GameLobby.fxml opened");
-    }
-    
+
     /*
     * button for entering game as user
     */
@@ -511,8 +645,6 @@ public class FXMLController implements Initializable {
         System.out.println("Login.fxml opened");
     }
     
-    
-    
     /*
     * button for going back to main
     */
@@ -526,18 +658,20 @@ public class FXMLController implements Initializable {
         System.out.println("GameLobby.fxml opened");
     }
     
-    
-    
     @FXML
     private void resetMyTotalResult(ActionEvent event) throws IOException
     {
-        
+        //reset user score
     }
     
     @FXML
     private void editUserProfile(ActionEvent event) throws IOException
     {
-        
+        currentScreen = ScreenType.EDIT;
+        root = FXMLLoader.load(getClass().getResource("EditProfile.fxml"));
+        TeamProject.getPrimaryStage().setScene(new Scene(root));
+        TeamProject.getPrimaryStage().show();
+        SetScreenResources();
+        System.out.println("EditProfile.fxml opened");
     }
-          
 }
