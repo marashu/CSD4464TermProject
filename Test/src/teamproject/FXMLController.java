@@ -32,69 +32,55 @@ import javafx.stage.Stage;
 public class FXMLController implements Initializable {
     private Parent root;
     
+    //track what screen we are on
+    private enum ScreenType{LOGIN, REGISTER,FORGOT_PASSWORD,READY,PLAY,RESULTS, EDIT};
+    private static ScreenType currentScreen = ScreenType.LOGIN;
+    
     /**
      * Login variable
     **/
-    @FXML
     private static TextField txtId, txtPassword;
-    @FXML
     private static Button btnLogin, btnRegister, btnFindIdPw;
     
     /**
      * Register variable
     **/
-    @FXML
     private static TextField txtRegisterId, txtRegisterPassword, txtRegisterPasswordConfirm, textRegisterAnswer, txtRegisterEmail;
-    @FXML
     private static ComboBox comboRegisterQuestion;
     
     /**
      * Find Id & pw
     **/
-    @FXML
     private static TextField txtEmailFind, txtHintAnswerFind;
-    @FXML
     private static ComboBox comboHintFind;
     
     /**
      * Game Lobby
      * button- btnLogOut, scrollpane - listUser can be used everywhere in Game play
     **/
-    @FXML
     private static Button btnLogOut, btnLobbyCreateRoom, btnLobbyJoinRoom;
-    @FXML
     private static Text txtStrongQuestion;
-    @FXML
     private static BarChart graphMyStastics;
-    @FXML
     private static ScrollPane listUser;
-    @FXML
     private static Button btnPlayGame;
     
     /**
      * Game Host and User
     **/
-    @FXML
     private static Button btnHostStartGame, btnHostExit, btnHostDropGame;
-    @FXML
     private static Text roomName;
     
     /**
      * Game Play
     **/
-    @FXML
     private static Button btnSubmitAnswer;
-    @FXML 
     private static Text txtScore, txtTimer, txtQuestion;
-    @FXML 
     private static RadioButton rdoAnswer1, rdoAnswer2, rdoAnswer3, rdoAnswer4;
     
     /**
      * Game End
     **/
-    @FXML
     private static Text txtFinalScore;
-    @FXML
     private static Button replayHost, backToMain;
     
     /**
@@ -113,17 +99,90 @@ public class FXMLController implements Initializable {
         //generate the questions list to reduce database calls
         gm.GenerateQuestions();
         
+        
+        
     }    
+    
+    public static void SetScreenResources()
+    {
+        //get resources based on the current screen
+        switch(currentScreen)
+        {
+            case LOGIN:
+                //TextField
+                txtId = (TextField) TeamProject.getPrimaryStage().getScene().lookup("#txtId");
+                txtPassword = (TextField) TeamProject.getPrimaryStage().getScene().lookup("#txtPassword");
+                
+                //Button
+                btnLogin= (Button) TeamProject.getPrimaryStage().getScene().lookup("#btnLogin");
+                btnRegister= (Button) TeamProject.getPrimaryStage().getScene().lookup("#btnRegister");
+                btnFindIdPw= (Button) TeamProject.getPrimaryStage().getScene().lookup("#btnFindIdPw");
+                break;
+            case REGISTER:
+                //TextField
+                txtRegisterId= (TextField) TeamProject.getPrimaryStage().getScene().lookup("#txtRegisterId");
+                txtRegisterPassword= (TextField) TeamProject.getPrimaryStage().getScene().lookup("#txtRegisterPassword");
+                txtRegisterPasswordConfirm= (TextField) TeamProject.getPrimaryStage().getScene().lookup("#txtRegisterPasswordConfirm");
+                textRegisterAnswer= (TextField) TeamProject.getPrimaryStage().getScene().lookup("#textRegisterAnswer");
+                txtRegisterEmail= (TextField) TeamProject.getPrimaryStage().getScene().lookup("#txtRegisterEmail");
+                //ComboBox
+                comboRegisterQuestion= (ComboBox) TeamProject.getPrimaryStage().getScene().lookup("#comboRegisterQuestion");
+                break;
+            case FORGOT_PASSWORD:
+                //TextField
+                txtEmailFind= (TextField) TeamProject.getPrimaryStage().getScene().lookup("#txtEmailFind");
+                txtHintAnswerFind= (TextField) TeamProject.getPrimaryStage().getScene().lookup("#txtHintAnswerFind");
+                //ComboBox
+                comboHintFind= (ComboBox) TeamProject.getPrimaryStage().getScene().lookup("#comboHintFind");
+                break;
+            case READY:
+                //Button
+                btnLogOut= (Button) TeamProject.getPrimaryStage().getScene().lookup("#btnLogOut"); 
+                btnLobbyCreateRoom= (Button) TeamProject.getPrimaryStage().getScene().lookup("#btnLobbyCreateRoom");
+                btnLobbyJoinRoom= (Button) TeamProject.getPrimaryStage().getScene().lookup("#btnLobbyJoinRoom");
+                btnPlayGame= (Button) TeamProject.getPrimaryStage().getScene().lookup("#btnPlayGame");
+                //Text
+                txtStrongQuestion= (Text) TeamProject.getPrimaryStage().getScene().lookup("#txtStrongQuestion");
+                //BarChart
+                graphMyStastics= (BarChart) TeamProject.getPrimaryStage().getScene().lookup("#graphMyStastics");
+                //ScrollPane
+                listUser= (ScrollPane) TeamProject.getPrimaryStage().getScene().lookup("#listUser");
+                break;
+            case PLAY:
+                //Button
+                btnSubmitAnswer= (Button) TeamProject.getPrimaryStage().getScene().lookup("#btnSubmitAnswer");
+                //Text
+                txtScore= (Text) TeamProject.getPrimaryStage().getScene().lookup("#txtScore");
+                txtTimer= (Text) TeamProject.getPrimaryStage().getScene().lookup("#txtTimer");
+                txtQuestion= (Text) TeamProject.getPrimaryStage().getScene().lookup("#txtQuestion");
+                //RadioButton
+                rdoAnswer1= (RadioButton) TeamProject.getPrimaryStage().getScene().lookup("#rdoAnswer1");
+                rdoAnswer2= (RadioButton) TeamProject.getPrimaryStage().getScene().lookup("#rdoAnswer2");
+                rdoAnswer3= (RadioButton) TeamProject.getPrimaryStage().getScene().lookup("#rdoAnswer3");
+                rdoAnswer4= (RadioButton) TeamProject.getPrimaryStage().getScene().lookup("#rdoAnswer4");
+                break;
+            case RESULTS:
+                //Text
+                txtFinalScore= (Text) TeamProject.getPrimaryStage().getScene().lookup("#txtFinalScore");
+                //Button
+                replayHost= (Button) TeamProject.getPrimaryStage().getScene().lookup("#replayHost");
+                backToMain= (Button) TeamProject.getPrimaryStage().getScene().lookup("#backToMain");
+                break;
+            default:
+                break;
+        }
+    }
     
     /*
     * button for going to register page
     */
     @FXML
     private void openRegister(ActionEvent event) throws IOException  {
+        currentScreen = ScreenType.REGISTER;
         root = FXMLLoader.load(getClass().getResource("Register.fxml"));        
         TeamProject.getPrimaryStage().setScene(new Scene(root));
         TeamProject.getPrimaryStage().show();
-
+        SetScreenResources();
         System.out.println("Register.fxml opened");
     }
     
@@ -134,10 +193,11 @@ public class FXMLController implements Initializable {
     */
     @FXML
     private void goToLogin(ActionEvent event) throws IOException {
+        currentScreen = ScreenType.LOGIN;
         root = FXMLLoader.load(getClass().getResource("Login.fxml"));
         TeamProject.getPrimaryStage().setScene(new Scene(root));
         TeamProject.getPrimaryStage().show();
-        
+        SetScreenResources();
         System.out.println("Login.fxml opened");
     }
     
@@ -146,12 +206,13 @@ public class FXMLController implements Initializable {
     */
     @FXML
     private void openLogin(ActionEvent event) throws IOException {
+        currentScreen = ScreenType.READY;
         root = FXMLLoader.load(getClass().getResource("GameLobby.fxml"));
         TeamProject.getPrimaryStage().setScene(new Scene(root));
         TeamProject.getPrimaryStage().show();
+        SetScreenResources();
         
-        
-        //System.out.println(btnPlayGame.getText());
+        System.out.println(btnPlayGame.getText());
         System.out.println("GameLobby.fxml opened");
     }
     
@@ -160,9 +221,11 @@ public class FXMLController implements Initializable {
     */
     @FXML
     private void openFindIdPw(ActionEvent event) throws IOException {
+        currentScreen = ScreenType.FORGOT_PASSWORD;
         root = FXMLLoader.load(getClass().getResource("FindIdPassword.fxml"));
         TeamProject.getPrimaryStage().setScene(new Scene(root));
         TeamProject.getPrimaryStage().show();
+        SetScreenResources();
         System.out.println("FindIdPassword.fxml opened");
     }
     
@@ -171,9 +234,11 @@ public class FXMLController implements Initializable {
     */
     @FXML
     private void creatAccount(ActionEvent event) throws IOException {
+        currentScreen = ScreenType.LOGIN;
         root = FXMLLoader.load(getClass().getResource("Login.fxml"));
         TeamProject.getPrimaryStage().setScene(new Scene(root));
         TeamProject.getPrimaryStage().show();
+        SetScreenResources();
         
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Create Account");
@@ -188,9 +253,11 @@ public class FXMLController implements Initializable {
     */
     @FXML
     private void resetAccount(ActionEvent event) throws IOException {
+        currentScreen = ScreenType.LOGIN;
         root = FXMLLoader.load(getClass().getResource("Login.fxml"));
         TeamProject.getPrimaryStage().setScene(new Scene(root));
         TeamProject.getPrimaryStage().show();
+        SetScreenResources();
         System.out.println("Login.fxml opened");
     }
     
@@ -199,9 +266,11 @@ public class FXMLController implements Initializable {
     */
     @FXML
     private void createRoom(ActionEvent event) throws IOException {
+        currentScreen = ScreenType.READY;
         root = FXMLLoader.load(getClass().getResource("GameHost.fxml"));
         TeamProject.getPrimaryStage().setScene(new Scene(root));
         TeamProject.getPrimaryStage().show();
+        SetScreenResources();
         System.out.println("GameHost.fxml opened");
     }
     
@@ -210,9 +279,11 @@ public class FXMLController implements Initializable {
     */
     @FXML
     private void loginAsUser(ActionEvent event) throws IOException {
+        currentScreen = ScreenType.READY;
         root = FXMLLoader.load(getClass().getResource("GameUser.fxml"));
         TeamProject.getPrimaryStage().setScene(new Scene(root));
         TeamProject.getPrimaryStage().show();
+        SetScreenResources();
         System.out.println("GameUser.fxml opened");
     }
     
@@ -221,9 +292,11 @@ public class FXMLController implements Initializable {
     */
     @FXML
     private void userLogout(ActionEvent event) throws IOException {
+        currentScreen = ScreenType.LOGIN;
         root = FXMLLoader.load(getClass().getResource("Login.fxml"));
         TeamProject.getPrimaryStage().setScene(new Scene(root));
         TeamProject.getPrimaryStage().show();
+        SetScreenResources();
         System.out.println("Login.fxml opened");
     }
     
@@ -233,9 +306,10 @@ public class FXMLController implements Initializable {
     @FXML
     private void startGame(ActionEvent event) throws IOException {
         //System.out.println((Node)event.getSource());
+        currentScreen = ScreenType.PLAY;
         root = FXMLLoader.load(getClass().getResource("GamePlay.fxml"));
         TeamProject.getPrimaryStage().setScene(new Scene(root));
-        
+        SetScreenResources();
         
         //generate the list of questions for this set
         gm.RandomizeQuestions();
@@ -292,9 +366,11 @@ public class FXMLController implements Initializable {
     */
     @FXML
     private void exitGame(ActionEvent event) throws IOException {
+        currentScreen = ScreenType.READY;
         root = FXMLLoader.load(getClass().getResource("GameLobby.fxml"));
         TeamProject.getPrimaryStage().setScene(new Scene(root));
         TeamProject.getPrimaryStage().show();
+        SetScreenResources();
         System.out.println("GameLobby.fxml opened");
     }
     
@@ -303,9 +379,11 @@ public class FXMLController implements Initializable {
     */
     @FXML
     private void dropGame(ActionEvent event) throws IOException {
+        currentScreen = ScreenType.READY;
         root = FXMLLoader.load(getClass().getResource("GameLobby.fxml"));
         TeamProject.getPrimaryStage().setScene(new Scene(root));
         TeamProject.getPrimaryStage().show();
+        SetScreenResources();
         
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setContentText("This room is dropped");
@@ -324,9 +402,11 @@ public class FXMLController implements Initializable {
     */
     @FXML
     private void backToMain(ActionEvent event) throws IOException {
+        currentScreen = ScreenType.READY;
         root = FXMLLoader.load(getClass().getResource("GameLobby.fxml"));
         TeamProject.getPrimaryStage().setScene(new Scene(root));
         TeamProject.getPrimaryStage().show();
+        SetScreenResources();
         System.out.println("GameLobby.fxml opened");
     }
     
@@ -335,9 +415,11 @@ public class FXMLController implements Initializable {
     */
     @FXML
     private void replayUser(ActionEvent event) throws IOException {
+        currentScreen = ScreenType.READY;
         root = FXMLLoader.load(getClass().getResource("GameUser.fxml"));
         TeamProject.getPrimaryStage().setScene(new Scene(root));
         TeamProject.getPrimaryStage().show();
+        SetScreenResources();
         System.out.println("GameUser.fxml opened");
     }
     
@@ -346,9 +428,11 @@ public class FXMLController implements Initializable {
     */
     @FXML
     private void replayHost(ActionEvent event) throws IOException {
+        currentScreen = ScreenType.READY;
         root = FXMLLoader.load(getClass().getResource("GameHost.fxml"));
         TeamProject.getPrimaryStage().setScene(new Scene(root));
         TeamProject.getPrimaryStage().show();
+        SetScreenResources();
         System.out.println("GameHost.fxml opened");
     }
     

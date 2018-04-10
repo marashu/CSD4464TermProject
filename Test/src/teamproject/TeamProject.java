@@ -33,7 +33,7 @@ public class TeamProject extends Application {
         primaryStage.setTitle("Trivia Game");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
-
+        FXMLController.SetScreenResources();
        
     }
 
