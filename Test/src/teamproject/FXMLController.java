@@ -343,21 +343,13 @@ public class FXMLController implements Initializable {
         //shuffle the answers
         gm.GetCurrentQuestion().ShuffleAnswers();
         
-        //the fxml isn't loading the elements for some reason, so pull them
-        //from the stage
-        Text txtQuest = (Text) TeamProject.getPrimaryStage().getScene().lookup("#txtQuestion");
-        RadioButton a1 = (RadioButton)TeamProject.getPrimaryStage().getScene().lookup("#rdoAnswer1");
-        RadioButton a2 = (RadioButton)TeamProject.getPrimaryStage().getScene().lookup("#rdoAnswer2");
-        RadioButton a3 = (RadioButton)TeamProject.getPrimaryStage().getScene().lookup("#rdoAnswer3");
-        RadioButton a4 = (RadioButton)TeamProject.getPrimaryStage().getScene().lookup("#rdoAnswer4");
-        
         //set the text
-        txtQuest.setText(gm.GetCurrentQuestion().GetQuestion());
+        txtQuestion.setText(gm.GetCurrentQuestion().GetQuestion());
         
-        a1.setText(gm.GetCurrentQuestion().GetAnswers().get(0).GetAnswer());
-        a2.setText(gm.GetCurrentQuestion().GetAnswers().get(1).GetAnswer());
-        a3.setText(gm.GetCurrentQuestion().GetAnswers().get(2).GetAnswer());
-        a4.setText(gm.GetCurrentQuestion().GetAnswers().get(3).GetAnswer());
+        rdoAnswer1.setText(gm.GetCurrentQuestion().GetAnswers().get(0).GetAnswer());
+        rdoAnswer2.setText(gm.GetCurrentQuestion().GetAnswers().get(1).GetAnswer());
+        rdoAnswer3.setText(gm.GetCurrentQuestion().GetAnswers().get(2).GetAnswer());
+        rdoAnswer4.setText(gm.GetCurrentQuestion().GetAnswers().get(3).GetAnswer());
         
     }
     
