@@ -10,6 +10,13 @@ import java.io.IOException;
 import javafx.fxml.Initializable;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,6 +29,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 /**
  * FXML Controller class
@@ -89,6 +97,13 @@ public class FXMLController implements Initializable {
     private GameManager gm;
     
     /**
+     * time variables
+     */
+    private static Timeline timeline;
+    private static final int MAXTIME = 5;
+    private static int iSeconds;
+    
+    /**
      * Initializes the controller class.
      */
     @Override
@@ -100,9 +115,12 @@ public class FXMLController implements Initializable {
         gm.GenerateQuestions();
         
         
-        
     }    
-    
+    /**
+     * THIS REGION CONTAINS THE CONTROLLER FUNCTIONS THAT MICHAEL HAS BEEN WORKING ON
+     * (I may work on other functions and others may work on these, but these functions
+     * are largely maintained by Michael)
+     */
     public static void SetScreenResources()
     {
         //get resources based on the current screen
@@ -172,6 +190,199 @@ public class FXMLController implements Initializable {
                 break;
         }
     }
+    
+    /*
+    * button for starting game
+    */
+    @FXML
+    private void startGame(ActionEvent event) throws IOException {
+        //System.out.println((Node)event.getSource());
+        currentScreen = ScreenType.PLAY;
+        root = FXMLLoader.load(getClass().getResource("GamePlay.fxml"));
+        TeamProject.getPrimaryStage().setScene(new Scene(root));
+        SetScreenResources();
+        
+        //generate the list of questions for this set
+        gm.RandomizeQuestions();
+        
+        //reset the score
+        gm.ResetScore();
+        txtScore.setText(Integer.toString(gm.GetScore()));
+        
+        //set the text
+        SetQuestionAndAnswers();
+        
+        //Start the timer
+        iSeconds = MAXTIME;
+        StartTimer();
+        txtTimer.setText(Integer.toString(iSeconds));
+        
+        System.out.println("GamePlay.fxml opened");
+        
+        //TODO: include a timer
+        //sample code can be found here:
+        //http://asgteach.com/2011/10/javafx-animation-and-binding-simple-countdown-timer-2/
+        
+        
+        TeamProject.getPrimaryStage().show();
+    }
+    
+    private void StartTimer()
+    {
+        if(timeline != null)
+            timeline.stop();
+        iSeconds = MAXTIME;
+        txtTimer.setText(Integer.toString(iSeconds));
+        timeline = new Timeline(new KeyFrame(Duration.seconds(1), ev -> {
+            txtTimer.setText(Integer.toString(--iSeconds));
+            if(iSeconds <= 0)
+                try {
+                    GoToNextQuestion();
+                } catch (IOException ex) {
+                    Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+        }));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
+    }
+    
+    /**
+     * Function to update the text for questions and answers
+     */
+    private void SetQuestionAndAnswers()
+    {
+        //shuffle the answers
+        gm.GetCurrentQuestion().ShuffleAnswers();
+        
+        //set the text
+        txtQuestion.setText(gm.GetCurrentQuestion().GetQuestion());
+        
+        rdoAnswer1.setText(gm.GetCurrentQuestion().GetAnswers().get(0).GetAnswer());
+        rdoAnswer2.setText(gm.GetCurrentQuestion().GetAnswers().get(1).GetAnswer());
+        rdoAnswer3.setText(gm.GetCurrentQuestion().GetAnswers().get(2).GetAnswer());
+        rdoAnswer4.setText(gm.GetCurrentQuestion().GetAnswers().get(3).GetAnswer());
+        
+        
+    }
+    
+    /*
+    * button for exit game
+    */
+    @FXML
+    private void exitGame(ActionEvent event) throws IOException {
+        currentScreen = ScreenType.READY;
+        root = FXMLLoader.load(getClass().getResource("GameLobby.fxml"));
+        TeamProject.getPrimaryStage().setScene(new Scene(root));
+        TeamProject.getPrimaryStage().show();
+        SetScreenResources();
+        System.out.println("GameLobby.fxml opened");
+    }
+    
+    
+    
+    @FXML
+    private void submitAnswer(ActionEvent event) throws IOException{
+//        this is the button for submit quiz answer
+        //first, check the submitted answer
+        //if none of the answers are selected, this button does nothing.
+        int iAnswer;
+        //Also deselect the button for the next question
+        if(rdoAnswer1.isSelected())
+        {
+            iAnswer = 0;
+            rdoAnswer1.setSelected(false);
+        }
+        else if(rdoAnswer2.isSelected())
+        {
+            iAnswer = 1;
+            rdoAnswer2.setSelected(false);
+        }
+        else if(rdoAnswer3.isSelected())
+        {
+            iAnswer = 2;
+            rdoAnswer3.setSelected(false);
+        }
+        else if(rdoAnswer4.isSelected())
+        {
+            iAnswer = 3;
+            rdoAnswer4.setSelected(false);
+        }
+        else
+            return;
+        
+        //Now check the answer
+        gm.CheckAnswer(iAnswer);
+        
+        
+        
+        //Go to the next question
+        GoToNextQuestion();
+    }
+    
+    private void GoToNextQuestion() throws IOException
+    {
+        //Increment the question and find out if there are any more questions
+        gm.IncrementQuestion();
+        if(gm.GetNumQuestionsRemaining() > 0)
+        {
+            iSeconds = MAXTIME;
+            txtScore.setText(Integer.toString(gm.GetScore()));
+            SetQuestionAndAnswers();
+            //reset the timer
+            //timer = new Timer();
+            StartTimer();
+        }
+        else
+        {
+            timeline.stop();
+            //if no more questions, go to the results screen
+            currentScreen = ScreenType.RESULTS;
+            root = FXMLLoader.load(getClass().getResource("GameEnd.fxml"));
+            TeamProject.getPrimaryStage().setScene(new Scene(root));
+            TeamProject.getPrimaryStage().show();
+            SetScreenResources();
+            //update the score
+            txtFinalScore.setText(Integer.toString(gm.GetScore()));
+            System.out.println("GameLobby.fxml opened");
+        }
+    }
+    
+    /*
+    * button for going back to user game lobby host
+    */
+    @FXML
+    private void replayHost(ActionEvent event) throws IOException {
+        currentScreen = ScreenType.PLAY;
+        root = FXMLLoader.load(getClass().getResource("GamePlay.fxml"));
+        TeamProject.getPrimaryStage().setScene(new Scene(root));
+        TeamProject.getPrimaryStage().show();
+        SetScreenResources();
+        System.out.println("GameLobby.fxml opened");
+        //generate the list of questions for this set
+        gm.RandomizeQuestions();
+        
+        //reset the score
+        gm.ResetScore();
+        txtScore.setText(Integer.toString(gm.GetScore()));
+        
+        //set the text
+        SetQuestionAndAnswers();
+        //reset the timer
+        iSeconds = MAXTIME;
+        StartTimer();
+        txtTimer.setText(Integer.toString(iSeconds));
+    }
+    
+    
+    
+    
+    
+    
+    
+    /**
+     * 
+     * This section is functions to be maintained by Aeri
+     */
     
     /*
     * button for going to register page
@@ -267,11 +478,11 @@ public class FXMLController implements Initializable {
     @FXML
     private void createRoom(ActionEvent event) throws IOException {
         currentScreen = ScreenType.READY;
-        root = FXMLLoader.load(getClass().getResource("GameHost.fxml"));
+        root = FXMLLoader.load(getClass().getResource("GameLobby.fxml"));
         TeamProject.getPrimaryStage().setScene(new Scene(root));
         TeamProject.getPrimaryStage().show();
         SetScreenResources();
-        System.out.println("GameHost.fxml opened");
+        System.out.println("GameLobby.fxml opened");
     }
     
     /*
@@ -300,94 +511,7 @@ public class FXMLController implements Initializable {
         System.out.println("Login.fxml opened");
     }
     
-    /*
-    * button for starting game
-    */
-    @FXML
-    private void startGame(ActionEvent event) throws IOException {
-        //System.out.println((Node)event.getSource());
-        currentScreen = ScreenType.PLAY;
-        root = FXMLLoader.load(getClass().getResource("GamePlay.fxml"));
-        TeamProject.getPrimaryStage().setScene(new Scene(root));
-        SetScreenResources();
-        
-        //generate the list of questions for this set
-        gm.RandomizeQuestions();
-        
-        //if text fields do not exist, create them
-        
-        
-        //set the text
-        SetQuestionAndAnswers();
-        
-        
-        
-        
-        System.out.println("GamePlay.fxml opened");
-        
-        //TODO: include a timer
-        //sample code can be found here:
-        //http://asgteach.com/2011/10/javafx-animation-and-binding-simple-countdown-timer-2/
-        
-        
-        TeamProject.getPrimaryStage().show();
-    }
     
-    
-    
-    /**
-     * Function to update the text for questions and answers
-     */
-    private void SetQuestionAndAnswers()
-    {
-        //shuffle the answers
-        gm.GetCurrentQuestion().ShuffleAnswers();
-        
-        //set the text
-        txtQuestion.setText(gm.GetCurrentQuestion().GetQuestion());
-        
-        rdoAnswer1.setText(gm.GetCurrentQuestion().GetAnswers().get(0).GetAnswer());
-        rdoAnswer2.setText(gm.GetCurrentQuestion().GetAnswers().get(1).GetAnswer());
-        rdoAnswer3.setText(gm.GetCurrentQuestion().GetAnswers().get(2).GetAnswer());
-        rdoAnswer4.setText(gm.GetCurrentQuestion().GetAnswers().get(3).GetAnswer());
-        
-    }
-    
-    /*
-    * button for exit game
-    */
-    @FXML
-    private void exitGame(ActionEvent event) throws IOException {
-        currentScreen = ScreenType.READY;
-        root = FXMLLoader.load(getClass().getResource("GameLobby.fxml"));
-        TeamProject.getPrimaryStage().setScene(new Scene(root));
-        TeamProject.getPrimaryStage().show();
-        SetScreenResources();
-        System.out.println("GameLobby.fxml opened");
-    }
-    
-    /*
-    * button for dropping game
-    */
-    @FXML
-    private void dropGame(ActionEvent event) throws IOException {
-        currentScreen = ScreenType.READY;
-        root = FXMLLoader.load(getClass().getResource("GameLobby.fxml"));
-        TeamProject.getPrimaryStage().setScene(new Scene(root));
-        TeamProject.getPrimaryStage().show();
-        SetScreenResources();
-        
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setContentText("This room is dropped");
-        alert.showAndWait();
-        
-        System.out.println("GameLobby.fxml opened");
-    }
-    
-    @FXML
-    private void submitAnswer(ActionEvent event){
-//        this is the button for submit quiz answer
-    }
     
     /*
     * button for going back to main
@@ -402,31 +526,7 @@ public class FXMLController implements Initializable {
         System.out.println("GameLobby.fxml opened");
     }
     
-    /*
-    * button for going back to user game lobby
-    */
-    @FXML
-    private void replayUser(ActionEvent event) throws IOException {
-        currentScreen = ScreenType.READY;
-        root = FXMLLoader.load(getClass().getResource("GameUser.fxml"));
-        TeamProject.getPrimaryStage().setScene(new Scene(root));
-        TeamProject.getPrimaryStage().show();
-        SetScreenResources();
-        System.out.println("GameUser.fxml opened");
-    }
     
-    /*
-    * button for going back to user game lobby host
-    */
-    @FXML
-    private void replayHost(ActionEvent event) throws IOException {
-        currentScreen = ScreenType.READY;
-        root = FXMLLoader.load(getClass().getResource("GameHost.fxml"));
-        TeamProject.getPrimaryStage().setScene(new Scene(root));
-        TeamProject.getPrimaryStage().show();
-        SetScreenResources();
-        System.out.println("GameHost.fxml opened");
-    }
     
     @FXML
     private void resetMyTotalResult(ActionEvent event) throws IOException

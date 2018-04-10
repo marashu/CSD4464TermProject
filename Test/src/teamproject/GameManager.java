@@ -14,14 +14,20 @@ import java.util.Random;
  */
 public class GameManager 
 {
-    private LinkedList<Question> listAllQuestions;
-    private LinkedList<Integer> listQuestionIndexes;
+    private static LinkedList<Question> listAllQuestions;
+    private static LinkedList<Integer> listQuestionIndexes;
+    private static int iCurrentScore = 0;
     
     public GameManager()
     {
         listAllQuestions = new LinkedList();
         listQuestionIndexes = new LinkedList();
+        //iCurrentScore = 0;
     }
+    
+    public int GetScore(){return iCurrentScore;}
+    public void SetScore(int score){iCurrentScore = score;}
+    public void ResetScore(){iCurrentScore = 0;}
     
     public void GenerateQuestions()
     {
@@ -67,5 +73,23 @@ public class GameManager
     {
         if(listQuestionIndexes.size() > 0)
             listQuestionIndexes.removeFirst();
+    }
+    
+    public int GetNumQuestionsRemaining()
+    {
+        return listQuestionIndexes.size();
+    }
+    
+    public void CheckAnswer(int index)
+    {
+        //make sure index is within range
+        if(index < 0 || index > 3)
+            return;
+        
+        //check if the answer is correct
+        if(GetCurrentQuestion().GetAnswers().get(index).GetCorrect())
+        {
+            iCurrentScore += 100;
+        }
     }
 }
