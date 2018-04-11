@@ -32,7 +32,14 @@ public class DBManager {
        // Create a connection to the database.
        conn = DriverManager.getConnection(DB_URL);
     }
-   
+    
+    /****************************************
+    ** START USER INFORMATION CONTROL - AERI 
+    ****************************************/
+    
+    /*
+     * user register
+    */
     public void submitPlayer(String id, String pw, String email) throws SQLException
     {
       // Create a connection to the database.  
@@ -52,7 +59,10 @@ public class DBManager {
       // Close the connection and statement objects.
       stmt.close();
     }
-   
+    
+    /*
+     * user login
+    */
     public boolean loginPlayer(String id, String pw) throws SQLException{
         String searchId = "";
         String searchPw = "";
@@ -86,15 +96,24 @@ public class DBManager {
         return status;
     }
     
-    private String findId = "";
-    private String findPw = "";
+    /*
+     * user find id, pw global variable
+    */
+    private String userId = "";
+    private String userPw = "";
+    private String userEmail = "";
+    private int bestScore = 0;
+    private int avgScore = 0;
     
+    /*
+     * user find id, pw 
+    */
     public boolean findIdPw(String email) throws SQLException{
         boolean status = false;
         
         // Create a connection to the database.  
         conn = DriverManager.getConnection(DB_URL);
-        String query = "SELECT username, password FROM player WHERE email= ?";
+        String query = "SELECT username, password, email FROM player WHERE email= ?";
 
         // Create a Statement object for the query.
         PreparedStatement stmt = conn.prepareStatement(query, 
@@ -105,35 +124,64 @@ public class DBManager {
         ResultSet rs = stmt.executeQuery();
         
         while(rs.next()){
-            findId = rs.getString("username");
-            findPw = rs.getString("password");
+            userId = rs.getString("username");
+            userPw = rs.getString("password");
+            userEmail = rs.getString("email");
         }
         
-        if(findId.equals("") || findPw.equals("")){
+        if(userId.equals("") || userPw.equals("")){
             status = false;
         }else{
-            setFindId(findId);
-            setFindPw(findPw);
+            setUserId(userId);
+            setUserPw(userPw);
+            setUserEmail(userEmail);
             status = true;
         }
         return status;
     }
+    public String getUserId() {
+        return userId;
+    }
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+    public String getUserPw() {
+        return userPw;
+    }
+    public void setUserPw(String userPw) {
+        this.userPw = userPw;
+    }
+    public String getUserEmail() {
+        return userEmail;
+    }
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
     
-    public String getFindId() {
-        return findId;
-    }
+    /*
+     * user edit 
+    */
+    
+    public void editUser(String id, String pw, String em) throws SQLException{
+        
+        // Create a connection to the database.  
+        conn = DriverManager.getConnection(DB_URL);
+        String query = "UPDATE player SET password =?, email =? WHERE username= ?";
 
-    public void setFindId(String findId) {
-        this.findId = findId;
+        // Create a Statement object for the query.
+        PreparedStatement stmt = conn.prepareStatement(query, 
+               ResultSet.TYPE_SCROLL_INSENSITIVE,
+               ResultSet.CONCUR_READ_ONLY);
+        stmt.setString(1, pw);
+        stmt.setString(2, em);
+        stmt.setString(3, id);
+        
+        stmt.executeUpdate();
+        stmt.close();
     }
-
-    public String getFindPw() {
-        return findPw;
-    }
-
-    public void setFindPw(String findPw) {
-        this.findPw = findPw;
-    }
+    /*
+    ** END USER INFORMATION CONTROL - AERI 
+    */
    
     
 }

@@ -21,6 +21,7 @@ public class Player
     private String password;
     private int bestScore;
     private int averageScore;
+    private String email;
     
     public Player()
     {
@@ -72,6 +73,14 @@ public class Player
 
     public void setAverageScore(int averageScore) {
         this.averageScore = averageScore;
+    }
+    
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String e) {
+        this.email = email;
     }
     
     

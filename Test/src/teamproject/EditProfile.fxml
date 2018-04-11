@@ -64,7 +64,7 @@
                   <Font size="20.0" />
                </font>
             </Text>
-            <Text fx:id="edit_notice_id" fill="WHITE" layoutX="751.0" layoutY="387.0" strokeType="OUTSIDE" strokeWidth="0.0" text="edit_notice_pw" />
+            <Text fx:id="edit_notice_pw" fill="WHITE" layoutX="751.0" layoutY="387.0" strokeType="OUTSIDE" strokeWidth="0.0" text="edit_notice_pw" />
             <Text fx:id="edit_notice_pwc" fill="WHITE" layoutX="751.0" layoutY="441.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
             <Text fx:id="edit_notice_email" fill="WHITE" layoutX="751.0" layoutY="495.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
       </children>

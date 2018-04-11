@@ -105,6 +105,11 @@ public class FXMLController implements Initializable {
     private static int iSeconds;
     
     /**
+     * Player Class variable
+     */
+    private static Player player = new Player();
+    
+    /**
      * Initializes the controller class.
      */
     @Override
@@ -415,10 +420,13 @@ public class FXMLController implements Initializable {
     /*
     * button for going to Game Lobby page if user success
     */
+    
     @FXML
     private void openLogin(ActionEvent event) throws IOException {
         String id = txtId.getText();
         String pw = txtPassword.getText();
+        String email;
+
         Alert alert = new Alert(AlertType.INFORMATION);
         
         try{
@@ -431,6 +439,11 @@ public class FXMLController implements Initializable {
                 alert.showAndWait();
             }else{
                 if(checkLogin){
+                    email = db.getUserEmail();
+                    player.setUsername(id);
+                    player.setPassword(pw);
+                    player.setEmail(email);
+
                     currentScreen = ScreenType.READY;
                     root = FXMLLoader.load(getClass().getResource("GameLobby.fxml"));
                     TeamProject.getPrimaryStage().setScene(new Scene(root));
@@ -470,10 +483,10 @@ public class FXMLController implements Initializable {
         String pw = txtRegisterPassword.getText();
         String pwc = txtRegisterPasswordConfirm.getText();
         String email = txtRegisterEmail.getText();
-        boolean checkID = checkID(id);
-        boolean checkPW = checkPW(pw);
-        boolean checkPWC = checkPWC(pwc, pw);
-        boolean checkEmail = checkEmail(email);
+        boolean checkID = checkID(id, reg_notice_id);
+        boolean checkPW = checkPW(pw, reg_notice_pw);
+        boolean checkPWC = checkPWC(pwc, pw, reg_notice_pwc);
+        boolean checkEmail = checkEmail(email, reg_notice_email);
         
         try{
             if(checkID && checkPW & checkPWC && checkEmail){
@@ -497,72 +510,72 @@ public class FXMLController implements Initializable {
             System.err.println(ex.getMessage());
         }
     }
-    public boolean checkID(String id){
+    public boolean checkID(String id, Text txt){
         boolean status = false;
         if(id.equals("")){
-            reg_notice_id.setText("This field is required.");
+            txt.setText("This field is required.");
             status = false;
         }else{
             char[] idArray = id.toCharArray();
             if(idArray.length < 5 || idArray.length > 8){
-                reg_notice_id.setText("Length of ID should be between 5 and 8");
+                txt.setText("Length of ID should be between 5 and 8");
                 status = false;
             }else{
-                reg_notice_id.setText("");
+                txt.setText("");
                 status = true;
             }
         }
         return status;
     }
-    public boolean checkPW(String pw){
+    public boolean checkPW(String pw, Text txt){
         boolean status = false;
         if(pw.equals("")){
-            reg_notice_pw.setText("This field is required.");
+            txt.setText("This field is required.");
             status = false;
         }else{
             char[] pwArray = pw.toCharArray();
             if(pwArray.length < 5){
-                reg_notice_pw.setText("Password is weak");
+                txt.setText("Password is weak");
                 status = false;
             }else{
-                reg_notice_pw.setText("");
+                txt.setText("");
                 status = true;
             }
         }
         return status;
     }
-    public boolean checkPWC(String pwc, String pw){
+    public boolean checkPWC(String pwc, String pw, Text txt){
         boolean status = false;
         if(pwc.equals("")){
-            reg_notice_pwc.setText("This field is required.");
+            txt.setText("This field is required.");
             status = false;
         }else{
             if(!pwc.equals(pw)){
-                reg_notice_pwc.setText("This is not mached to Password.");
+                txt.setText("This is not mached to Password.");
                 status = false;
             }else{
-                reg_notice_pwc.setText("");
+                txt.setText("");
                 status = true;
             }
         }
         return status;
     }
-    public boolean checkEmail(String email){
+    public boolean checkEmail(String email, Text txt){
         boolean status = false;
         String regex =  "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
         + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
         Pattern pattern = Pattern.compile(regex);
         
         if(email.equals("")){
-            reg_notice_email.setText("This field is required.");
+            txt.setText("This field is required.");
             status = false;
         }else{
             Matcher matcher  = pattern.matcher(email);
             if(!matcher.matches()){
-                reg_notice_email.setText("This is not email format.");
+                txt.setText("This is not email format.");
                 status= false;
             }else{
-                reg_notice_email.setText("");
+                txt.setText("");
                 status= true;
             } 
         }
@@ -583,8 +596,8 @@ public class FXMLController implements Initializable {
             DBManager db = new DBManager();
             boolean checkAccount = db.findIdPw(email);
             if(checkAccount){
-                findId = db.getFindId();
-                findPw = db.getFindPw();
+                findId = db.getUserId();
+                findPw = db.getUserPw();
                 Alert alert = new Alert(AlertType.CONFIRMATION);
                 alert.setTitle("Login Information");
                 alert.setContentText("ID : " + findId + "\n" + "Password: " + findPw + "\n\n" +
@@ -620,23 +633,15 @@ public class FXMLController implements Initializable {
     }
 
     /*
-    * button for entering game as user
-    */
-    @FXML
-    private void loginAsUser(ActionEvent event) throws IOException {
-        currentScreen = ScreenType.READY;
-        root = FXMLLoader.load(getClass().getResource("GameUser.fxml"));
-        TeamProject.getPrimaryStage().setScene(new Scene(root));
-        TeamProject.getPrimaryStage().show();
-        SetScreenResources();
-        System.out.println("GameUser.fxml opened");
-    }
-    
-    /*
     * button for going to Game Lobby page if user success
     */
     @FXML
     private void userLogout(ActionEvent event) throws IOException {
+        // initializing when user log out
+        player.setUsername("");
+        player.setPassword("");
+        player.setEmail("");
+        
         currentScreen = ScreenType.LOGIN;
         root = FXMLLoader.load(getClass().getResource("Login.fxml"));
         TeamProject.getPrimaryStage().setScene(new Scene(root));
@@ -672,6 +677,43 @@ public class FXMLController implements Initializable {
         TeamProject.getPrimaryStage().setScene(new Scene(root));
         TeamProject.getPrimaryStage().show();
         SetScreenResources();
+        
+        String id = player.getUsername();
+        txtIdEdit.setText(id);
         System.out.println("EditProfile.fxml opened");
     }
+    
+    @FXML
+    private void editUserProfileConfirm(ActionEvent event) throws IOException{
+        String id = player.getUsername();
+        String pw = txtEditPassword.getText();
+        String pwc = txtEditPasswordConfirm.getText();
+        String email = txtEditEmail.getText();
+        
+        boolean checkPW = checkPW(pw, edit_notice_pw);
+        boolean checkPWC = checkPWC(pwc, pw, edit_notice_pwc);
+        boolean checkEmail = checkEmail(email, edit_notice_email);
+
+        try{
+            if(checkPW && checkPWC && checkEmail){
+                DBManager db = new DBManager();
+                db.editUser(id, pw, email);
+                
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Edit Profile");
+                alert.setContentText("User information is edited");
+                alert.showAndWait();
+                
+                currentScreen = ScreenType.READY;
+                root = FXMLLoader.load(getClass().getResource("GameLobby.fxml"));
+                TeamProject.getPrimaryStage().setScene(new Scene(root));
+                TeamProject.getPrimaryStage().show();
+                SetScreenResources();
+                System.out.println("GameLobby.fxml opened");
+            }
+        }catch(SQLException ex){
+            System.out.println(ex.getMessage());
+        }
+    }
+    
 }
