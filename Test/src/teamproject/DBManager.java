@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.LinkedList;
 
 /**
  *
@@ -46,8 +47,8 @@ public class DBManager {
       conn = DriverManager.getConnection(DB_URL);
 
       // Create a Statement object for the query.
-      PreparedStatement stmt = conn.prepareStatement("INSERT INTO player ("
-              + "username, password, email) VALUES(?,?,?)");
+      PreparedStatement stmt = conn.prepareStatement("INSERT INTO players ("
+              + "username, password, email_address, player_id) VALUES(?,?,?, NEXT VALUE FOR players_seq)");
       
       stmt.setString(1, id);
       stmt.setString(2, pw);
@@ -70,7 +71,7 @@ public class DBManager {
         
         // Create a connection to the database.  
         conn = DriverManager.getConnection(DB_URL);
-        String query = "SELECT username, password FROM player WHERE username= ?";
+        String query = "SELECT username, password FROM players WHERE username= ?";
 
         // Create a Statement object for the query.
         PreparedStatement stmt = conn.prepareStatement(query, 
@@ -113,7 +114,7 @@ public class DBManager {
         
         // Create a connection to the database.  
         conn = DriverManager.getConnection(DB_URL);
-        String query = "SELECT username, password, email FROM player WHERE email= ?";
+        String query = "SELECT username, password, email_address FROM players WHERE email= ?";
 
         // Create a Statement object for the query.
         PreparedStatement stmt = conn.prepareStatement(query, 
@@ -126,7 +127,7 @@ public class DBManager {
         while(rs.next()){
             userId = rs.getString("username");
             userPw = rs.getString("password");
-            userEmail = rs.getString("email");
+            userEmail = rs.getString("email_address");
         }
         
         if(userId.equals("") || userPw.equals("")){
@@ -166,7 +167,7 @@ public class DBManager {
         
         // Create a connection to the database.  
         conn = DriverManager.getConnection(DB_URL);
-        String query = "UPDATE player SET password =?, email =? WHERE username= ?";
+        String query = "UPDATE players SET password =?, email_address =? WHERE username= ?";
 
         // Create a Statement object for the query.
         PreparedStatement stmt = conn.prepareStatement(query, 
@@ -183,5 +184,99 @@ public class DBManager {
     ** END USER INFORMATION CONTROL - AERI 
     */
    
+    /**
+     * BEGIN QUESTION INFORMATION CONTROL - MICHAEL
+     */
+    public static boolean GetQuestions(LinkedList<Question> list)
+    {
+        final String DB_URL = "jdbc:derby://localhost:1527/TriviaGame;user=root;password=password;create=true";
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        try
+        {
+            // Create a connection to the database.
+            conn = DriverManager.getConnection(DB_URL);
+            String query = "SELECT question_id, question, correct_answer_id "
+                    + "FROM questions";
+            stmt = conn.prepareStatement(query, 
+               ResultSet.TYPE_SCROLL_INSENSITIVE,
+               ResultSet.CONCUR_READ_ONLY);
+            
+            
+            // Execute the query.
+            ResultSet resultSet =
+                   stmt.executeQuery();
+            
+            // Get the number of rows.
+            resultSet.last();                 // Move to last row
+            int numRows = resultSet.getRow(); // Get row number
+            resultSet.first();                // Move to first row
+            
+            //reset the questions
+            list.clear();
+            
+            for(int row = 0; row < numRows; row++)
+            {
+                int id = resultSet.getInt(1);
+                query = "SELECT answer_id, answer FROM answers "
+                    + "WHERE question_id=" + id;
+                
+                PreparedStatement ans_stmt = conn.prepareStatement(query, 
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
+                ResultSet ans_resultSet =
+                   ans_stmt.executeQuery();
+                
+                ans_resultSet.last();
+                int numAns = ans_resultSet.getRow(); // Get row number
+                ans_resultSet.first();
+                
+                LinkedList<String> ans = new LinkedList();
+                
+                for(int j = 0; j < numAns; j++)
+                {
+                    if(ans_resultSet.getInt(1) == resultSet.getInt(3))
+                        ans.addFirst(ans_resultSet.getString(2));
+                    else
+                        ans.addLast(ans_resultSet.getString(2));
+                    ans_resultSet.next();
+                }
+                
+                Question q = new Question(id, resultSet.getString(2), ans.get(0), ans.get(1), ans.get(2), ans.get(3));
+                list.add(q);
+                
+                resultSet.next();
+            }
+        }
+        catch (Exception ex)
+        {
+            System.out.println("ERROR: " + ex.getMessage());
+        }
+        finally
+        {
+            try {
+                if (conn != null) 
+                { 
+                    //close the connection
+                    conn.close(); 
+                }
+            }
+            catch (Exception ex) {
+                // log this error
+                System.out.println("ERROR: " + ex.getMessage());
+            }
+            try{
+                if (stmt != null)
+                {
+                    stmt.close();
+                }
+            }
+            catch (Exception ex) {
+                // log this error
+                System.out.println("ERROR: " + ex.getMessage());
+            }
+        }
+        return true;
+    }
     
 }

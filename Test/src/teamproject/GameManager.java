@@ -33,9 +33,7 @@ public class GameManager
     {
         //this class will call the database class and populate it there
         //for now, generate it with two questions
-        listAllQuestions.add(new Question(0,"What is the best leaf?","2","3","4","blue"));
-        listAllQuestions.add(new Question(1,"Who is not one of the best coders?",
-            "Daffy Duck", "Bradley Coleman", "Aeri Jung", "Michael Patoine"));
+        DBManager.GetQuestions(listAllQuestions);
     }
     
     //a function to create the list of random questions for the set
