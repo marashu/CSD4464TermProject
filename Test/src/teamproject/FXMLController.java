@@ -10,6 +10,7 @@ import java.io.IOException;
 import javafx.fxml.Initializable;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Timer;
@@ -28,6 +29,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
@@ -70,7 +74,11 @@ public class FXMLController implements Initializable {
      * button- btnLogOut, scrollpane - listUser can be used everywhere in Game play
     **/
     private static Text txtStrongQuestion;
-    private static BarChart graphMyStastics;
+    private static CategoryAxis xAxis = new CategoryAxis();
+    private static NumberAxis yAxis = new NumberAxis();
+    private static BarChart<?,?> graphMyStastics = new BarChart(xAxis, yAxis);
+    
+    
     
     /**
      * Game User-Edit
@@ -157,8 +165,14 @@ public class FXMLController implements Initializable {
             case READY:
                 //Text
                 txtStrongQuestion= (Text) TeamProject.getPrimaryStage().getScene().lookup("#txtStrongQuestion");
+                //CategoryAxis
+                xAxis = (CategoryAxis) TeamProject.getPrimaryStage().getScene().lookup("#xAxis");
+                //NumberAxis
+                yAxis = (NumberAxis) TeamProject.getPrimaryStage().getScene().lookup("#yAxis");
                 //BarChart
                 graphMyStastics= (BarChart) TeamProject.getPrimaryStage().getScene().lookup("#graphMyStastics");
+                //XYChart.Series
+                //barData = (XYChart.Series) TeamProject.getPrimaryStage().getScene().lookup("#barData");
                 break;
             case PLAY:
                 //Button
@@ -449,6 +463,15 @@ public class FXMLController implements Initializable {
                     TeamProject.getPrimaryStage().setScene(new Scene(root));
                     TeamProject.getPrimaryStage().show();
                     SetScreenResources();
+                    
+                    XYChart.Series data = new XYChart.Series<>();
+                    
+                    data.setName("Score");
+                    data.getData().add(new XYChart.Data<>("Best Score", 111));
+                    data.getData().add(new XYChart.Data<>("AVG Score", 111));
+                    
+                    graphMyStastics.getData().addAll(data);
+                    
                     System.out.println("GameLobby.fxml opened");
                 }else{
                     alert.setTitle("Login Failed");
