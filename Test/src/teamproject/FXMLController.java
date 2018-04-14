@@ -10,7 +10,6 @@ import java.io.IOException;
 import javafx.fxml.Initializable;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Timer;
@@ -76,7 +75,7 @@ public class FXMLController implements Initializable {
     private static Text txtStrongQuestion;
     private static CategoryAxis xAxis = new CategoryAxis();
     private static NumberAxis yAxis = new NumberAxis();
-    private static BarChart<?,?> graphMyStastics = new BarChart(xAxis, yAxis);
+    private static BarChart graphMyStastics = new BarChart(xAxis, yAxis);
     
     
     
@@ -294,6 +293,8 @@ public class FXMLController implements Initializable {
         TeamProject.getPrimaryStage().setScene(new Scene(root));
         TeamProject.getPrimaryStage().show();
         SetScreenResources();
+        XYChart.Series best = getBestScore(player, "Best Score");
+        XYChart.Series avg = getAvgScore(player, "Average Score");
         System.out.println("GameLobby.fxml opened");
     }
     
@@ -362,7 +363,7 @@ public class FXMLController implements Initializable {
             SetScreenResources();
             //update the score
             txtFinalScore.setText(Integer.toString(gm.GetScore()));
-            System.out.println("GameLobby.fxml opened");
+            System.out.println("GameEnd.fxml opened");
         }
     }
     
@@ -462,15 +463,12 @@ public class FXMLController implements Initializable {
                     root = FXMLLoader.load(getClass().getResource("GameLobby.fxml"));
                     TeamProject.getPrimaryStage().setScene(new Scene(root));
                     TeamProject.getPrimaryStage().show();
-                    SetScreenResources();
+                    SetScreenResources();                 
                     
-                    XYChart.Series data = new XYChart.Series<>();
+                    XYChart.Series best = getBestScore(player, "Best Score");
+                    XYChart.Series avg = getAvgScore(player, "Average Score");
                     
-                    data.setName("Score");
-                    data.getData().add(new XYChart.Data<>("Best Score", 111));
-                    data.getData().add(new XYChart.Data<>("AVG Score", 111));
-                    
-                    graphMyStastics.getData().addAll(data);
+                    graphMyStastics.getData().addAll(best, avg);
                     
                     System.out.println("GameLobby.fxml opened");
                 }else{
@@ -482,6 +480,25 @@ public class FXMLController implements Initializable {
         }catch(SQLException ex){
             System.out.println(ex.getMessage());
         }
+    }
+    
+    public XYChart.Series getBestScore (Player p, String name){
+        int numScore = 100;
+        XYChart.Series data = new XYChart.Series<>();
+        data.setName(name);
+        XYChart.Data<String, Number> best = new XYChart.Data<String, Number>("", numScore);
+        data.getData().add(best);
+        
+        return data;
+    }
+    public XYChart.Series getAvgScore (Player p, String name){
+        int numScore = 11;
+        XYChart.Series data = new XYChart.Series<>();
+        data.setName(name);
+        XYChart.Data<String, Number> best = new XYChart.Data<String, Number>("", numScore);
+        data.getData().add(best);
+        
+        return data;
     }
     
     /*
@@ -683,6 +700,8 @@ public class FXMLController implements Initializable {
         TeamProject.getPrimaryStage().setScene(new Scene(root));
         TeamProject.getPrimaryStage().show();
         SetScreenResources();
+        XYChart.Series best = getBestScore(player, "Best Score");
+        XYChart.Series avg = getAvgScore(player, "Average Score");
         System.out.println("GameLobby.fxml opened");
     }
     
@@ -732,6 +751,8 @@ public class FXMLController implements Initializable {
                 TeamProject.getPrimaryStage().setScene(new Scene(root));
                 TeamProject.getPrimaryStage().show();
                 SetScreenResources();
+                XYChart.Series best = getBestScore(player, "Best Score");
+                XYChart.Series avg = getAvgScore(player, "Average Score");
                 System.out.println("GameLobby.fxml opened");
             }
         }catch(SQLException ex){

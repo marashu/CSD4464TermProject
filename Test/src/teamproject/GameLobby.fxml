@@ -28,7 +28,7 @@
                         <Font name="Myanmar Text Bold" size="24.0" />
                      </font>
                   </Text>
-                  <BarChart fx:id="graphMyStastics" layoutX="15.0" layoutY="66.0" prefHeight="293.0" prefWidth="384.0">
+                  <BarChart fx:id="graphMyStastics" barGap="0.0" layoutX="29.0" layoutY="93.0" prefHeight="366.0" prefWidth="384.0">
                     <xAxis>
                       <CategoryAxis side="BOTTOM" />
                     </xAxis>
@@ -36,12 +36,6 @@
                       <NumberAxis side="LEFT" />
                     </yAxis>
                   </BarChart>
-                  <Text fill="#000e64" layoutX="102.0" layoutY="396.0" strokeType="OUTSIDE" strokeWidth="0.0" text="My Strong Question">
-                     <font>
-                        <Font name="Myanmar Text Bold" size="24.0" />
-                     </font>
-                  </Text>
-                  <Text fx:id="txtStrongQuestion" fill="#a3a3a3" layoutX="46.0" layoutY="433.0" strokeType="OUTSIDE" strokeWidth="0.0" text="zfsdfsfsdfsdfsdfsdfsdfsdfzfsdfsfsdfsdfsdfsdfsdfsdfzfsdfsfsdfsdfsdfsdfsdfsdf" wrappingWidth="354.18359375" />
                   <Button fx:id="btnResetMyTotalResult" layoutX="80.0" layoutY="474.0" mnemonicParsing="false" onAction="#resetMyTotalResult" prefHeight="46.0" prefWidth="134.0" styleClass="button2" stylesheets="@style.css" text="Reset My Result" />
                   <Button fx:id="btnEditProfile" layoutX="230.0" layoutY="476.0" mnemonicParsing="false" onAction="#editUserProfile" prefHeight="46.0" prefWidth="134.0" styleClass="button2" stylesheets="@style.css" text="Edit User Profile" />
                </children>
