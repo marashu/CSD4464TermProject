@@ -70,6 +70,7 @@ public class DBManager {
     public boolean loginPlayer(Player temp) throws SQLException{
         String id = temp.getUsername();
         String pw = temp.getPassword();
+        
         String searchId = "";
         String searchPw = "";
         boolean status = false;
@@ -187,6 +188,25 @@ public class DBManager {
         
         stmt.executeUpdate();
         stmt.close();
+    }
+    
+    public void removeUser(Player temp) throws SQLException
+    {
+        int id = temp.getId();
+        
+        // Create a connection to the database.  
+        conn = DriverManager.getConnection(DB_URL);
+        String query = "DELETE FROM players WHERE player_id=?";
+
+        // Create a Statement object for the query.
+        PreparedStatement stmt = conn.prepareStatement(query, 
+               ResultSet.TYPE_SCROLL_INSENSITIVE,
+               ResultSet.CONCUR_READ_ONLY);
+        stmt.setInt(1, id);
+        
+        stmt.executeUpdate();
+        stmt.close();
+        
     }
     /*
     ** END USER INFORMATION CONTROL - AERI 

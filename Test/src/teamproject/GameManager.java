@@ -25,6 +25,20 @@ public class GameManager
         //iCurrentScore = 0;
     }
     
+    //get a specific question from the question list
+    public static Question GetSpecificQuestion(int index)
+    {
+        try
+        {
+            if(index >= listAllQuestions.size())
+                throw new IndexOutOfBoundsException();
+        } catch(IndexOutOfBoundsException ex)
+        {
+            System.err.println(ex.getMessage());
+        }
+        return listAllQuestions.get(index);
+    }
+    
     public int GetScore(){return iCurrentScore;}
     public void SetScore(int score){iCurrentScore = score;}
     public void ResetScore(){iCurrentScore = 0;}
@@ -62,15 +76,31 @@ public class GameManager
     {
         //TODO: insert a custom try-catch error catcher to check if the stored index
         //is out of bounds
-        if(listQuestionIndexes.size() > 0)
+        try
+        {
+            if(listAllQuestions.size() <= 0)
+                throw new NoQuestionsException();
             return listAllQuestions.get(listQuestionIndexes.get(0));
-        return listAllQuestions.getFirst();
+        } catch(NoQuestionsException ex)
+        {
+            System.err.println(ex.getMessage());
+            return null;//new Question(-1,"","","","","");
+        }
+        
     }
     
     public void IncrementQuestion()
     {
-        if(listQuestionIndexes.size() > 0)
+       
+        try
+        {
+            if(listAllQuestions.size() <= 0)
+                throw new NoQuestionsException();
             listQuestionIndexes.removeFirst();
+        } catch(NoQuestionsException ex)
+        {
+            System.err.println(ex.getMessage());
+        }
     }
     
     public int GetNumQuestionsRemaining()
@@ -78,16 +108,22 @@ public class GameManager
         return listQuestionIndexes.size();
     }
     
-    public void CheckAnswer(int index)
+    public void CheckAnswer(int index, Question q)
     {
-        //make sure index is within range
-        if(index < 0 || index > 3)
-            return;
-        
-        //check if the answer is correct
-        if(GetCurrentQuestion().GetAnswers().get(index).GetCorrect())
+        try
         {
-            iCurrentScore += 100;
+            //make sure index is within range
+            if(index < 0 || index > 3)
+                throw new IndexOutOfBoundsException("No answer at that index.");
+
+            //check if the answer is correct
+            if(q.GetAnswers().get(index).GetCorrect())
+            {
+                iCurrentScore += 100;
+            }
+        } catch(IndexOutOfBoundsException ex)
+        {
+            System.err.println(ex.getMessage());
         }
     }
 }

@@ -331,7 +331,7 @@ public class FXMLController implements Initializable {
             return;
         
         //Now check the answer
-        gm.CheckAnswer(iAnswer);
+        gm.CheckAnswer(iAnswer, gm.GetCurrentQuestion());
         
         
         

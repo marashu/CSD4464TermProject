@@ -18,6 +18,10 @@ public class Question implements Serializable
     private int id;
     private String question;
     private ArrayList<Answer> answers;
+
+    public int getId() {
+        return id;
+    }
     
     public Question(int id, String quest, String q1, String q2, String q3, String q4)
     {

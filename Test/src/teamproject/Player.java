@@ -89,7 +89,7 @@ public class Player
     }
 
     public void setEmail(String e) {
-        this.email = email;
+        this.email = e;
     }
     
     
