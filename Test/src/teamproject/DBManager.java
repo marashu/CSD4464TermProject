@@ -41,11 +41,14 @@ public class DBManager {
     /*
      * user register
     */
-    public void submitPlayer(String id, String pw, String email) throws SQLException
+    public void submitPlayer(Player temp) throws SQLException
     {
       // Create a connection to the database.  
       conn = DriverManager.getConnection(DB_URL);
 
+      String id = temp.getUsername();
+      String pw = temp.getPassword();
+      String email = temp.getEmail();
       // Create a Statement object for the query.
       PreparedStatement stmt = conn.prepareStatement("INSERT INTO players ("
               + "username, password, email_address, player_id) VALUES(?,?,?, NEXT VALUE FOR players_seq)");
@@ -64,7 +67,9 @@ public class DBManager {
     /*
      * user login
     */
-    public boolean loginPlayer(String id, String pw) throws SQLException{
+    public boolean loginPlayer(Player temp) throws SQLException{
+        String id = temp.getUsername();
+        String pw = temp.getPassword();
         String searchId = "";
         String searchPw = "";
         boolean status = false;
@@ -163,8 +168,11 @@ public class DBManager {
      * user edit 
     */
     
-    public void editUser(String id, String pw, String em) throws SQLException{
+    public void editUser(Player temp) throws SQLException{
         
+        String id = temp.getUsername();
+        String pw = temp.getPassword();
+        String em = temp.getEmail();
         // Create a connection to the database.  
         conn = DriverManager.getConnection(DB_URL);
         String query = "UPDATE players SET password =?, email_address =? WHERE username= ?";

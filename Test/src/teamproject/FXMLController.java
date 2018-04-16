@@ -446,7 +446,8 @@ public class FXMLController implements Initializable {
         
         try{
             DBManager db = new DBManager();
-            boolean checkLogin = db.loginPlayer(id, pw);
+            Player temp = new Player(id, pw);
+            boolean checkLogin = db.loginPlayer(temp);
             
             if(id.equals("") || pw.equals("")){
                 alert.setTitle("Login Failed");
@@ -531,8 +532,10 @@ public class FXMLController implements Initializable {
         
         try{
             if(checkID && checkPW & checkPWC && checkEmail){
+                Player temp = new Player(id, pw);
+                temp.setEmail(email);
                 DBManager db = new DBManager();
-                db.submitPlayer(id, pw, email);
+                db.submitPlayer(temp);
                 
                 currentScreen = ScreenType.LOGIN;
                 root = FXMLLoader.load(getClass().getResource("Login.fxml"));
@@ -740,7 +743,9 @@ public class FXMLController implements Initializable {
         try{
             if(checkPW && checkPWC && checkEmail){
                 DBManager db = new DBManager();
-                db.editUser(id, pw, email);
+                Player temp = new Player(id, pw);
+                temp.setEmail(email);
+                db.editUser(temp);
                 
                 Alert alert = new Alert(AlertType.INFORMATION);
                 alert.setTitle("Edit Profile");
