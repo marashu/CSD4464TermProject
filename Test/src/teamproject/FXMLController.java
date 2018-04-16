@@ -483,19 +483,19 @@ public class FXMLController implements Initializable {
     }
     
     public XYChart.Series getBestScore (Player p, String name){
-        int numScore = 100;
+        int numScore = p.getBestScore();
         XYChart.Series data = new XYChart.Series<>();
         data.setName(name);
-        XYChart.Data<String, Number> best = new XYChart.Data<String, Number>("", numScore);
+        XYChart.Data<String, Number> best = new XYChart.Data<String, Number>("", 11);
         data.getData().add(best);
         
         return data;
     }
     public XYChart.Series getAvgScore (Player p, String name){
-        int numScore = 11;
+        int numScore = p.getAverageScore();
         XYChart.Series data = new XYChart.Series<>();
         data.setName(name);
-        XYChart.Data<String, Number> best = new XYChart.Data<String, Number>("", numScore);
+        XYChart.Data<String, Number> best = new XYChart.Data<String, Number>("", 111);
         data.getData().add(best);
         
         return data;
