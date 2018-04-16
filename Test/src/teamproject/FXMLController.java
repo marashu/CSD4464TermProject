@@ -458,16 +458,17 @@ public class FXMLController implements Initializable {
                     player.setUsername(id);
                     player.setPassword(pw);
                     player.setEmail(email);
-
+                    
+                    
+                    
                     currentScreen = ScreenType.READY;
                     root = FXMLLoader.load(getClass().getResource("GameLobby.fxml"));
                     TeamProject.getPrimaryStage().setScene(new Scene(root));
                     TeamProject.getPrimaryStage().show();
                     SetScreenResources();                 
-                    
+
                     XYChart.Series best = getBestScore(player, "Best Score");
                     XYChart.Series avg = getAvgScore(player, "Average Score");
-                    
                     graphMyStastics.getData().addAll(best, avg);
                     
                     System.out.println("GameLobby.fxml opened");
@@ -486,7 +487,7 @@ public class FXMLController implements Initializable {
         int numScore = p.getBestScore();
         XYChart.Series data = new XYChart.Series<>();
         data.setName(name);
-        XYChart.Data<String, Number> best = new XYChart.Data<String, Number>("", 11);
+        XYChart.Data<String, Number> best = new XYChart.Data<String, Number>("", 75);
         data.getData().add(best);
         
         return data;
@@ -495,7 +496,7 @@ public class FXMLController implements Initializable {
         int numScore = p.getAverageScore();
         XYChart.Series data = new XYChart.Series<>();
         data.setName(name);
-        XYChart.Data<String, Number> best = new XYChart.Data<String, Number>("", 111);
+        XYChart.Data<String, Number> best = new XYChart.Data<String, Number>("", 65);
         data.getData().add(best);
         
         return data;
