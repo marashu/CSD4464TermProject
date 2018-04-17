@@ -27,27 +27,27 @@
                         <Font size="30.0" />
                      </font>
                   </Text>
-                  <RadioButton fx:id="rdoAnswer1" layoutX="155.0" layoutY="318.0" mnemonicParsing="false" text="RadioButton">
+                  <RadioButton fx:id="rdoAnswer1" layoutX="71.0" layoutY="319.0" mnemonicParsing="false" text="RadioButton">
                      <font>
-                        <Font size="24.0" />
+                        <Font size="22.0" />
                      </font>
                      <toggleGroup>
                         <ToggleGroup fx:id="quizAnswer" />
                      </toggleGroup>
                   </RadioButton>
-                  <RadioButton fx:id="rdoAnswer2" layoutX="511.0" layoutY="318.0" mnemonicParsing="false" text="RadioButton" toggleGroup="$quizAnswer">
+                  <RadioButton fx:id="rdoAnswer2" layoutX="460.0" layoutY="319.0" mnemonicParsing="false" text="RadioButton" toggleGroup="$quizAnswer">
                      <font>
-                        <Font size="24.0" />
+                        <Font size="22.0" />
                      </font>
                   </RadioButton>
-                  <RadioButton fx:id="rdoAnswer3" layoutX="155.0" layoutY="376.0" mnemonicParsing="false" text="RadioButton" toggleGroup="$quizAnswer">
+                  <RadioButton fx:id="rdoAnswer3" layoutX="71.0" layoutY="377.0" mnemonicParsing="false" text="RadioButton" toggleGroup="$quizAnswer">
                      <font>
-                        <Font size="24.0" />
+                        <Font size="22.0" />
                      </font>
                   </RadioButton>
-                  <RadioButton fx:id="rdoAnswer4" layoutX="511.0" layoutY="376.0" mnemonicParsing="false" text="RadioButton" toggleGroup="$quizAnswer">
+                  <RadioButton fx:id="rdoAnswer4" layoutX="460.0" layoutY="377.0" mnemonicParsing="false" text="RadioButton" toggleGroup="$quizAnswer">
                      <font>
-                        <Font size="24.0" />
+                        <Font size="22.0" />
                      </font>
                   </RadioButton>
                   <ImageView fitHeight="67.0" fitWidth="571.0" layoutX="263.0" layoutY="234.0" pickOnBounds="true" preserveRatio="true">
