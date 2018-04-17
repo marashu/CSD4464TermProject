@@ -39,7 +39,7 @@ public class Player
     public Player(String username, String password)
     {
         this.username = username;
-        this.password = password;
+        setPassword(password);
     }
 
     public String getUsername() {
@@ -66,6 +66,15 @@ public class Player
             Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
         }
         password = Arrays.toString(raw);
+    }
+    
+    /**
+     * IMPORTANT: DO NOT CALL THIS FUNCTION UNLESS THE PASSWORD HAS ALREADY
+     * BEEN ENCRYPTED (ie, retrieving it from the database)
+     */
+    public void SetEncryptedPassword(String p)
+    {
+        this.password = p;
     }
 
     public int getBestScore() {

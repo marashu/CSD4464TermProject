@@ -58,14 +58,14 @@ public class GameManager
         for(int i = 0; i < length; i++)
         {
             Random rnd = new Random();
-            int temp = rnd.nextInt(length);
+            int temp = rnd.nextInt(listAllQuestions.size());
             //make sure the questions are different
             for(int j = 0; j < listQuestionIndexes.size(); j++)
             {
                 if(listQuestionIndexes.get(j) == temp)
                 {
                     j = -1;
-                    temp = rnd.nextInt(length);
+                    temp = rnd.nextInt(listAllQuestions.size());
                 }
             }
             listQuestionIndexes.add(temp);

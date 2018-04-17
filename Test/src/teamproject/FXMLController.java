@@ -75,7 +75,8 @@ public class FXMLController implements Initializable {
     **/
     private static Text txtStrongQuestion;
     private static CategoryAxis xAxis = new CategoryAxis();
-    private static NumberAxis yAxis = new NumberAxis();
+    private static NumberAxis yAxis = new NumberAxis(0,100,10);
+    
     private static BarChart graphMyStastics = new BarChart(xAxis, yAxis);
     
     
@@ -170,10 +171,14 @@ public class FXMLController implements Initializable {
                 //CategoryAxis
                 xAxis = (CategoryAxis) TeamProject.getPrimaryStage().getScene().lookup("#xAxis");
                 //NumberAxis
-                yAxis = (NumberAxis) TeamProject.getPrimaryStage().getScene().lookup("#yAxis");
+                //yAxis = (NumberAxis) TeamProject.getPrimaryStage().getScene().lookup("#yAxis");
+                
                 //BarChart
                 graphMyStastics= (BarChart) TeamProject.getPrimaryStage().getScene().lookup("#graphMyStastics");
                 //XYChart.Series
+                graphMyStastics.getYAxis().setAutoRanging(false);
+                ((NumberAxis)graphMyStastics.getYAxis()).setUpperBound(100);
+                
                 //barData = (XYChart.Series) TeamProject.getPrimaryStage().getScene().lookup("#barData");
                 break;
             case PLAY:
@@ -448,20 +453,17 @@ public class FXMLController implements Initializable {
         Alert alert = new Alert(AlertType.INFORMATION);
         
         try{
-            DBManager db = new DBManager();
-            Player temp = new Player(id, pw);
-            boolean checkLogin = db.loginPlayer(temp);
-            
             if(id.equals("") || pw.equals("")){
                 alert.setTitle("Login Failed");
                 alert.setContentText("Please check your ID and password");
                 alert.showAndWait();
             }else{
+                DBManager db = new DBManager();
+                Player temp = new Player(id, pw);
+                temp = db.loginPlayer(temp);
+                boolean checkLogin = !(temp == null);
                 if(checkLogin){
-                    email = db.getUserEmail();
-                    player.setUsername(id);
-                    player.setPassword(pw);
-                    player.setEmail(email);
+                    player = temp;
                     
                     currentScreen = ScreenType.READY;
                     root = FXMLLoader.load(getClass().getResource("GameLobby.fxml"));

@@ -120,9 +120,11 @@ public class DBManager {
     /*
      * user login
     */
-    public boolean loginPlayer(Player temp) throws SQLException{
+    public Player loginPlayer(Player temp) throws SQLException{
         String id = temp.getUsername();
         String pw = temp.getPassword();
+        
+        Player output = null;
         
         String searchId = "";
         String searchPw = "";
@@ -130,7 +132,7 @@ public class DBManager {
         
         // Create a connection to the database.  
         conn = DriverManager.getConnection(DB_URL);
-        String query = "SELECT username, password FROM players WHERE username= ?";
+        String query = "SELECT username, password, player_id, email_address FROM players WHERE username= ?";
 
         // Create a Statement object for the query.
         PreparedStatement stmt = conn.prepareStatement(query, 
@@ -140,10 +142,24 @@ public class DBManager {
         
         ResultSet rs = stmt.executeQuery();
         
-        while(rs.next()){
+        // Get the number of rows.
+            rs.last();                 // Move to last row
+            int numRows = rs.getRow(); // Get row number
+            
+            //if more than one player, or if the player doesn't exist,
+            //there is an error, so return null
+            if(numRows != 1)
+                return null;
+            rs.first();                // Move to first row
+            
+        
             searchId = rs.getString("username");
             searchPw = rs.getString("password");
-        }        
+            output = new Player(searchId, searchPw);
+            output.SetEncryptedPassword(searchPw);
+            output.setEmail(rs.getString("email_address"));
+            output.setId(rs.getInt("player_id"));
+                  
         
         if(!id.equals(searchId) || !pw.equals(searchPw)){
             status = false;
@@ -153,7 +169,9 @@ public class DBManager {
 
         // Close the connection and statement objects.
         stmt.close();
-        return status;
+        if(!status)
+            return null;
+        return output;
     }
     
     

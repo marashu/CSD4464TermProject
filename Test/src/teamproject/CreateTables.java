@@ -40,6 +40,9 @@ public class CreateTables {
             //populate the questions and the answers
             PopulateQuestionsTable(conn);
             PopulateAnswersTable(conn);
+            
+            //Set the correct answer
+            SetCorrectAnswer(conn);
         }
         catch (Exception ex)
         {
@@ -74,6 +77,43 @@ public class CreateTables {
             // Get a Statement object.
             Statement stmt  = conn.createStatement();;
 
+            //drop a couple constraints that prevent tables from dropping
+            try
+            {
+                // Drop the Answers table.
+                stmt.execute("ALTER TABLE questions DROP CONSTRAINT QUESTIONS_CORRECT_ANSWER_ID_FK");
+                System.out.println("Removed FK from questions");
+            }
+            catch(SQLException ex)
+            {
+                // No need to report an error.
+                // The table simply did not exist.
+            }
+            try
+            {
+                // Drop the Answers table.
+                stmt.execute("ALTER TABLE scores DROP CONSTRAINT scores_player_id_fk");
+                System.out.println("Removed FK from scores");
+            }
+            catch(SQLException ex)
+            {
+                // No need to report an error.
+                // The table simply did not exist.
+            }
+            
+            //now drop the tables
+            try
+            {
+                // Drop the Answers table.
+                stmt.execute("DROP TABLE answers");
+                System.out.println("Answers table dropped.");
+            }
+            catch(SQLException ex)
+            {
+                // No need to report an error.
+                // The table simply did not exist.
+            }
+            
             try
             {
                 // Drop the Players table.
@@ -85,17 +125,7 @@ public class CreateTables {
                 // No need to report an error.
                 // The table simply did not exist.
             }
-            try
-            {
-                // Drop the Scores table.
-                stmt.execute("DROP TABLE scores");
-                System.out.println("Scores table dropped.");
-            }
-            catch(SQLException ex)
-            {
-                // No need to report an error.
-                // The table simply did not exist.
-            }
+            
             try
             {
                 // Drop the Questions table.
@@ -107,17 +137,19 @@ public class CreateTables {
                 // No need to report an error.
                 // The table simply did not exist.
             }
+            
             try
             {
-                // Drop the UnpaidOrder table.
-                stmt.execute("DROP TABLE answers");
-                System.out.println("Answers table dropped.");
+                // Drop the Scores table.
+                stmt.execute("DROP TABLE scores");
+                System.out.println("Scores table dropped.");
             }
             catch(SQLException ex)
             {
                 // No need to report an error.
                 // The table simply did not exist.
             }
+            
             try
             {
                 // Drop the UnpaidOrder table.
@@ -161,7 +193,7 @@ public class CreateTables {
             stmt.execute("CREATE TABLE players(" +
                 "player_id INTEGER NOT NULL," +
                 "username VARCHAR(30)  NOT NULL," +
-                "password VARCHAR(40) NOT NULL," +
+                "password VARCHAR(100) NOT NULL," +
                 "email_address VARCHAR(40)  NOT NULL," +
                 "creation_date DATE," +
                 "first_name VARCHAR(20)," +
@@ -215,7 +247,7 @@ public class CreateTables {
             stmt.execute("CREATE TABLE questions(" +
                 "question_id INTEGER NOT NULL," +
                 "question VARCHAR(100) NOT NULL," +
-                "correct_answer_id INTEGER NOT NULL)");
+                "correct_answer_id INTEGER)");
             
             
             
@@ -263,16 +295,21 @@ public class CreateTables {
          
             // Create the table.
             stmt.execute("INSERT INTO questions " +
-                "VALUES (401, 'What is the longest river in the world?', 503)," +
-                "(402, 'How many megabytes are in one gigabyte?', 508)," +
-                "(403, 'Which Apollo mission landed the first humans on the Moon?', 511)," +
-                "(404, 'What does 8 * 8 equal?', 516)," +
-                "(405, 'What country has the longest coastline?', 517)," +
-                "(406, 'What did the \"D\" in \"D-Day\" stand for?', 522)," +
-                "(407, 'Who holds the record for the most victories in a row on the professional golf tour?', 527 )," +
-                "(408, 'What element in the periodic table has the symbol of ''S''?',530 )," +
-                "(409, 'What does 162 / 9 equal?', 535)," +
-                "(410, 'Who is the 20th Prime Minister of Canada?', 539)");
+                "VALUES (401, 'What is the longest river in the world?',NULL)," +
+                "(402, 'How many megabytes are in one gigabyte?',NULL)," +
+                "(403, 'Which Apollo mission landed the first humans on the Moon?',NULL)," +
+                "(404, 'What does 8 * 8 equal?',NULL)," +
+                "(405, 'What country has the longest coastline?',NULL)," +
+                "(406, 'What did the \"D\" in \"D-Day\" stand for?',NULL)," +
+                "(407, 'Who holds the record for the most victories in a row on the professional golf tour?',NULL)," +
+                "(408, 'What element in the periodic table has the symbol of ''S''?',NULL)," +
+                "(409, 'What does 162 / 9 equal?',NULL)," +
+                "(410, 'Who is the 20th Prime Minister of Canada?',NULL)," +
+                "(411, 'What is the lowest layer of the earth''s atmosphere?',NULL),"
+                    + "(412, 'Which U. S. State provided the title of a Bee Gees hit single?',NULL),"
+                    + "(413, 'Who is the first person a newly elected pope meets?',NULL),"
+                    + "(414, 'In Greek mythology, who was Minos'' mother?',NULL),"
+                    + "(415, 'Vienna is the setting for what Shakespeare play?',NULL)");
             
             
             
@@ -333,7 +370,27 @@ public class CreateTables {
                 "(537, 410, 'Stephen Harper')," +
                 "(538, 410, 'Justin Trudeau')," +
                 "(539, 410, 'Jean Chretien')," +
-                "(540, 410, 'Paul Martin')");
+                "(540, 410, 'Paul Martin'),"
+                    + "(541, 411, 'Thermosphere'),"
+                    + "(542, 411, 'Mesosphere'),"
+                    + "(543, 411, 'Stratosphere'),"
+                    + "(544, 411, 'Troposphere'),"
+                    + "(545, 412, 'Carolina'),"
+                    + "(546, 412, 'Louisiana'),"
+                    + "(547, 412, 'California'),"
+                    + "(548, 412, 'Massachusetts'),"
+                    + "(549, 413,'The president of Italy'),"
+                    + "(550, 413,'The monarch of England'),"
+                    + "(551, 413,'The president of the United States'),"
+                    + "(552, 413,'His tailor'),"
+                    + "(553, 414,'Arachne'),"
+                    + "(554, 414,'Persephone'),"
+                    + "(555, 414,'Lysistrata'),"
+                    + "(556, 414,'Europa'),"
+                    + "(557, 415,'Taming of the Shrew'),"
+                    + "(558, 415,'The Merchant of Venice'),"
+                    + "(559, 415,'As You Like It'),"
+                    + "(560, 415,'Measure for Measure')");
             
             
             
@@ -367,10 +424,7 @@ public class CreateTables {
                 "ADD CONSTRAINT players_email_address_uq " +
                 "UNIQUE(email_address)");
             
-            stmt.execute("CREATE SEQUENCE players_seq " +
-                "START WITH 1 " +
-                "MAXVALUE 100 " +
-                "INCREMENT BY 1 " );
+            
             
             //add table constraints
             stmt.execute("ALTER TABLE scores " +
@@ -382,33 +436,29 @@ public class CreateTables {
                 "FOREIGN KEY(player_id) " +
                 "REFERENCES players(player_id)");
             
-            stmt.execute("CREATE SEQUENCE scores_seq " +
-                "START WITH 101 " +
-                "MAXVALUE 200 " +
-                "INCREMENT BY 1 " );
+            
             
             //add table constraints
             stmt.execute("ALTER TABLE questions " +
                 "ADD CONSTRAINT questions_question_id_pk " +
                 "PRIMARY KEY(question_id)");
             
-            stmt.execute("ALTER TABLE questions" +
-                "ADD CONSTRAINT questions_correct_answer_id_pk " +
-                "PRIMARY KEY(correct_answer_id)");
             
             stmt.execute("ALTER TABLE questions " +
                 "ADD CONSTRAINT questions_question_uq " +
                 "UNIQUE(question)");
             
-            stmt.execute("ALTER TABLE questions " +
-                "ADD CONSTRAINT questions_correct_answer_id_fk " +
-                "FOREIGN KEY(correct_answer_id) " +
-                "REFERENCES answers(answer _id)");
+            
             
             //add table constraints
             stmt.execute("ALTER TABLE answers " +
                 "ADD CONSTRAINT answers_answer_id_pk " +
                 "PRIMARY KEY(answer_id)");
+            
+            stmt.execute("ALTER TABLE questions " +
+                "ADD CONSTRAINT questions_correct_answer_id_fk " +
+                "FOREIGN KEY(correct_answer_id) " +
+                "REFERENCES answers(answer_id)");
             
             stmt.execute("ALTER TABLE answers " +
                 "ADD CONSTRAINT answers_answer_uq " +
@@ -419,12 +469,71 @@ public class CreateTables {
                 "FOREIGN KEY(question_id) " +
                 "REFERENCES questions(question_id)");
             
+            stmt.execute("CREATE SEQUENCE scores_seq " +
+                "START WITH 101 " +
+                "MAXVALUE 200 " +
+                "INCREMENT BY 1 " );
+            
+            stmt.execute("CREATE SEQUENCE players_seq " +
+                "START WITH 1 " +
+                "MAXVALUE 100 " +
+                "INCREMENT BY 1 " );
+            
             //Output to show the database has been successfully created
             System.out.println("Constraints added.");
         }
         catch (SQLException ex)
         {
             System.out.println("CONSTRAINT ERROR: " + ex.getMessage());
+        }
+    }
+    
+    public static void SetCorrectAnswer(Connection conn)
+    {
+         try
+	{
+            // Get a Statement object.
+            Statement stmt = conn.createStatement();
+            
+           
+            
+            stmt.execute("UPDATE questions SET correct_answer_id=503"
+                    + "WHERE question_id=401" );
+            stmt.execute("UPDATE questions SET correct_answer_id=508"
+                    + "WHERE question_id=402" );
+            stmt.execute("UPDATE questions SET correct_answer_id=511"
+                    + "WHERE question_id=403" );
+            stmt.execute("UPDATE questions SET correct_answer_id=516"
+                    + "WHERE question_id=404" );
+            stmt.execute("UPDATE questions SET correct_answer_id=517"
+                    + "WHERE question_id=405" );
+            stmt.execute("UPDATE questions SET correct_answer_id=522"
+                    + "WHERE question_id=406" );
+            stmt.execute("UPDATE questions SET correct_answer_id=527"
+                    + "WHERE question_id=407" );
+            stmt.execute("UPDATE questions SET correct_answer_id=530"
+                    + "WHERE question_id=408" );
+            stmt.execute("UPDATE questions SET correct_answer_id=535"
+                    + "WHERE question_id=409" );
+            stmt.execute("UPDATE questions SET correct_answer_id=539"
+                    + "WHERE question_id=410" );
+            stmt.execute("UPDATE questions SET correct_answer_id=544"
+                    + "WHERE question_id=411" );
+            stmt.execute("UPDATE questions SET correct_answer_id=548"
+                    + "WHERE question_id=412" );
+            stmt.execute("UPDATE questions SET correct_answer_id=552"
+                    + "WHERE question_id=413" );
+            stmt.execute("UPDATE questions SET correct_answer_id=556"
+                    + "WHERE question_id=414" );
+            stmt.execute("UPDATE questions SET correct_answer_id=560"
+                    + "WHERE question_id=415" );
+            
+            //Output to show the database has been successfully created
+            System.out.println("Updated answers");
+        }
+        catch (SQLException ex)
+        {
+            System.out.println("UPDATE ERROR: " + ex.getMessage());
         }
     }
 }
