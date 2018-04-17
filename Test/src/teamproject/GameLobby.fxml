@@ -42,19 +42,19 @@
             </Pane>
             <Pane layoutX="522.0" layoutY="142.0" prefHeight="562.0" prefWidth="443.0" style="-fx-background-color: #d6f8ff;">
                <children>
-                  <ImageView fitHeight="222.0" fitWidth="235.0" layoutX="105.0" layoutY="214.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@source/ryan.png" />
-                     </image>
-                  </ImageView>
                   <Button fx:id="btnPlayGame" layoutX="42.0" layoutY="416.0" mnemonicParsing="false" onAction="#startGame" prefHeight="93.0" prefWidth="363.0" styleClass="button1" stylesheets="@style.css" text="Play Game">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <ImageView fitHeight="110.0" fitWidth="364.0" layoutX="47.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="204.0" fitWidth="322.0" layoutX="68.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@source/playgame.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="222.0" fitWidth="235.0" layoutX="107.0" layoutY="214.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@source/ryan.png" />
                      </image>
                   </ImageView>
                </children>

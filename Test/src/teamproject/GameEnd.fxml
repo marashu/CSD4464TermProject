@@ -11,17 +11,12 @@
   <children>
     <Pane fx:id="paneLogin" prefHeight="755.0" prefWidth="1024.0">
       <children>
-            <Text fill="WHITE" layoutX="46.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome  Trivia Quiz Game" wrappingWidth="334.0">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-            </Text>
-            <Text fill="#000e64" layoutX="456.0" layoutY="225.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your Score is">
+            <Text fill="#000e64" layoutX="456.0" layoutY="174.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your Score is">
                <font>
                   <Font name="Myanmar Text Bold" size="24.0" />
                </font>
             </Text>
-            <Text fx:id="txtFinalScore" fill="WHITE" layoutX="173.0" layoutY="446.0" strokeType="OUTSIDE" strokeWidth="0.0" text="100,000" textAlignment="CENTER" wrappingWidth="713.5039159003645">
+            <Text fx:id="txtFinalScore" fill="WHITE" layoutX="173.0" layoutY="395.0" strokeType="OUTSIDE" strokeWidth="0.0" text="100,000" textAlignment="CENTER" wrappingWidth="713.5039159003645">
                <font>
                   <Font name="Leelawadee UI Bold" size="180.0" />
                </font>

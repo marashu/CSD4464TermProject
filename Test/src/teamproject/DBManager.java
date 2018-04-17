@@ -24,6 +24,18 @@ public class DBManager {
     // Field for the database connection
     private Connection conn;
     
+    /*
+     * user find id, pw global variable
+    */
+    private String userId = "";
+    private String userPw = "";
+    private String userEmail = "";
+    private int bestScore = 0;
+    private int avgScore = 0;
+    private int numRow = 0;
+    private int emailNumRow = 0;
+
+
     /**
       Constructor
    */
@@ -62,6 +74,47 @@ public class DBManager {
 
       // Close the connection and statement objects.
       stmt.close();
+    }
+    
+    public int getNumRow(String id) throws SQLException{
+        // Create a connection to the database.  
+        conn = DriverManager.getConnection(DB_URL);
+
+        // Create a Statement object for the query.
+        String query = "SELECT username FROM players WHERE username= ?";
+        PreparedStatement stmt = conn.prepareStatement(query, 
+                 ResultSet.TYPE_SCROLL_INSENSITIVE,
+                 ResultSet.CONCUR_READ_ONLY);
+        stmt.setString(1, id);
+        ResultSet rs = stmt.executeQuery();
+        rs.last();
+        
+        numRow = rs.getRow();
+        setNumRow(numRow);
+        
+        stmt.close();
+        
+        return numRow;
+    }
+    
+    public int getEmailNumRow(String email) throws SQLException{
+        // Create a connection to the database.  
+        conn = DriverManager.getConnection(DB_URL);
+
+        // Create a Statement object for the query.
+        String query = "SELECT email_address FROM players WHERE email_address= ?";
+        PreparedStatement stmt = conn.prepareStatement(query, 
+                 ResultSet.TYPE_SCROLL_INSENSITIVE,
+                 ResultSet.CONCUR_READ_ONLY);
+        stmt.setString(1, email);
+        ResultSet rs = stmt.executeQuery();
+        rs.last();
+        
+        emailNumRow = rs.getRow();
+        setNumRow(emailNumRow);
+        stmt.close();
+        
+        return emailNumRow;
     }
     
     /*
@@ -103,14 +156,6 @@ public class DBManager {
         return status;
     }
     
-    /*
-     * user find id, pw global variable
-    */
-    private String userId = "";
-    private String userPw = "";
-    private String userEmail = "";
-    private int bestScore = 0;
-    private int avgScore = 0;
     
     /*
      * user find id, pw 
@@ -120,7 +165,7 @@ public class DBManager {
         
         // Create a connection to the database.  
         conn = DriverManager.getConnection(DB_URL);
-        String query = "SELECT username, password, email_address FROM players WHERE email= ?";
+        String query = "SELECT username, password, email_address FROM players WHERE email_address= ?";
 
         // Create a Statement object for the query.
         PreparedStatement stmt = conn.prepareStatement(query, 
@@ -163,6 +208,24 @@ public class DBManager {
     }
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
+    }
+    public int getBestScore() {
+        return bestScore;
+    }
+    public void setBestScore(int bestScore) {
+        this.bestScore = bestScore;
+    }
+    public int getAvgScore() {
+        return avgScore;
+    }
+    public void setAvgScore(int avgScore) {
+        this.avgScore = avgScore;
+    }
+    public void setNumRow(int numRow) {
+        this.numRow = numRow;
+    }
+    public void setEmailNumRow(int emailNumRow) {
+        this.emailNumRow = emailNumRow;
     }
     
     /*

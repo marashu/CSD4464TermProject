@@ -67,6 +67,7 @@ public class FXMLController implements Initializable {
      * Find Id & pw
     **/
     private static TextField txtEmailFind;
+    private static Text find_notice_email;
     
     /**
      * Game Lobby
@@ -160,6 +161,8 @@ public class FXMLController implements Initializable {
             case FORGOT_PASSWORD:
                 //TextField
                 txtEmailFind= (TextField) TeamProject.getPrimaryStage().getScene().lookup("#txtEmailFind");
+                //Text
+                find_notice_email = (Text) TeamProject.getPrimaryStage().getScene().lookup("#find_notice_email");
                 break;
             case READY:
                 //Text
@@ -460,13 +463,11 @@ public class FXMLController implements Initializable {
                     player.setPassword(pw);
                     player.setEmail(email);
                     
-                    
-                    
                     currentScreen = ScreenType.READY;
                     root = FXMLLoader.load(getClass().getResource("GameLobby.fxml"));
                     TeamProject.getPrimaryStage().setScene(new Scene(root));
                     TeamProject.getPrimaryStage().show();
-                    SetScreenResources();                 
+                    SetScreenResources();  
 
                     XYChart.Series best = getBestScore(player, "Best Score");
                     XYChart.Series avg = getAvgScore(player, "Average Score");
@@ -520,7 +521,7 @@ public class FXMLController implements Initializable {
     * button for creating user account
     */
     @FXML
-    private void creatAccount(ActionEvent event) throws IOException{
+    private void creatAccount(ActionEvent event) throws IOException, SQLException{
         String id = txtRegisterId.getText();
         String pw = txtRegisterPassword.getText();
         String pwc = txtRegisterPasswordConfirm.getText();
@@ -554,19 +555,27 @@ public class FXMLController implements Initializable {
             System.err.println(ex.getMessage());
         }
     }
-    public boolean checkID(String id, Text txt){
+    public boolean checkID(String id, Text txt) throws SQLException{
         boolean status = false;
+        DBManager db = new DBManager();
+        int numRow = db.getNumRow(id);
+        
         if(id.equals("")){
             txt.setText("This field is required.");
             status = false;
         }else{
-            char[] idArray = id.toCharArray();
-            if(idArray.length < 5 || idArray.length > 8){
-                txt.setText("Length of ID should be between 5 and 8");
-                status = false;
+            if(numRow == 0){
+                char[] idArray = id.toCharArray();
+                if(idArray.length < 5 || idArray.length > 8){
+                    txt.setText("Length of ID should be between 5 and 8");
+                    status = false;
+                }else{
+                    txt.setText("");
+                    status = true;
+                }
             }else{
-                txt.setText("");
-                status = true;
+                txt.setText("This ID is duplicated");
+                status = false;
             }
         }
         return status;
@@ -604,8 +613,10 @@ public class FXMLController implements Initializable {
         }
         return status;
     }
-    public boolean checkEmail(String email, Text txt){
+    public boolean checkEmail(String email, Text txt) throws SQLException{
         boolean status = false;
+        DBManager db = new DBManager();
+        int emailNumRow = db.getEmailNumRow(email);
         String regex =  "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
         + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
         Pattern pattern = Pattern.compile(regex);
@@ -614,14 +625,19 @@ public class FXMLController implements Initializable {
             txt.setText("This field is required.");
             status = false;
         }else{
-            Matcher matcher  = pattern.matcher(email);
-            if(!matcher.matches()){
-                txt.setText("This is not email format.");
-                status= false;
+            if(emailNumRow == 0){
+                Matcher matcher  = pattern.matcher(email);
+                if(!matcher.matches()){
+                    txt.setText("This is not email format.");
+                    status= false;
+                }else{
+                    txt.setText("");
+                    status= true;
+                } 
             }else{
-                txt.setText("");
-                status= true;
-            } 
+                txt.setText("Email is duplicated.");
+                status= false;
+            }
         }
         return status;
     }
@@ -631,46 +647,69 @@ public class FXMLController implements Initializable {
     */
     @FXML
     private void findAccount(ActionEvent event) throws IOException{
-        
+        Alert alert = new Alert(AlertType.CONFIRMATION);
         String email = txtEmailFind.getText();
         String findId = "";
         String findPw = "";
         
+        
+        String regex =  "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+        Pattern pattern = Pattern.compile(regex);
+        
         try{
             DBManager db = new DBManager();
-            boolean checkAccount = db.findIdPw(email);
-            if(checkAccount){
-                findId = db.getUserId();
-                findPw = db.getUserPw();
-                Alert alert = new Alert(AlertType.CONFIRMATION);
-                alert.setTitle("Login Information");
-                alert.setContentText("ID : " + findId + "\n" + "Password: " + findPw + "\n\n" +
-                        "Would you like to login?");
+            int emailNumRow = db.getEmailNumRow(email);
+            
+            if(email.equals("")){
                 
-                Optional<ButtonType> result = alert.showAndWait();
-                if(result.get() == ButtonType.OK){
-                    currentScreen = ScreenType.LOGIN;
-                    root = FXMLLoader.load(getClass().getResource("Login.fxml"));
-                    TeamProject.getPrimaryStage().setScene(new Scene(root));
-                    TeamProject.getPrimaryStage().show();
-                    SetScreenResources();
-                    System.out.println("Login.fxml opened");
-                }
+                alert.setTitle("Login Information");
+                alert.setContentText("Email should be entered");
             }else{
-                Alert alert = new Alert(AlertType.CONFIRMATION);
-                alert.setTitle("Login Information");
-                alert.setContentText("Can't find user information\nWill you find again?");
-                
-                Optional<ButtonType> result = alert.showAndWait();
-                if(result.get() == ButtonType.CANCEL){
-                    currentScreen = ScreenType.LOGIN;
-                    root = FXMLLoader.load(getClass().getResource("Login.fxml"));
-                    TeamProject.getPrimaryStage().setScene(new Scene(root));
-                    TeamProject.getPrimaryStage().show();
-                    SetScreenResources();
-                    System.out.println("Login.fxml opened");
-                }
+                Matcher matcher  = pattern.matcher(email);
+                if(!matcher.matches()){
+                    find_notice_email.setText("This is not email format.");
+                }else{
+                    find_notice_email.setText("");
+                    if(emailNumRow == 1){
+                        boolean checkAccount = db.findIdPw(email);
+                        if(checkAccount){
+                            findId = db.getUserId();
+                            findPw = db.getUserPw();
+
+                            alert.setTitle("Login Information");
+                            alert.setContentText("ID : " + findId + "\n" + "Password: " + findPw + "\n\n" +
+                                    "Would you like to login?");
+
+                            Optional<ButtonType> result = alert.showAndWait();
+                            if(result.get() == ButtonType.OK){
+                                currentScreen = ScreenType.LOGIN;
+                                root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+                                TeamProject.getPrimaryStage().setScene(new Scene(root));
+                                TeamProject.getPrimaryStage().show();
+                                SetScreenResources();
+                                System.out.println("Login.fxml opened");
+                            }
+                        }else{
+                            alert.setTitle("Login Information");
+                            alert.setContentText("Can't find user information\nWill you find again?");
+
+                            Optional<ButtonType> result = alert.showAndWait();
+                            if(result.get() == ButtonType.CANCEL){
+                                currentScreen = ScreenType.LOGIN;
+                                root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+                                TeamProject.getPrimaryStage().setScene(new Scene(root));
+                                TeamProject.getPrimaryStage().show();
+                                SetScreenResources();
+                                System.out.println("Login.fxml opened");
+                            }
+                        }
+                    }else{
+                        find_notice_email.setText("Can't Find email");
+                    }
+                } 
             }
+            
         }catch(SQLException ex){
             System.out.println(ex.getMessage());            
         }
@@ -730,7 +769,7 @@ public class FXMLController implements Initializable {
     }
     
     @FXML
-    private void editUserProfileConfirm(ActionEvent event) throws IOException{
+    private void editUserProfileConfirm(ActionEvent event) throws IOException, SQLException{
         String id = player.getUsername();
         String pw = txtEditPassword.getText();
         String pwc = txtEditPasswordConfirm.getText();
