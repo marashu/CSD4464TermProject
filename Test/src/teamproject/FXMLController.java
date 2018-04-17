@@ -37,8 +37,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
 /**
  * FXML Controller class
@@ -657,6 +655,7 @@ public class FXMLController implements Initializable {
         String findId = "";
         String findPw = "";
         
+        
         String regex =  "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
         + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
         Pattern pattern = Pattern.compile(regex);
@@ -669,6 +668,7 @@ public class FXMLController implements Initializable {
                 
                 alert.setTitle("Login Information");
                 alert.setContentText("Email should be entered");
+                alert.showAndWait();
             }else{
                 Matcher matcher  = pattern.matcher(email);
                 if(!matcher.matches()){
@@ -676,30 +676,56 @@ public class FXMLController implements Initializable {
                 }else{
                     find_notice_email.setText("");
                     if(emailNumRow == 1){
-                        boolean checkAccount = db.findIdPw(email);
-                        if(checkAccount){
-                            findId = db.getUserId();
-                            findPw = db.getUserPw();
+                        //In this case, the email exists
+                        //boolean checkAccount = db.findIdPw(email);
+                        try{
+                            player = db.findPlayerByEmail(email);
+                        
+                            //findId = db.getUserId();
+                            //findPw = db.getUserPw();
 
-                            JFrame frame = new JFrame("InputDialoague");
-                            String resetPassword = "";
-                            String input = JOptionPane.showInputDialog(frame, "Your id :" + findId + "\n" +
-                                    "Please reset your password");
+                            TextInputDialog dialog = new TextInputDialog();
+                            dialog.setContentText("Your username is: " + player.getUsername()
+                                + "\nPlease enter a new password.");
                             
-                            db.editPassword(email, input);
-                            
-                            Optional<ButtonType> result = alert.showAndWait();
-                            if(result.get() == ButtonType.OK){
-                                currentScreen = ScreenType.LOGIN;
-                                root = FXMLLoader.load(getClass().getResource("Login.fxml"));
-                                TeamProject.getPrimaryStage().setScene(new Scene(root));
-                                TeamProject.getPrimaryStage().show();
-                                SetScreenResources();
-                                System.out.println("Login.fxml opened");
+
+                            Optional<String> result = dialog.showAndWait();
+                            if(result.isPresent())
+                            {
+                                if(checkPW(result.get(), new Text()))
+                                {
+                                    player.setPassword(result.get());
+                                    db.editUser(player);
+                                    alert.setTitle("Confirmation");
+                                    alert.setContentText("Password has been updated");
+                                    alert.showAndWait();
+                                }
+                                else
+                                {
+                                    alert.setTitle("Error");
+                                    alert.setContentText("Password was not valid.  Must be between\n"
+                                            + "5 and 8 characters long.");
+                                    alert.showAndWait();
+                                }
                             }
-                        }else{
+                            else
+                            {
+                                alert.setTitle("Error");
+                                alert.setContentText("Password not found.  New password must be between\n"
+                                            + "5 and 8 characters long.");
+                                alert.showAndWait();
+                            }
+                            
+                        } catch(SQLException ex)
+                        {
+                            System.err.println(ex.getMessage());
+                        }
+                        
+                    }else{
+                        //Email doesn't exist
                             alert.setTitle("Login Information");
-                            alert.setContentText("Can't find user information\nWill you find again?");
+                            alert.setContentText("Can't find user information\nWill you try again?");
+                            alert.showAndWait();
 
                             Optional<ButtonType> result = alert.showAndWait();
                             if(result.get() == ButtonType.CANCEL){
@@ -710,9 +736,6 @@ public class FXMLController implements Initializable {
                                 SetScreenResources();
                                 System.out.println("Login.fxml opened");
                             }
-                        }
-                    }else{
-                        find_notice_email.setText("Can't Find email");
                     }
                 } 
             }

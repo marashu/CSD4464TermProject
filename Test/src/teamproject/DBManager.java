@@ -149,7 +149,10 @@ public class DBManager {
             //if more than one player, or if the player doesn't exist,
             //there is an error, so return null
             if(numRows != 1)
+            {
+                stmt.close();
                 return null;
+            }
             rs.first();                // Move to first row
             
         
@@ -174,6 +177,49 @@ public class DBManager {
         return output;
     }
     
+    /**
+     * a function to return a player based on an email address
+     * @param email the email index to search for
+     * @return 
+     */
+    public Player findPlayerByEmail(String email) throws SQLException
+    {
+        Player output = null;
+        // Create a connection to the database.  
+        conn = DriverManager.getConnection(DB_URL);
+        String query = "SELECT username, player_id FROM players WHERE email_address= ?";
+
+        // Create a Statement object for the query.
+        PreparedStatement stmt = conn.prepareStatement(query, 
+               ResultSet.TYPE_SCROLL_INSENSITIVE,
+               ResultSet.CONCUR_READ_ONLY);
+        stmt.setString(1, email);
+        
+        ResultSet rs = stmt.executeQuery();
+        
+        //make sure there is a row
+        rs.last();                 // Move to last row
+            int numRows = rs.getRow(); // Get row number
+            
+            //if more than one player, or if the player doesn't exist,
+            //there is an error, so return null
+            if(numRows != 1)
+            {
+                stmt.close();
+                return null;
+            }
+            rs.first();                // Move to first row
+        
+        //while(rs.next()){
+        output = new Player();
+        output.setUsername(rs.getString("username"));
+        output.setEmail(email);
+        output.setId(rs.getInt("player_id"));
+        //}
+        stmt.close();
+        
+        return output;
+    }
     
     /*
      * user find id, pw 
@@ -207,6 +253,7 @@ public class DBManager {
             setUserEmail(userEmail);
             status = true;
         }
+        stmt.close();
         return status;
     }
     public String getUserId() {
@@ -252,40 +299,29 @@ public class DBManager {
     
     public void editUser(Player temp) throws SQLException{
         
-        String id = temp.getUsername();
+        int id = temp.getId();
         String pw = temp.getPassword();
         String em = temp.getEmail();
-        // Create a connection to the database.  
-        conn = DriverManager.getConnection(DB_URL);
-        String query = "UPDATE players SET password =?, email_address =? WHERE username= ?";
-
-        // Create a Statement object for the query.
-        PreparedStatement stmt = conn.prepareStatement(query, 
-               ResultSet.TYPE_SCROLL_INSENSITIVE,
-               ResultSet.CONCUR_READ_ONLY);
-        stmt.setString(1, pw);
-        stmt.setString(2, em);
-        stmt.setString(3, id);
         
-        stmt.executeUpdate();
-        stmt.close();
-    }
-    
-    public void editPassword(String email, String pw) throws SQLException{
+        
         
         // Create a connection to the database.  
         conn = DriverManager.getConnection(DB_URL);
-        String query = "UPDATE players SET password =? WHERE email_address = ?";
-
-        // Create a Statement object for the query.
-        PreparedStatement stmt = conn.prepareStatement(query, 
-               ResultSet.TYPE_SCROLL_INSENSITIVE,
-               ResultSet.CONCUR_READ_ONLY);
-        stmt.setString(1, pw);
-        stmt.setString(2, email);
-        
-        stmt.executeUpdate();
-        stmt.close();
+        //String query = "UPDATE players SET password=?, email_address=? WHERE player_id=?";
+        String query = "UPDATE players SET password=?, email_address=? WHERE player_id=?";
+        try ( // Create a Statement object for the query.
+                PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, pw);
+            stmt.setString(2, em);
+            stmt.setInt(3, id);
+            
+            stmt.executeUpdate();
+            stmt.close();
+        }
+        catch(Exception ex)
+        {
+            System.err.println(ex.getMessage());
+        }
     }
     
     public void removeUser(Player temp) throws SQLException
@@ -367,7 +403,7 @@ public class DBManager {
                         ans.addLast(ans_resultSet.getString(2));
                     ans_resultSet.next();
                 }
-                
+                ans_stmt.close();
                 Question q = new Question(id, resultSet.getString(2), ans.get(0), ans.get(1), ans.get(2), ans.get(3));
                 list.add(q);
                 
