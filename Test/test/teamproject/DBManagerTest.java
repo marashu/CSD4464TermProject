@@ -60,6 +60,22 @@ public class DBManagerTest {
     
     //testing for SQL Injection
     @Test
+    public void testIncorrectLoginPlayer() throws Exception
+    {
+        System.out.println("Test for unsuccessful login");
+        //no player has a username or password 1 character long
+        Player temp = new Player("a", "a");
+        temp.setEmail("a@a.aa");
+        
+        DBManager instance = new DBManager();
+        boolean expResult = false;
+        //try logging the player in
+        boolean result = !(instance.loginPlayer(temp) == null);
+        //assert that login was not successful
+        assertEquals(expResult, result);
+    }
+    //testing for SQL Injection
+    @Test
     public void textSQLInjection() throws Exception
     {
         System.out.println("Test for SQL injection");
