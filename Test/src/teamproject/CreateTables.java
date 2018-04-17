@@ -150,28 +150,7 @@ public class CreateTables {
                 // The table simply did not exist.
             }
             
-            try
-            {
-                // Drop the UnpaidOrder table.
-                stmt.execute("DROP SEQUENCE players_seq");
-                System.out.println("Players sequence dropped.");
-            }
-            catch(SQLException ex)
-            {
-                // No need to report an error.
-                // The sequence simply did not exist.
-            }
-            try
-            {
-                // Drop the UnpaidOrder table.
-                stmt.execute("DROP SEQUENCE scores_seq");
-                System.out.println("Scores sequence dropped.");
-            }
-            catch(SQLException ex)
-            {
-                // No need to report an error.
-                // The sequence simply did not exist.
-            }
+            
 
         }
         catch(SQLException ex)
@@ -191,7 +170,7 @@ public class CreateTables {
          
             // Create the table.
             stmt.execute("CREATE TABLE players(" +
-                "player_id INTEGER NOT NULL," +
+                "player_id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1)," +
                 "username VARCHAR(30)  NOT NULL," +
                 "password VARCHAR(100) NOT NULL," +
                 "email_address VARCHAR(40)  NOT NULL," +
@@ -218,7 +197,7 @@ public class CreateTables {
          
             // Create the table.
             stmt.execute("CREATE TABLE scores(" +
-                "score_id INTEGER NOT NULL," +
+                "score_id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1,  INCREMENT BY 1)," +
                 "player_id INTEGER NOT NULL," +
                 "total_score DEC(9,0)," +
                 "average_score DEC(9,0)," +
@@ -469,15 +448,7 @@ public class CreateTables {
                 "FOREIGN KEY(question_id) " +
                 "REFERENCES questions(question_id)");
             
-            stmt.execute("CREATE SEQUENCE scores_seq " +
-                "START WITH 101 " +
-                "MAXVALUE 200 " +
-                "INCREMENT BY 1 " );
             
-            stmt.execute("CREATE SEQUENCE players_seq " +
-                "START WITH 1 " +
-                "MAXVALUE 100 " +
-                "INCREMENT BY 1 " );
             
             //Output to show the database has been successfully created
             System.out.println("Constraints added.");

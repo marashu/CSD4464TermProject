@@ -63,7 +63,7 @@ public class DBManager {
       String email = temp.getEmail();
       // Create a Statement object for the query.
       PreparedStatement stmt = conn.prepareStatement("INSERT INTO players ("
-              + "username, password, email_address, player_id) VALUES(?,?,?, NEXT VALUE FOR players_seq)");
+              + "username, password, email_address) VALUES(?,?,?)");
       
       stmt.setString(1, id);
       stmt.setString(2, pw);
