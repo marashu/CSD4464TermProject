@@ -271,6 +271,23 @@ public class DBManager {
         stmt.close();
     }
     
+    public void editPassword(String email, String pw) throws SQLException{
+        
+        // Create a connection to the database.  
+        conn = DriverManager.getConnection(DB_URL);
+        String query = "UPDATE players SET password =? WHERE email_address = ?";
+
+        // Create a Statement object for the query.
+        PreparedStatement stmt = conn.prepareStatement(query, 
+               ResultSet.TYPE_SCROLL_INSENSITIVE,
+               ResultSet.CONCUR_READ_ONLY);
+        stmt.setString(1, pw);
+        stmt.setString(2, email);
+        
+        stmt.executeUpdate();
+        stmt.close();
+    }
+    
     public void removeUser(Player temp) throws SQLException
     {
         int id = temp.getId();

@@ -37,6 +37,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  * FXML Controller class
@@ -116,7 +118,7 @@ public class FXMLController implements Initializable {
     /**
      * Player Class variable
      */
-    private static Player player = new Player();
+    private static Player player;
     
     /**
      * Initializes the controller class.
@@ -129,7 +131,8 @@ public class FXMLController implements Initializable {
         //generate the questions list to reduce database calls
         gm.GenerateQuestions();
         
-        
+        if(player == null)
+            player = new Player();
     }    
     /**
      * THIS REGION CONTAINS THE CONTROLLER FUNCTIONS THAT MICHAEL HAS BEEN WORKING ON
@@ -654,7 +657,6 @@ public class FXMLController implements Initializable {
         String findId = "";
         String findPw = "";
         
-        
         String regex =  "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
         + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
         Pattern pattern = Pattern.compile(regex);
@@ -679,10 +681,13 @@ public class FXMLController implements Initializable {
                             findId = db.getUserId();
                             findPw = db.getUserPw();
 
-                            alert.setTitle("Login Information");
-                            alert.setContentText("ID : " + findId + "\n" + "Password: " + findPw + "\n\n" +
-                                    "Would you like to login?");
-
+                            JFrame frame = new JFrame("InputDialoague");
+                            String resetPassword = "";
+                            String input = JOptionPane.showInputDialog(frame, "Your id :" + findId + "\n" +
+                                    "Please reset your password");
+                            
+                            db.editPassword(email, input);
+                            
                             Optional<ButtonType> result = alert.showAndWait();
                             if(result.get() == ButtonType.OK){
                                 currentScreen = ScreenType.LOGIN;
