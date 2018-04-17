@@ -45,7 +45,7 @@ public class DBManagerTest {
         
         boolean expResult = true;
         //try logging the player in
-        boolean result = instance.loginPlayer(temp);
+        boolean result = !(instance.loginPlayer(temp) == null);
         //remove the temp player
         try{
         instance.removeUser(temp);
@@ -69,7 +69,7 @@ public class DBManagerTest {
         DBManager instance = new DBManager();
         boolean expResult = false;
         //try logging the player in
-        boolean result = instance.loginPlayer(temp);
+        boolean result = !(instance.loginPlayer(temp) == null);
         //assert that login was not successful
         assertEquals(expResult, result);
     }
