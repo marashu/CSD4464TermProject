@@ -27,7 +27,7 @@
                         <Font size="30.0" />
                      </font>
                   </Text>
-                  <RadioButton fx:id="rdoAnswer1" layoutX="256.0" layoutY="319.0" mnemonicParsing="false" text="RadioButton">
+                  <RadioButton fx:id="rdoAnswer1" layoutX="155.0" layoutY="318.0" mnemonicParsing="false" text="RadioButton">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -35,17 +35,17 @@
                         <ToggleGroup fx:id="quizAnswer" />
                      </toggleGroup>
                   </RadioButton>
-                  <RadioButton fx:id="rdoAnswer2" layoutX="506.0" layoutY="319.0" mnemonicParsing="false" text="RadioButton" toggleGroup="$quizAnswer">
+                  <RadioButton fx:id="rdoAnswer2" layoutX="511.0" layoutY="318.0" mnemonicParsing="false" text="RadioButton" toggleGroup="$quizAnswer">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </RadioButton>
-                  <RadioButton fx:id="rdoAnswer3" layoutX="256.0" layoutY="377.0" mnemonicParsing="false" text="RadioButton" toggleGroup="$quizAnswer">
+                  <RadioButton fx:id="rdoAnswer3" layoutX="155.0" layoutY="376.0" mnemonicParsing="false" text="RadioButton" toggleGroup="$quizAnswer">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </RadioButton>
-                  <RadioButton fx:id="rdoAnswer4" layoutX="506.0" layoutY="377.0" mnemonicParsing="false" text="RadioButton" toggleGroup="$quizAnswer">
+                  <RadioButton fx:id="rdoAnswer4" layoutX="511.0" layoutY="376.0" mnemonicParsing="false" text="RadioButton" toggleGroup="$quizAnswer">
                      <font>
                         <Font size="24.0" />
                      </font>
