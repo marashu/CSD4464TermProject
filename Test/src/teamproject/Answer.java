@@ -37,25 +37,25 @@ public class Answer implements Serializable
     }
     
     /**
-     * getting answer
-     * @return
+     * method for getting answer
+     * @return sAnswer
      */
     public String GetAnswer(){return sAnswer;}
 
     /**
-     * setting answer
+     * method for setting answer
      * @param s
      */
     public void SetAnswer(String s){sAnswer = s;}
 
     /**
-     * getting correct answer
-     * @return
+     * method for getting correct answer
+     * @return bCorrect
      */
     public boolean GetCorrect(){return bCorrect;}
 
     /**
-     * setting correct answer
+     * method for setting correct answer
      * @param b
      */
     public void SetCorrect(boolean b){bCorrect = b;}
