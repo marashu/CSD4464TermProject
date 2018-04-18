@@ -7,9 +7,13 @@ package teamproject;
 
 /**
  *
- * @author c0692516
+ * @author c0692516 Michael Patoine
  */
 public class NoQuestionsException extends Exception {
+
+    /**
+     * Class constructor
+     */
     public NoQuestionsException()
     {
         super("Error: No questions loaded.");
