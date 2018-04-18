@@ -20,6 +20,10 @@ import java.util.LinkedList;
 public class DBManager {
     
     // Constant for database URL.
+
+    /**
+     *
+     */
     public final String DB_URL = "jdbc:derby://localhost:1527/TriviaGame;user=root;password=password";
     // Field for the database connection
     private Connection conn;
@@ -38,6 +42,7 @@ public class DBManager {
 
     /**
       Constructor
+     * @throws java.sql.SQLException
    */
 
     public DBManager() throws SQLException
@@ -48,10 +53,13 @@ public class DBManager {
     
     /****************************************
     ** START USER INFORMATION CONTROL - AERI 
+     * 
     ****************************************/
     
     /*
      * user register
+     * @param temp
+     * @throws java.sql.SQLException
     */
     public void submitPlayer(Player temp) throws SQLException
     {
@@ -76,6 +84,12 @@ public class DBManager {
       stmt.close();
     }
     
+    /**
+     * method for getting number of id rows
+     * @param id
+     * @return numRow
+     * @throws SQLException
+     */
     public int getNumRow(String id) throws SQLException{
         // Create a connection to the database.  
         conn = DriverManager.getConnection(DB_URL);
@@ -97,6 +111,12 @@ public class DBManager {
         return numRow;
     }
     
+    /**
+     * method for getting number of row email
+     * @param email
+     * @return emailNumRow
+     * @throws SQLException
+     */
     public int getEmailNumRow(String email) throws SQLException{
         // Create a connection to the database.  
         conn = DriverManager.getConnection(DB_URL);
@@ -120,6 +140,14 @@ public class DBManager {
     /*
      * user login
     */
+
+    /**
+     * method for logging in player
+     * @param temp
+     * @return output
+     * @throws SQLException
+     */
+
     public Player loginPlayer(Player temp) throws SQLException{
         String id = temp.getUsername();
         String pw = temp.getPassword();
@@ -181,6 +209,7 @@ public class DBManager {
      * a function to return a player based on an email address
      * @param email the email index to search for
      * @return 
+     * @throws java.sql.SQLException 
      */
     public Player findPlayerByEmail(String email) throws SQLException
     {
@@ -224,6 +253,14 @@ public class DBManager {
     /*
      * user find id, pw 
     */
+
+    /**
+     * method for finding id and password
+     * @param email
+     * @return status
+     * @throws SQLException
+     */
+
     public boolean findIdPw(String email) throws SQLException{
         boolean status = false;
         
@@ -256,39 +293,99 @@ public class DBManager {
         stmt.close();
         return status;
     }
+
+    /**
+     * userId
+     * @return
+     */
     public String getUserId() {
         return userId;
     }
+
+    /**
+     * method for setting userid
+     * @param userId
+     */
     public void setUserId(String userId) {
         this.userId = userId;
     }
+
+    /**
+     * method for getting user password
+     * @return userPw
+     */
     public String getUserPw() {
         return userPw;
     }
+
+    /**
+     * method for setting user password
+     * @param userPw
+     */
     public void setUserPw(String userPw) {
         this.userPw = userPw;
     }
+
+    /**
+     * method for getting user email
+     * @return userEmail
+     */
     public String getUserEmail() {
         return userEmail;
     }
+
+    /**
+     * method for setting user email
+     * @param userEmail
+     */
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
     }
+
+    /**
+     * method for getting best scores
+     * @return bestScore
+     */
     public int getBestScore() {
         return bestScore;
     }
+
+    /**
+     * method for setting best score
+     * @param bestScore
+     */
     public void setBestScore(int bestScore) {
         this.bestScore = bestScore;
     }
+
+    /**
+     * method for getting average score
+     * @return avgScore
+     */
     public int getAvgScore() {
         return avgScore;
     }
+
+    /**
+     * method for average score 
+     * @param avgScore
+     */
     public void setAvgScore(int avgScore) {
         this.avgScore = avgScore;
     }
+
+    /**
+     * method for setting number of rows 
+     * @param numRow
+     */
     public void setNumRow(int numRow) {
         this.numRow = numRow;
     }
+
+    /**
+     * method for setting email number of rows
+     * @param emailNumRow
+     */
     public void setEmailNumRow(int emailNumRow) {
         this.emailNumRow = emailNumRow;
     }
@@ -296,6 +393,13 @@ public class DBManager {
     /*
      * user edit 
     */
+
+    /**
+     * method for editing user profile
+     * @param temp
+     * @throws SQLException
+     */
+
     
     public void editUser(Player temp) throws SQLException{
         
@@ -324,6 +428,11 @@ public class DBManager {
         }
     }
     
+    /**
+     * method for removing user information
+     * @param temp
+     * @throws SQLException
+     */
     public void removeUser(Player temp) throws SQLException
     {
         int id = temp.getId();
@@ -348,6 +457,8 @@ public class DBManager {
    
     /**
      * BEGIN QUESTION INFORMATION CONTROL - MICHAEL
+     * @param list
+     * @return 
      */
     public static boolean GetQuestions(LinkedList<Question> list)
     {
@@ -502,7 +613,7 @@ public class DBManager {
     }
     
     /**
-     * 
+     * method for counting games played by user.
      * @param p the player whose id we need to check
      * @return the number of games played
      * @throws SQLException if the sql query doesn't work
