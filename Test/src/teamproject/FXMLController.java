@@ -125,6 +125,8 @@ public class FXMLController implements Initializable {
     private XYChart.Series avg;
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -506,6 +508,12 @@ public class FXMLController implements Initializable {
         }
     }
     
+    /**
+     * method for returning chart
+     * @param p
+     * @param name
+     * @return
+     */
     public XYChart.Series getBestScore (Player p, String name){
         //int numScore = p.getBestScore();
         XYChart.Series data = new XYChart.Series<>();
@@ -522,6 +530,13 @@ public class FXMLController implements Initializable {
         
         return data;
     }
+
+    /**
+     * method for get average score from chart
+     * @param p
+     * @param name
+     * @return
+     */
     public XYChart.Series getAvgScore (Player p, String name){
         //int numScore = p.getAverageScore();
         XYChart.Series data = new XYChart.Series<>();
@@ -589,6 +604,14 @@ public class FXMLController implements Initializable {
             System.err.println(ex.getMessage());
         }
     }
+
+    /**
+     * method for id validation
+     * @param id
+     * @param txt
+     * @return
+     * @throws SQLException
+     */
     public boolean checkID(String id, Text txt) throws SQLException{
         boolean status = false;
         DBManager db = new DBManager();
@@ -614,6 +637,13 @@ public class FXMLController implements Initializable {
         }
         return status;
     }
+
+    /**
+     * method for password validation
+     * @param pw
+     * @param txt
+     * @return
+     */
     public boolean checkPW(String pw, Text txt){
         boolean status = false;
         if(pw.equals("")){
@@ -631,6 +661,14 @@ public class FXMLController implements Initializable {
         }
         return status;
     }
+
+    /**
+     * method for password check validation
+     * @param pwc
+     * @param pw
+     * @param txt
+     * @return
+     */
     public boolean checkPWC(String pwc, String pw, Text txt){
         boolean status = false;
         if(pwc.equals("")){
@@ -647,6 +685,14 @@ public class FXMLController implements Initializable {
         }
         return status;
     }
+
+    /**
+     * method for email validation
+     * @param email
+     * @param txt
+     * @return
+     * @throws SQLException
+     */
     public boolean checkEmail(String email, Text txt) throws SQLException{
         boolean status = false;
         DBManager db = new DBManager();
