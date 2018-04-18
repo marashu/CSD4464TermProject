@@ -24,36 +24,69 @@ public class Player
     private String email;
     private int id;
 
+    /**
+     * method for getting id
+     * @return
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * method for setting id
+     * @param id
+     */
     public void setId(int id) {
         this.id = id;
     }
     
+    /**
+     * Class constructor
+     */
     public Player()
     {
         
     }
+
+    /**
+     * Class constructor
+     * @param username
+     * @param password
+     */
     public Player(String username, String password)
     {
         this.username = username;
         setPassword(password);
     }
 
+    /**
+     * method for getting user name
+     * @return
+     */
     public String getUsername() {
         return username;
     }
 
+    /**
+     * method for setting user name
+     * @param username
+     */
     public void setUsername(String username) {
         this.username = username;
     }
 
+    /**
+     * method for getting password
+     * @return
+     */
     public String getPassword() {
         return password;
     }
 
+    /**
+     * method for setting password
+     * @param s
+     */
     public void setPassword(String s) {
         //Get the bytes from the string
         byte[] raw = s.getBytes();
@@ -71,32 +104,60 @@ public class Player
     /**
      * IMPORTANT: DO NOT CALL THIS FUNCTION UNLESS THE PASSWORD HAS ALREADY
      * BEEN ENCRYPTED (ie, retrieving it from the database)
+     * 
+     * method for encryping password
+     * @param p
      */
     public void SetEncryptedPassword(String p)
     {
         this.password = p;
     }
 
+    /**
+     *
+     * method for getting best score
+     * @return
+     */
     public int getBestScore() {
         return bestScore;
     }
 
+    /**
+     * method for setting best score
+     * @param bestScore
+     */
     public void setBestScore(int bestScore) {
         this.bestScore = bestScore;
     }
 
+    /**
+     * method for setting average score
+     * @return
+     */
     public int getAverageScore() {
         return averageScore;
     }
 
+    /**
+     * method for setting average score
+     * @param averageScore
+     */
     public void setAverageScore(int averageScore) {
         this.averageScore = averageScore;
     }
     
+    /**
+     * method for getting email
+     * @return
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     * method for setting email
+     * @param e
+     */
     public void setEmail(String e) {
         this.email = e;
     }
