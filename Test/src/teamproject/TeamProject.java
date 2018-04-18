@@ -16,7 +16,8 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author Robyn
+ * @author c0692516 Michael Patoine
+ * @author c0717947 Aeri Jung
  */
 public class TeamProject extends Application {
     
@@ -37,12 +38,19 @@ public class TeamProject extends Application {
        
     }
 
+    /**
+     * Stage
+     * @return
+     */
     static public Stage getPrimaryStage() {
         return TeamProject.primaryStage;
     }    
     
     /**
      * @param args the command line arguments
+     * @throws java.io.IOException
+     * @throws java.net.UnknownHostException
+     * @throws java.lang.ClassNotFoundException
      */
     public static void main(String[] args) throws IOException, UnknownHostException, ClassNotFoundException {
         //ClientManager.GetQuestionFromServer();
