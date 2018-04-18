@@ -15,7 +15,12 @@ import java.sql.Statement;
  * @author c0692516
  */
 public class CreateTables {
-     public static void main(String[] args)
+
+    /**
+     * method for making tables
+     * @param args
+     */
+    public static void main(String[] args)
     {
         // Create a named constant for the URL.
         // NOTE: This value is specific for Java DB.
@@ -67,6 +72,7 @@ public class CreateTables {
      /**
     * The dropTables method drops any existing
     * in case the database already exists.
+     * @param conn
     */
     public static void DropTable(Connection conn)
     {
@@ -161,6 +167,11 @@ public class CreateTables {
     }
     
     //A function to add the players table
+
+    /**
+     * method for creating players table
+     * @param conn
+     */
     public static void BuildPlayersTable(Connection conn)
     {
         try
@@ -188,6 +199,11 @@ public class CreateTables {
     }
     
     //A function to add the scores table
+
+    /**
+     * method for creating score table 
+     * @param conn
+     */
     public static void BuildScoresTable(Connection conn)
     {
         try
@@ -213,6 +229,11 @@ public class CreateTables {
     }
     
     //A function to add the questions table
+
+    /**
+     * method for creating question table 
+     * @param conn
+     */
     public static void BuildQuestionsTable(Connection conn)
     {
         try
@@ -238,6 +259,11 @@ public class CreateTables {
     }
     
     //A function to add the questions table
+
+    /**
+     * method for builing answers table
+     * @param conn
+     */
     public static void BuildAnswersTable(Connection conn)
     {
         try
@@ -263,6 +289,11 @@ public class CreateTables {
     }
     
     //A function to add the questions table
+
+    /**
+     * method for inserting questions
+     * @param conn
+     */
     public static void PopulateQuestionsTable(Connection conn)
     {
         try
@@ -299,6 +330,11 @@ public class CreateTables {
         }
     }
     //A function to add the questions table
+
+    /**
+     * method for inserting answers table
+     * @param conn
+     */
     public static void PopulateAnswersTable(Connection conn)
     {
         try
@@ -381,6 +417,11 @@ public class CreateTables {
         
         
     }
+
+    /**
+     * method for adding constraints
+     * @param conn
+     */
     public static void AddConstraints(Connection conn)
     {
         try
@@ -457,6 +498,10 @@ public class CreateTables {
         }
     }
     
+    /**
+     * method for update correct answer
+     * @param conn
+     */
     public static void SetCorrectAnswer(Connection conn)
     {
          try
