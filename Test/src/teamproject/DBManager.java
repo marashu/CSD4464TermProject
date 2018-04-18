@@ -441,4 +441,134 @@ public class DBManager {
         return true;
     }
     
+    /***
+     * Code for the scores
+     * 
+     */
+    
+    /**
+     *  This will get the player's top score and average score, and add it to
+     * the player
+     * @param p The player to update
+     * @return the updated player
+     * @exception SQLException if the sql query doesn't work
+     */
+    public Player GetScoreData(Player p) throws SQLException
+    {
+        Player output = p;
+         conn = DriverManager.getConnection(DB_URL);
+        String query = "SELECT COUNT(score_id), SUM(total_score), MAX(total_score) FROM scores WHERE player_id= ?";
+
+        // Create a Statement object for the query.
+        PreparedStatement stmt = conn.prepareStatement(query, 
+               ResultSet.TYPE_SCROLL_INSENSITIVE,
+               ResultSet.CONCUR_READ_ONLY);
+        stmt.setInt(1, output.getId());
+        
+        ResultSet rs = stmt.executeQuery();
+        
+        //make sure there is a row
+        rs.last();                 // Move to last row
+        int numRows = rs.getRow(); // Get row number
+            
+            //if more than one player, or if the player doesn't exist,
+            //there is an error, so return null
+           
+        rs.first();                // Move to first row
+        
+            
+        if(numRows <= 0 || rs.getInt(1) <= 0)
+        {
+            output.setBestScore(0);
+            output.setAverageScore(0);
+            stmt.close();
+            return output;
+        }
+        //while(rs.next()){
+        output.setBestScore(rs.getInt(3));
+        //get the average score
+        double avg = rs.getInt(2)/rs.getInt(1);
+        //next, get the percent by dividing it by the highest possible score
+        avg /= (1000);
+        //finally, multiply it by 100 and make it an int
+        avg *= 100;
+        output.setAverageScore((int)avg);
+        
+        //}
+        stmt.close();
+        
+        return output;
+    }
+    
+    /**
+     * 
+     * @param p the player whose id we need to check
+     * @return the number of games played
+     * @throws SQLException if the sql query doesn't work
+     */
+    public int GetGamesPlayed(Player p) throws SQLException
+    {
+        conn = DriverManager.getConnection(DB_URL);
+        String query = "SELECT COUNT(score_id) FROM scores WHERE player_id= ?";
+
+        // Create a Statement object for the query.
+        PreparedStatement stmt = conn.prepareStatement(query, 
+               ResultSet.TYPE_SCROLL_INSENSITIVE,
+               ResultSet.CONCUR_READ_ONLY);
+        stmt.setInt(1, p.getId());
+        
+        ResultSet rs = stmt.executeQuery();
+        
+        
+        //}
+        stmt.close();
+        return rs.getInt(1);
+    }
+    
+    /**
+     *  a function to add scores to the persistent score database
+     * @param iScore the score to add
+     * @param p the player who scored
+     * @throws SQLException if the sql doesn't work
+     */
+    public void AddScore(int iScore, Player p) throws SQLException
+    {
+        // Create a connection to the database.  
+      conn = DriverManager.getConnection(DB_URL);
+
+      // Create a Statement object for the query.
+      PreparedStatement stmt = conn.prepareStatement("INSERT INTO scores ("
+              + "total_score, player_id) VALUES(?,?)");
+      
+      stmt.setInt(1, iScore);
+      stmt.setInt(2, p.getId());
+
+      // Execute the query.
+      stmt.executeUpdate();
+
+      // Close the connection and statement objects.
+      stmt.close();
+    }
+    
+    /**
+     * reset the player's scores
+     * @param p the current player
+     * @throws SQLException if the sql doesn't work
+     */
+    public void DeleteScores(Player p) throws SQLException
+    {
+        
+        // Create a connection to the database.  
+        conn = DriverManager.getConnection(DB_URL);
+        String query = "DELETE FROM scores WHERE player_id=?";
+
+        // Create a Statement object for the query.
+        PreparedStatement stmt = conn.prepareStatement(query, 
+               ResultSet.TYPE_SCROLL_INSENSITIVE,
+               ResultSet.CONCUR_READ_ONLY);
+        stmt.setInt(1, p.getId());
+        
+        stmt.executeUpdate();
+        stmt.close();
+    }
 }

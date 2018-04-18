@@ -304,6 +304,8 @@ public class FXMLController implements Initializable {
         SetScreenResources();
         XYChart.Series best = getBestScore(player, "Best Score");
         XYChart.Series avg = getAvgScore(player, "Average Score");
+        graphMyStastics.getData().addAll(best, avg);
+        
         System.out.println("GameLobby.fxml opened");
     }
     
@@ -372,6 +374,14 @@ public class FXMLController implements Initializable {
             SetScreenResources();
             //update the score
             txtFinalScore.setText(Integer.toString(gm.GetScore()));
+            try {
+                //update the database
+                DBManager db = new DBManager();
+                db.AddScore(gm.GetScore(), player);
+            } catch (SQLException ex) {
+                Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
             System.out.println("GameEnd.fxml opened");
         }
     }
@@ -474,6 +484,7 @@ public class FXMLController implements Initializable {
 
                     XYChart.Series best = getBestScore(player, "Best Score");
                     XYChart.Series avg = getAvgScore(player, "Average Score");
+                    
                     graphMyStastics.getData().addAll(best, avg);
                     
                     System.out.println("GameLobby.fxml opened");
@@ -489,19 +500,32 @@ public class FXMLController implements Initializable {
     }
     
     public XYChart.Series getBestScore (Player p, String name){
-        int numScore = p.getBestScore();
+        //int numScore = p.getBestScore();
         XYChart.Series data = new XYChart.Series<>();
         data.setName(name);
-        XYChart.Data<String, Number> best = new XYChart.Data<String, Number>("", 75);
+        try {
+            DBManager db = new DBManager();
+            db.GetScoreData(player);
+        } catch (SQLException ex) {
+            Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        XYChart.Data<String, Number> best = new XYChart.Data<String, Number>("", player.getBestScore());
         data.getData().add(best);
         
         return data;
     }
     public XYChart.Series getAvgScore (Player p, String name){
-        int numScore = p.getAverageScore();
+        //int numScore = p.getAverageScore();
         XYChart.Series data = new XYChart.Series<>();
         data.setName(name);
-        XYChart.Data<String, Number> best = new XYChart.Data<String, Number>("", 65);
+        try {
+            DBManager db = new DBManager();
+            db.GetScoreData(player);
+        } catch (SQLException ex) {
+            Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        XYChart.Data<String, Number> best = new XYChart.Data<String, Number>("", player.getAverageScore());
         data.getData().add(best);
         
         return data;
@@ -775,6 +799,7 @@ public class FXMLController implements Initializable {
         SetScreenResources();
         XYChart.Series best = getBestScore(player, "Best Score");
         XYChart.Series avg = getAvgScore(player, "Average Score");
+        graphMyStastics.getData().addAll(best, avg);
         System.out.println("GameLobby.fxml opened");
     }
     
@@ -828,6 +853,7 @@ public class FXMLController implements Initializable {
                 SetScreenResources();
                 XYChart.Series best = getBestScore(player, "Best Score");
                 XYChart.Series avg = getAvgScore(player, "Average Score");
+                graphMyStastics.getData().addAll(best, avg);
                 System.out.println("GameLobby.fxml opened");
             }
         }catch(SQLException ex){

@@ -199,9 +199,7 @@ public class CreateTables {
             stmt.execute("CREATE TABLE scores(" +
                 "score_id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1,  INCREMENT BY 1)," +
                 "player_id INTEGER NOT NULL," +
-                "total_score DEC(9,0)," +
-                "average_score DEC(9,0)," +
-                "highest_score DEC(9,0))");
+                "total_score DEC(9,0))");
             
             
             
