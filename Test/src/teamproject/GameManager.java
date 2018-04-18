@@ -9,8 +9,7 @@ import java.util.LinkedList;
 import java.util.Random;
 
 /**
- *
- * @author c0692516
+ * @author c0692516 Michael Patoine
  */
 public class GameManager 
 {
@@ -18,6 +17,9 @@ public class GameManager
     private static LinkedList<Integer> listQuestionIndexes;
     private static int iCurrentScore = 0;
     
+    /**
+     * Class constructor
+     */
     public GameManager()
     {
         listAllQuestions = new LinkedList();
@@ -26,6 +28,12 @@ public class GameManager
     }
     
     //get a specific question from the question list
+
+    /**
+     * method for getting specific question
+     * @param index
+     * @return Question
+     */
     public static Question GetSpecificQuestion(int index)
     {
         try
@@ -39,10 +47,26 @@ public class GameManager
         return listAllQuestions.get(index);
     }
     
+    /**
+     * method for score getter
+     * @return iCurrentScore
+     */
     public int GetScore(){return iCurrentScore;}
+
+    /**
+     * method for score setter
+     * @param score
+     */
     public void SetScore(int score){iCurrentScore = score;}
+
+    /**
+     * method for resetting score
+     */
     public void ResetScore(){iCurrentScore = 0;}
     
+    /**
+     * method for generating question
+     */
     public void GenerateQuestions()
     {
         //this class will call the database class and populate it there
@@ -51,6 +75,10 @@ public class GameManager
     }
     
     //a function to create the list of random questions for the set
+
+    /**
+     * method for getting randomized question
+     */
     public void RandomizeQuestions()
     {
         listQuestionIndexes.clear();
@@ -72,6 +100,10 @@ public class GameManager
         }
     }
     
+    /**
+     * get current question
+     * @return Question
+     */
     public Question GetCurrentQuestion()
     {
         //TODO: insert a custom try-catch error catcher to check if the stored index
@@ -89,6 +121,9 @@ public class GameManager
         
     }
     
+    /**
+     * increasing number of question
+     */
     public void IncrementQuestion()
     {
        
@@ -103,11 +138,20 @@ public class GameManager
         }
     }
     
+    /**
+     * method for getting number of question is remaining
+     * @return
+     */
     public int GetNumQuestionsRemaining()
     {
         return listQuestionIndexes.size();
     }
     
+    /**
+     * method for checking answer
+     * @param index
+     * @param q
+     */
     public void CheckAnswer(int index, Question q)
     {
         try
