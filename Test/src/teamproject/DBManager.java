@@ -485,7 +485,8 @@ public class DBManager {
             return output;
         }
         //while(rs.next()){
-        output.setBestScore(rs.getInt(3));
+        double best = rs.getInt(3) / 1000.0 * 100;
+        output.setBestScore((int)best);
         //get the average score
         double avg = rs.getInt(2)/rs.getInt(1);
         //next, get the percent by dividing it by the highest possible score

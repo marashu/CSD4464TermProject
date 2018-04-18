@@ -119,6 +119,11 @@ public class FXMLController implements Initializable {
     private static Player player;
     
     /**
+     * Variable for chart series
+     */
+    private XYChart.Series best;
+    private XYChart.Series avg;
+    /**
      * Initializes the controller class.
      */
     @Override
@@ -173,9 +178,11 @@ public class FXMLController implements Initializable {
                 xAxis = (CategoryAxis) TeamProject.getPrimaryStage().getScene().lookup("#xAxis");
                 //NumberAxis
                 //yAxis = (NumberAxis) TeamProject.getPrimaryStage().getScene().lookup("#yAxis");
+                //yAxis.setAnimated(false);
                 
                 //BarChart
                 graphMyStastics= (BarChart) TeamProject.getPrimaryStage().getScene().lookup("#graphMyStastics");
+                graphMyStastics.setAnimated(false);
                 //XYChart.Series
                 graphMyStastics.getYAxis().setAutoRanging(false);
                 ((NumberAxis)graphMyStastics.getYAxis()).setUpperBound(100);
@@ -302,8 +309,8 @@ public class FXMLController implements Initializable {
         TeamProject.getPrimaryStage().setScene(new Scene(root));
         TeamProject.getPrimaryStage().show();
         SetScreenResources();
-        XYChart.Series best = getBestScore(player, "Best Score");
-        XYChart.Series avg = getAvgScore(player, "Average Score");
+        best = getBestScore(player, "Best Score");
+        avg = getAvgScore(player, "Average Score");
         graphMyStastics.getData().addAll(best, avg);
         
         System.out.println("GameLobby.fxml opened");
@@ -482,8 +489,8 @@ public class FXMLController implements Initializable {
                     TeamProject.getPrimaryStage().show();
                     SetScreenResources();  
 
-                    XYChart.Series best = getBestScore(player, "Best Score");
-                    XYChart.Series avg = getAvgScore(player, "Average Score");
+                    best = getBestScore(player, "Best Score");
+                    avg = getAvgScore(player, "Average Score");
                     
                     graphMyStastics.getData().addAll(best, avg);
                     
@@ -797,8 +804,8 @@ public class FXMLController implements Initializable {
         TeamProject.getPrimaryStage().setScene(new Scene(root));
         TeamProject.getPrimaryStage().show();
         SetScreenResources();
-        XYChart.Series best = getBestScore(player, "Best Score");
-        XYChart.Series avg = getAvgScore(player, "Average Score");
+        best = getBestScore(player, "Best Score");
+        avg = getAvgScore(player, "Average Score");
         graphMyStastics.getData().addAll(best, avg);
         System.out.println("GameLobby.fxml opened");
     }
@@ -806,7 +813,30 @@ public class FXMLController implements Initializable {
     @FXML
     private void resetMyTotalResult(ActionEvent event) throws IOException
     {
+        Alert alert = new Alert(AlertType.CONFIRMATION);
         //reset user score
+        alert.setTitle("Confirm Reset");
+        alert.setContentText("Score data will be permanently deleted.\nContinue?");
+        
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if(result.get() == ButtonType.OK){
+            try {
+                DBManager db = new DBManager();
+                db.DeleteScores(player);
+                player.setBestScore(0);
+                player.setAverageScore(0);
+                graphMyStastics.getData().clear();
+                
+                best = getBestScore(player, "Best Score");
+                avg = getAvgScore(player, "Average Score");
+                //graphMyStastics.layout();
+                graphMyStastics.getData().addAll(best, avg);
+                
+            } catch (SQLException ex) {
+                Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
     
     @FXML
@@ -851,8 +881,8 @@ public class FXMLController implements Initializable {
                 TeamProject.getPrimaryStage().setScene(new Scene(root));
                 TeamProject.getPrimaryStage().show();
                 SetScreenResources();
-                XYChart.Series best = getBestScore(player, "Best Score");
-                XYChart.Series avg = getAvgScore(player, "Average Score");
+                best = getBestScore(player, "Best Score");
+                avg = getAvgScore(player, "Average Score");
                 graphMyStastics.getData().addAll(best, avg);
                 System.out.println("GameLobby.fxml opened");
             }
