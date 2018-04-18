@@ -14,10 +14,17 @@ import java.net.UnknownHostException;
 
 /**
  *
- * @author c0692516
+ * @author c0692516 Michael Patoine
  */
 public class ClientManager 
 {
+
+    /**
+     * method for getting question from server
+     * @throws UnknownHostException
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public static void GetQuestionFromServer() throws UnknownHostException, IOException, ClassNotFoundException
     {
         //for now, just output the question
