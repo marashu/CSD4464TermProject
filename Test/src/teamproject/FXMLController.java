@@ -263,6 +263,9 @@ public class FXMLController implements Initializable {
         TeamProject.getPrimaryStage().show();
     }
     
+    /**
+     * A method to start the question timer
+     */
     private void StartTimer()
     {
         if(timeline != null)
@@ -273,6 +276,11 @@ public class FXMLController implements Initializable {
             txtTimer.setText(Integer.toString(--iSeconds));
             if(iSeconds <= 0)
                 try {
+                    //Make sure to deselect the radio buttons
+                    rdoAnswer1.setSelected(false);
+                    rdoAnswer2.setSelected(false);
+                    rdoAnswer3.setSelected(false);
+                    rdoAnswer4.setSelected(false);
                     GoToNextQuestion();
                 } catch (IOException ex) {
                     Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);

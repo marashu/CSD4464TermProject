@@ -325,9 +325,9 @@ public class CreateTables {
             + "(420, 'What band has won the most grammys?',NULL),"
             + "(421, 'Which country has the largest population of wild tigers?',NULL),"
             + "(422, 'What is the capital of Egypt?',NULL),"
-            + "(423, Which physiologist is famous for his work in classical conditioning?',NULL),"
+            + "(423, 'Which physiologist is famous for his work in classical conditioning?',NULL),"
             + "(424, 'Which country is the hottest in the world?',NULL),"
-            + "(425, 'Which dog breed is the most popular in the United States?',NULL),");
+            + "(425, 'Which dog breed is the most popular in the United States?',NULL)");
             
             
             
@@ -527,10 +527,6 @@ public class CreateTables {
                 "ADD CONSTRAINT questions_correct_answer_id_fk " +
                 "FOREIGN KEY(correct_answer_id) " +
                 "REFERENCES answers(answer_id)");
-            
-            stmt.execute("ALTER TABLE answers " +
-                "ADD CONSTRAINT answers_answer_uq " +
-                "UNIQUE(answer)");
             
             stmt.execute("ALTER TABLE answers " +
                 "ADD CONSTRAINT answers_question_id_fk " +
