@@ -71,9 +71,13 @@ public class FXMLControllerTest {
         
         boolean result = instance.checkID(id, txt);
         
-        assertTrue(result);
+        assertTrue("Supplied a valid username, but was considered invalid.",result);
     }
     
+    /**
+     * Test checkID with invalid data
+     * @throws Exception 
+     */
     @Test
     public void testCheckIDInvalidData() throws Exception {
         System.out.println("checkIDInvalid");
@@ -84,9 +88,13 @@ public class FXMLControllerTest {
         boolean result = instance.checkID(id, txt);
         
         
-        assertFalse(result);
+        assertFalse("Supplied a username that was too short, but was considered valid.",result);
     }
     
+    /**
+     * Test CheckID with duplicate data
+     * @throws Exception 
+     */
     @Test
     public void testCheckIDDuplicateData() throws Exception{
          System.out.println("checkIDDuplicate");
@@ -102,9 +110,13 @@ public class FXMLControllerTest {
         
         //remove the user
         db.removeUser(p);
-        assertFalse(result);
+        assertFalse("Provided a username that existed, but was considered valid.",result);
     }
     
+    /**
+     * Test CheckID with null data
+     * @throws Exception 
+     */
     @Test
     public void testCheckIDNullData() throws Exception {
         System.out.println("checkIDNullData");
@@ -115,7 +127,7 @@ public class FXMLControllerTest {
         boolean result = instance.checkID(id, txt);
         
         
-        assertFalse(result);
+        assertFalse("Provided an empty string, but was considered valid.",result);
     }
 
     /**
@@ -131,9 +143,12 @@ public class FXMLControllerTest {
         FXMLController instance = new FXMLController();
         boolean result = instance.checkPW(id, txt);
         
-        assertTrue(result);
+        assertTrue("Provided valid password, but was considered invalid.",result);
     }
     
+    /**
+     * Test checkPW with invalid data
+     */
     @Test
     public void testCheckPWInvalidValidData() {
         System.out.println("checkPWInvalid");
@@ -143,9 +158,12 @@ public class FXMLControllerTest {
         FXMLController instance = new FXMLController();
         boolean result = instance.checkPW(id, txt);
         
-        assertFalse(result);
+        assertFalse("Provided password that was too short, but was considered valid.",result);
     }
     
+    /**
+     * Test checkPW with null data
+     */
     @Test
     public void testCheckPWNullValidData() {
         System.out.println("checkPWNull");
@@ -155,7 +173,7 @@ public class FXMLControllerTest {
         FXMLController instance = new FXMLController();
         boolean result = instance.checkPW(id, txt);
         
-        assertFalse(result);
+        assertFalse("Provided empty string password, but was considered valid.",result);
     }
 
     /**
@@ -172,9 +190,13 @@ public class FXMLControllerTest {
         boolean result = instance.checkEmail(id, txt);
         
         
-        assertTrue(result);
+        assertTrue("Provided valid email, but was considered invalid",result);
     }
     
+    /**
+     * Test checkEmail with invalid data
+     * @throws Exception 
+     */
     @Test
     public void testCheckEmailInvalidData() throws Exception {
         System.out.println("checkEmailInvalid");
@@ -185,16 +207,20 @@ public class FXMLControllerTest {
         boolean result = instance.checkEmail(id, txt);
         
         
-        assertFalse(result);
+        assertFalse("Provided email that did not match regex, but was considered valid.",result);
     }
     
+    /**
+     * Test checkEmail with duplicate data
+     * @throws Exception 
+     */
     @Test
     public void testCheckEmailDuplicateData() throws Exception{
          System.out.println("checkEmail");
         String id = "test@e.mail";
         Text txt = new Text();
         DBManager db = new DBManager();
-        Player p = new Player("a","a");
+        Player p = new Player("acc","acc");
         p.setEmail(id);
         db.submitPlayer(p);
         p = db.loginPlayer(p);
@@ -203,9 +229,13 @@ public class FXMLControllerTest {
         
         //remove the user
         db.removeUser(p);
-        assertFalse(result);
+        assertFalse("Provided duplicate email, but was considered valid.",result);
     }
     
+    /**
+     * Test checkEmail with null data
+     * @throws Exception 
+     */
     @Test
     public void testCheckEmailNullData() throws Exception {
         System.out.println("checkEmailNullData");
@@ -216,7 +246,7 @@ public class FXMLControllerTest {
         boolean result = instance.checkEmail(id, txt);
         
         
-        assertEquals(false,result);
+        assertEquals("Provided empty string, but was considered valid.",false,result);
     }
     
 }

@@ -62,26 +62,9 @@ public class GameManagerTest {
             instance.IncrementQuestion();
         }
         
-        assertFalse(bSame);
+        assertFalse("Questions did not randomize.",bSame);
     }
 
-    
-
-    /**
-     * Test of GetCurrentQuestion method, of class GameManager.
-     */
-    @Test
-    public void testGetCurrentQuestion() {
-        System.out.println("GetCurrentQuestion");
-        GameManager instance = new GameManager();
-        assertEquals(instance.GetCurrentQuestion(), null);
-        // TODO review the generated test code and remove the default call to fail.
-        
-    }
-
-    
-
-    
 
     /**
      * Test of CheckAnswer method, of class GameManager.
@@ -97,7 +80,7 @@ public class GameManagerTest {
         
         instance.CheckAnswer(0,GameManager.GetSpecificQuestion(0));
         
-        assertEquals(instance.GetScore(), 100);
+        assertEquals("Tested answer should have been correct, but was incorrect",instance.GetScore(), 100);
     }
     /**
      * Test of CheckAnswer method, of class GameManager.
@@ -113,9 +96,12 @@ public class GameManagerTest {
         
         instance.CheckAnswer(1,GameManager.GetSpecificQuestion(0));
         
-        assertEquals(instance.GetScore(), 0);
+        assertEquals("Tested answer should have been incorrect, but was correct.",instance.GetScore(), 0);
     }
     
+    /**
+     * Test if the answer is out of bounds
+     */
     @Test
     public void testCheckAnswerOutOfBounds() {
         System.out.println("CheckAnswerOutOfBounds");
@@ -127,6 +113,6 @@ public class GameManagerTest {
         
         instance.CheckAnswer(5,GameManager.GetSpecificQuestion(0));
         
-        assertEquals(instance.GetScore(), 0);
+        assertEquals("Tested question should have been out of bounds, but was treated as correct.",instance.GetScore(), 0);
     }
 }

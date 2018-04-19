@@ -42,29 +42,33 @@ public class DBManagerTest {
         DBManager instance = new DBManager();
         //create a dummy player
         instance.submitPlayer(temp);
-        
+        //get the player by email so we can find the correct id to remove later.
+        temp = instance.loginPlayer(temp);
         boolean expResult = true;
         //try logging the player in
         boolean result = !(instance.loginPlayer(temp) == null);
         //remove the temp player
         try{
-        instance.removeUser(temp);
+            instance.removeUser(temp);
         } catch(SQLException ex)
         {
             System.err.println(ex.getMessage());
         }
         //assert that login was successful
-        assertEquals(expResult, result);
-        
+        assertEquals("Provided a valid username and password, but did not log in.",expResult, result);
     }
     
-    //testing for SQL Injection
+    
+    /**
+     * Test LoginPlayer with incorrect details
+     * @throws Exception 
+     */
     @Test
     public void testIncorrectLoginPlayer() throws Exception
     {
         System.out.println("Test for unsuccessful login");
         //no player has a username or password 1 character long
-        Player temp = new Player("a", "a");
+        Player temp = new Player("ab", "ab");
         temp.setEmail("a@a.aa");
         
         DBManager instance = new DBManager();
@@ -72,9 +76,14 @@ public class DBManagerTest {
         //try logging the player in
         boolean result = !(instance.loginPlayer(temp) == null);
         //assert that login was not successful
-        assertEquals(expResult, result);
+        assertEquals("Provided an incorrect username and password, but logged in.",expResult, result);
     }
+    
     //testing for SQL Injection
+    /**
+     * Test the database for SQL injection
+     * @throws Exception 
+     */
     @Test
     public void textSQLInjection() throws Exception
     {
@@ -87,7 +96,7 @@ public class DBManagerTest {
         //try logging the player in
         boolean result = !(instance.loginPlayer(temp) == null);
         //assert that login was not successful
-        assertEquals(expResult, result);
+        assertEquals("Database was found to be vulnerable to SQL Injections.  Use a PreparedStatement to fix this.",expResult, result);
     }
     
 }
