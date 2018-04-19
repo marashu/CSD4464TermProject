@@ -567,7 +567,7 @@ public class CreateTables {
                     + "WHERE question_id=404" );
             stmt.execute("UPDATE questions SET correct_answer_id=517"
                     + "WHERE question_id=405" );
-            stmt.execute("UPDATE questions SET correct_answer_id=522"
+            stmt.execute("UPDATE questions SET correct_answer_id=521"
                     + "WHERE question_id=406" );
             stmt.execute("UPDATE questions SET correct_answer_id=527"
                     + "WHERE question_id=407" );
