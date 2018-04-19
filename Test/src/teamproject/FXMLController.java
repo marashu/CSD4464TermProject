@@ -110,7 +110,7 @@ public class FXMLController implements Initializable {
      * time variables
      */
     private static Timeline timeline;
-    private static final int MAXTIME = 5;
+    private static final int MAXTIME = 10;
     private static int iSeconds;
     
     /**

@@ -317,7 +317,17 @@ public class CreateTables {
                     + "(412, 'Which U. S. State provided the title of a Bee Gees hit single?',NULL),"
                     + "(413, 'Who is the first person a newly elected pope meets?',NULL),"
                     + "(414, 'In Greek mythology, who was Minos'' mother?',NULL),"
-                    + "(415, 'Vienna is the setting for what Shakespeare play?',NULL)");
+                    + "(415, 'Vienna is the setting for what Shakespeare play?',NULL),"
+            + "(416, 'Who won Superbowl XLVII/48 in 2014?',NULL),"
+            + "(417, 'Who won the Oscar for best picture in 2009?',NULL),"
+            + "(418, 'What is the national sport of Canada?',NULL),"
+            + "(419, 'What year was Pacman first released?',NULL),"
+            + "(420, 'What band has won the most grammys?',NULL),"
+            + "(421, 'Which country has the largest population of wild tigers?',NULL),"
+            + "(422, 'What is the capital of Egypt?',NULL),"
+            + "(423, Which physiologist is famous for his work in classical conditioning?',NULL),"
+            + "(424, 'Which country is the hottest in the world?',NULL),"
+            + "(425, 'Which dog breed is the most popular in the United States?',NULL),");
             
             
             
@@ -403,7 +413,47 @@ public class CreateTables {
                     + "(557, 415,'Taming of the Shrew'),"
                     + "(558, 415,'The Merchant of Venice'),"
                     + "(559, 415,'As You Like It'),"
-                    + "(560, 415,'Measure for Measure')");
+                    + "(560, 415,'Measure for Measure'),"
+            + "(561, 416,'Denver Broncos'),"
+            + "(562, 416,'Green Bay Packers'),"
+            + "(563, 416,'New England Patriots'),"
+            + "(564, 416,'Seattle Seahawks'),"
+            + "(565, 417,'District 9'),"
+            + "(566, 417,'Avatar'),"
+            + "(567, 417,'Up'),"
+            + "(568, 417,'The Hurt Locker'),"
+            + "(569, 418,'Hockey'),"
+            + "(570, 418,'Baseball'),"
+            + "(571, 418,'Skiing'),"
+            + "(572, 418,'Lacrosse'),"
+            + "(573, 419,'1983'),"
+            + "(574, 419,'1986'),"
+            + "(575, 419,'1985'),"
+            + "(576, 419,'1980'),"
+            + "(577, 420,'Foo Fighters'),"
+            + "(578, 420,'Metallica'),"
+            + "(579, 420,'Coldplay'),"
+            + "(580, 420,'U2'),"
+            + "(581, 421,'Indonesia'),"
+            + "(582, 421,'Russia'),"
+            + "(583, 421,'Malaysia'),"
+            + "(584, 421,'India'),"
+            + "(585, 422,'Alexandria'),"
+            + "(586, 422,'Aswan'),"
+            + "(587, 422,'Luxor'),"
+            + "(588, 422,'Cairo'),"
+            + "(589, 423,'Wilhelm Wundt'),"
+            + "(590, 423,'Raymond Heimbecker'),"
+            + "(591, 423,'Claude Bernard'),"
+            + "(592, 423,'Ivan Pavlov'),"
+            + "(593, 424,'Algeria'),"
+            + "(594, 424,'Saudi Arabia'),"
+            + "(595, 424,'Iraq'),"
+            + "(596, 424,'Libya'),"
+            + "(597, 425,'German Shepherd'),"
+            + "(598, 425,'French Bulldog'),"
+            + "(599, 425,'Golden Retriever'),"
+            + "(600, 425,'Labrador Retriever')");
             
             
             
@@ -541,6 +591,26 @@ public class CreateTables {
                     + "WHERE question_id=414" );
             stmt.execute("UPDATE questions SET correct_answer_id=560"
                     + "WHERE question_id=415" );
+            stmt.execute("UPDATE questions SET correct_answer_id=564"
+                    + "WHERE question_id=416" );
+            stmt.execute("UPDATE questions SET correct_answer_id=568"
+                    + "WHERE question_id=417" );
+            stmt.execute("UPDATE questions SET correct_answer_id=572"
+                    + "WHERE question_id=418" );
+            stmt.execute("UPDATE questions SET correct_answer_id=576"
+                    + "WHERE question_id=419" );
+            stmt.execute("UPDATE questions SET correct_answer_id=580"
+                    + "WHERE question_id=420" );
+            stmt.execute("UPDATE questions SET correct_answer_id=584"
+                    + "WHERE question_id=421" );
+            stmt.execute("UPDATE questions SET correct_answer_id=588"
+                    + "WHERE question_id=422" );
+            stmt.execute("UPDATE questions SET correct_answer_id=592"
+                    + "WHERE question_id=423" );
+            stmt.execute("UPDATE questions SET correct_answer_id=596"
+                    + "WHERE question_id=424" );
+            stmt.execute("UPDATE questions SET correct_answer_id=600"
+                    + "WHERE question_id=425" );
             
             //Output to show the database has been successfully created
             System.out.println("Updated answers");
