@@ -921,9 +921,11 @@ public class FXMLController implements Initializable {
         try{
             if(checkPW && checkPWC && checkEmail){
                 DBManager db = new DBManager();
-                Player temp = new Player(id, pw);
-                temp.setEmail(email);
-                db.editUser(temp);
+                //Player temp = new Player(id, pw);
+                //temp.setEmail(email);
+                player.setPassword(pw);
+                player.setEmail(email);
+                db.editUser(player);
                 
                 Alert alert = new Alert(AlertType.INFORMATION);
                 alert.setTitle("Edit Profile");
